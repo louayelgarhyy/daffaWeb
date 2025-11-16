@@ -5,9 +5,17 @@ import { ProductCard } from "@/components/products/ProductCard";
 import { BannerCarousel } from "@/components/ui/banner-carousel";
 import { Animation } from "@/components/ui/animation";
 import { Banner } from "@/components/ui/banner";
+import { CustomCursor } from "@/components/ui/custom-cursor";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useState } from "react";
 
 const Home = () => {
   const navigate = useNavigate();
+  const [isCursorActive, setIsCursorActive] = useState(false);
+  
+  const featuredRef = useScrollAnimation({ threshold: 0.2 });
+  const featuresRef = useScrollAnimation({ threshold: 0.3 });
+  const ctaRef = useScrollAnimation({ threshold: 0.3 });
 
   const bannerSlides = [
     {
@@ -80,6 +88,9 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Custom Cursor Effect */}
+      <CustomCursor isActive={isCursorActive} />
+      
       {/* Promotional Banner */}
       <Banner
         variant="promotional"
@@ -92,33 +103,50 @@ const Home = () => {
       />
 
       {/* Hero Carousel Section */}
-      <BannerCarousel slides={bannerSlides} />
+      <div 
+        onMouseEnter={() => setIsCursorActive(true)}
+        onMouseLeave={() => setIsCursorActive(false)}
+      >
+        <BannerCarousel slides={bannerSlides} />
+      </div>
 
       {/* Featured Products */}
-      <section className="container px-4 py-16">
-        <Animation type="fade" delay={200} duration={600}>
+      <section 
+        ref={featuredRef.elementRef}
+        className="container px-4 py-16"
+      >
+        <div className={`transition-all duration-1000 ${
+          featuredRef.isVisible 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-20'
+        }`}>
           <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4 animate-in slide-in-from-bottom duration-700">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Featured Collection
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto animate-in slide-in-from-bottom duration-700 delay-100">
+            <p className="text-muted-foreground max-w-2xl mx-auto">
               Explore our carefully curated selection of the finest abayas, designed for the modern woman.
             </p>
           </div>
-        </Animation>
+        </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div 
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          onMouseEnter={() => setIsCursorActive(true)}
+          onMouseLeave={() => setIsCursorActive(false)}
+        >
           {featuredProducts.map((product, index) => (
-            <Animation 
-              key={product.id} 
-              type="scale" 
-              delay={100 * index} 
-              duration={500}
+            <div
+              key={product.id}
+              className={`transform transition-all duration-700 hover:scale-105 ${
+                featuredRef.isVisible
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 translate-y-20'
+              }`}
+              style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <div className="transform hover:scale-105 transition-transform duration-300">
-                <ProductCard {...product} />
-              </div>
-            </Animation>
+              <ProductCard {...product} />
+            </div>
           ))}
         </div>
 
@@ -139,57 +167,64 @@ const Home = () => {
       </section>
 
       {/* Features Section */}
-      <section className="bg-card-secondary py-16 overflow-hidden">
+      <section 
+        ref={featuresRef.elementRef}
+        className="bg-card-secondary py-16 overflow-hidden"
+      >
         <div className="container px-4">
-          <Animation type="fade" delay={100} duration={600}>
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-12 animate-in slide-in-from-bottom duration-700">
+          <div className={`transition-all duration-1000 ${
+            featuresRef.isVisible 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-20'
+          }`}>
+            <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-12">
               Why Choose Daffa?
             </h2>
-          </Animation>
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <Animation type="slide-up" delay={100} duration={600}>
-              <div className="text-center space-y-3 group hover:transform hover:scale-105 transition-all duration-300">
-                <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300 group-hover:rotate-6 transform">
-                  <Sparkles className="h-10 w-10 text-primary animate-pulse" />
+            {[
+              { icon: Sparkles, title: "Premium Quality", desc: "Only the finest fabrics and materials for lasting elegance", delay: 0 },
+              { icon: Truck, title: "Free Shipping", desc: "Complimentary delivery on all orders over $100", delay: 200 },
+              { icon: Shield, title: "Easy Returns", desc: "30-day hassle-free returns for your peace of mind", delay: 400 }
+            ].map((feature, index) => {
+              const Icon = feature.icon;
+              return (
+                <div
+                  key={index}
+                  className={`text-center space-y-3 group hover:transform hover:scale-105 transition-all duration-700 ${
+                    featuresRef.isVisible
+                      ? 'opacity-100 translate-x-0'
+                      : index === 0 
+                        ? 'opacity-0 -translate-x-20'
+                        : index === 2
+                        ? 'opacity-0 translate-x-20'
+                        : 'opacity-0 translate-y-20'
+                  }`}
+                  style={{ transitionDelay: `${feature.delay}ms` }}
+                >
+                  <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300 group-hover:rotate-6 transform">
+                    <Icon className="h-10 w-10 text-primary group-hover:animate-pulse" />
+                  </div>
+                  <h3 className="text-xl font-semibold">{feature.title}</h3>
+                  <p className="text-muted-foreground">{feature.desc}</p>
                 </div>
-                <h3 className="text-xl font-semibold">Premium Quality</h3>
-                <p className="text-muted-foreground">
-                  Only the finest fabrics and materials for lasting elegance
-                </p>
-              </div>
-            </Animation>
-            
-            <Animation type="slide-up" delay={200} duration={600}>
-              <div className="text-center space-y-3 group hover:transform hover:scale-105 transition-all duration-300">
-                <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300 group-hover:rotate-6 transform">
-                  <Truck className="h-10 w-10 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold">Free Shipping</h3>
-                <p className="text-muted-foreground">
-                  Complimentary delivery on all orders over $100
-                </p>
-              </div>
-            </Animation>
-            
-            <Animation type="slide-up" delay={300} duration={600}>
-              <div className="text-center space-y-3 group hover:transform hover:scale-105 transition-all duration-300">
-                <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300 group-hover:rotate-6 transform">
-                  <Shield className="h-10 w-10 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold">Easy Returns</h3>
-                <p className="text-muted-foreground">
-                  30-day hassle-free returns for your peace of mind
-                </p>
-              </div>
-            </Animation>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="container px-4 py-16">
-        <Animation type="scale" delay={200} duration={700}>
+      <section 
+        ref={ctaRef.elementRef}
+        className="container px-4 py-16"
+      >
+        <div className={`transition-all duration-1000 ${
+          ctaRef.isVisible 
+            ? 'opacity-100 scale-100' 
+            : 'opacity-0 scale-95'
+        }`}>
           <div className="bg-gradient-to-r from-primary to-primary-hover rounded-2xl p-12 text-center text-primary-foreground relative overflow-hidden group">
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRjMC0yIDItNCAzLTVzMi0yIDItM2MwLTEtMS0yLTItMi0xIDAtMiAxLTMgMi0xIDItMyAzLTMgNXptMCA2YzEgMCAyLTEgMi0ycy0xLTItMi0yLTIgMS0yIDIgMSAyIDIgMnoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
             
@@ -212,7 +247,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-        </Animation>
+        </div>
       </section>
     </div>
   );
