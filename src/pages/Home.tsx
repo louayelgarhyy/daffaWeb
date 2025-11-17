@@ -7,10 +7,12 @@ import { Animation } from "@/components/ui/animation";
 import { Banner } from "@/components/ui/banner";
 import { CustomCursor } from "@/components/ui/custom-cursor";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { useState } from "react";
 
 const Home = () => {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const [isCursorActive, setIsCursorActive] = useState(false);
   
   const featuredRef = useScrollAnimation({ threshold: 0.2 });
@@ -89,7 +91,7 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Custom Cursor Effect */}
-      <CustomCursor isActive={isCursorActive} />
+      {!isMobile && <CustomCursor isActive={isCursorActive} />}
       
       {/* Promotional Banner */}
       <Banner
@@ -104,8 +106,8 @@ const Home = () => {
 
       {/* Hero Carousel Section */}
       <div 
-        onMouseEnter={() => setIsCursorActive(true)}
-        onMouseLeave={() => setIsCursorActive(false)}
+        onMouseEnter={() => !isMobile && setIsCursorActive(true)}
+        onMouseLeave={() => !isMobile && setIsCursorActive(false)}
       >
         <BannerCarousel slides={bannerSlides} />
       </div>
@@ -113,27 +115,27 @@ const Home = () => {
       {/* Featured Products */}
       <section 
         ref={featuredRef.elementRef}
-        className="container px-4 py-16"
+        className="container px-4 py-12 md:py-16"
       >
         <div className={`transition-all duration-1000 ${
-          featuredRef.isVisible 
+            featuredRef.isVisible 
             ? 'opacity-100 translate-y-0' 
             : 'opacity-0 translate-y-20'
         }`}>
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 md:mb-4 px-4">
               Featured Collection
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
               Explore our carefully curated selection of the finest abayas, designed for the modern woman.
             </p>
           </div>
         </div>
 
         <div 
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-          onMouseEnter={() => setIsCursorActive(true)}
-          onMouseLeave={() => setIsCursorActive(false)}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"
+          onMouseEnter={() => !isMobile && setIsCursorActive(true)}
+          onMouseLeave={() => !isMobile && setIsCursorActive(false)}
         >
           {featuredProducts.map((product, index) => (
             <div
@@ -151,12 +153,12 @@ const Home = () => {
         </div>
 
         <Animation type="fade" delay={400} duration={600}>
-          <div className="text-center mt-12">
+          <div className="text-center mt-8 md:mt-12">
             <Link to="/shop">
               <Button 
                 variant="outline" 
                 size="lg" 
-                className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
+                className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl w-full sm:w-auto"
               >
                 View All Products
                 <ArrowRight className="ml-2 h-4 w-4" />
@@ -169,7 +171,7 @@ const Home = () => {
       {/* Features Section */}
       <section 
         ref={featuresRef.elementRef}
-        className="bg-card-secondary py-16 overflow-hidden"
+        className="bg-card-secondary py-12 md:py-16 overflow-hidden"
       >
         <div className="container px-4">
           <div className={`transition-all duration-1000 ${
@@ -177,40 +179,13 @@ const Home = () => {
               ? 'opacity-100 translate-y-0' 
               : 'opacity-0 translate-y-20'
           }`}>
-            <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-12">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-foreground mb-8 md:mb-12 px-4">
               Why Choose Daffa?
             </h2>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { icon: Sparkles, title: "Premium Quality", desc: "Only the finest fabrics and materials for lasting elegance", delay: 0 },
-              { icon: Truck, title: "Free Shipping", desc: "Complimentary delivery on all orders over $100", delay: 200 },
-              { icon: Shield, title: "Easy Returns", desc: "30-day hassle-free returns for your peace of mind", delay: 400 }
-            ].map((feature, index) => {
-              const Icon = feature.icon;
-              return (
-                <div
-                  key={index}
-                  className={`text-center space-y-3 group hover:transform hover:scale-105 transition-all duration-700 ${
-                    featuresRef.isVisible
-                      ? 'opacity-100 translate-x-0'
-                      : index === 0 
-                        ? 'opacity-0 -translate-x-20'
-                        : index === 2
-                        ? 'opacity-0 translate-x-20'
-                        : 'opacity-0 translate-y-20'
-                  }`}
-                  style={{ transitionDelay: `${feature.delay}ms` }}
-                >
-                  <div className="inline-flex h-20 w-20 items-center justify-center rounded-full bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300 group-hover:rotate-6 transform">
-                    <Icon className="h-10 w-10 text-primary group-hover:animate-pulse" />
-                  </div>
-                  <h3 className="text-xl font-semibold">{feature.title}</h3>
-                  <p className="text-muted-foreground">{feature.desc}</p>
-                </div>
-              );
-            })}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+...
           </div>
         </div>
       </section>

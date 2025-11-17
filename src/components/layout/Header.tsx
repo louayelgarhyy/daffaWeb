@@ -1,22 +1,93 @@
-import { ShoppingCart, Search, Menu, Heart, User } from "lucide-react";
+import { ShoppingCart, Search, Menu, Heart, User, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
 export const Header = () => {
   const [cartCount, setCartCount] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="container flex h-16 items-center justify-between px-4">
-        {/* Mobile Menu Button */}
-        <Button variant="ghost" size="icon" className="md:hidden">
-          <Menu className="h-5 w-5" />
-        </Button>
+        {/* Mobile Menu */}
+        <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+          <SheetTrigger asChild className="md:hidden">
+            <Button variant="ghost" size="icon">
+              <Menu className="h-5 w-5" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="w-[300px] sm:w-[400px]">
+            <nav className="flex flex-col space-y-6 mt-8">
+              <Link 
+                to="/" 
+                className="text-lg font-medium transition-colors hover:text-primary"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Home
+              </Link>
+              <Link 
+                to="/shop" 
+                className="text-lg font-medium transition-colors hover:text-primary"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Shop
+              </Link>
+              <Link 
+                to="/collections" 
+                className="text-lg font-medium transition-colors hover:text-primary"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Collections
+              </Link>
+              <Link 
+                to="/about" 
+                className="text-lg font-medium transition-colors hover:text-primary"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                About
+              </Link>
+              <Link 
+                to="/contact" 
+                className="text-lg font-medium transition-colors hover:text-primary"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Contact
+              </Link>
+              <div className="pt-6 border-t border-border space-y-4">
+                <Link 
+                  to="/search" 
+                  className="flex items-center space-x-3 text-lg font-medium transition-colors hover:text-primary"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <Search className="h-5 w-5" />
+                  <span>Search</span>
+                </Link>
+                <Link 
+                  to="/wishlist" 
+                  className="flex items-center space-x-3 text-lg font-medium transition-colors hover:text-primary"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <Heart className="h-5 w-5" />
+                  <span>Wishlist</span>
+                </Link>
+                <Link 
+                  to="/account" 
+                  className="flex items-center space-x-3 text-lg font-medium transition-colors hover:text-primary"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <User className="h-5 w-5" />
+                  <span>Account</span>
+                </Link>
+              </div>
+            </nav>
+          </SheetContent>
+        </Sheet>
 
         {/* Logo */}
-        <Link to="/" className="flex items-center space-x-2">
-          <h1 className="text-xl md:text-2xl font-bold text-primary">
+        <Link to="/" className="flex items-center space-x-2 flex-1 md:flex-initial justify-center md:justify-start">
+          <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-primary">
             Daffa for Abayat
           </h1>
         </Link>

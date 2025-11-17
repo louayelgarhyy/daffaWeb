@@ -58,7 +58,7 @@ export const BannerCarousel = ({
   };
 
   return (
-    <div className={cn("relative h-[600px] overflow-hidden group", className)}>
+    <div className={cn("relative h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden group", className)}>
       {slides.map((slide, index) => (
         <div
           key={slide.id}
@@ -81,19 +81,19 @@ export const BannerCarousel = ({
             <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-transparent" />
           </div>
 
-          <div className="container relative z-10 h-full flex items-center px-4">
+          <div className="container relative z-10 h-full flex items-center px-4 sm:px-6">
             <div 
               className={cn(
-                "max-w-2xl space-y-6 transition-all duration-700 delay-200",
+                "max-w-2xl space-y-4 sm:space-y-6 transition-all duration-700 delay-200",
                 index === currentIndex
                   ? "opacity-100 translate-y-0"
                   : "opacity-0 translate-y-8"
               )}
             >
-              <h1 className="text-5xl md:text-7xl font-bold text-foreground leading-tight animate-in slide-in-from-bottom duration-700">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-bold text-foreground leading-tight animate-in slide-in-from-bottom duration-700">
                 {slide.title}
               </h1>
-              <p className="text-lg md:text-2xl text-muted-foreground animate-in slide-in-from-bottom duration-700 delay-100">
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground animate-in slide-in-from-bottom duration-700 delay-100">
                 {slide.subtitle}
               </p>
               {slide.cta && (
@@ -101,7 +101,7 @@ export const BannerCarousel = ({
                   <Button
                     size="lg"
                     onClick={slide.cta.onClick}
-                    className="bg-primary hover:bg-primary-hover text-primary-foreground shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
+                    className="bg-primary hover:bg-primary-hover text-primary-foreground shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 w-full sm:w-auto"
                   >
                     {slide.cta.label}
                   </Button>
@@ -115,21 +115,21 @@ export const BannerCarousel = ({
       {/* Navigation Arrows */}
       <button
         onClick={handlePrev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-background/80 hover:bg-background text-foreground p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 backdrop-blur-sm"
+        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 bg-background/80 hover:bg-background text-foreground p-2 sm:p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 backdrop-blur-sm"
         aria-label="Previous slide"
       >
-        <ChevronLeft className="h-6 w-6" />
+        <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
       </button>
       <button
         onClick={handleNext}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-background/80 hover:bg-background text-foreground p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 backdrop-blur-sm"
+        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 bg-background/80 hover:bg-background text-foreground p-2 sm:p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 backdrop-blur-sm"
         aria-label="Next slide"
       >
-        <ChevronRight className="h-6 w-6" />
+        <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />
       </button>
 
       {/* Dots Navigation */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-3">
+      <div className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-20 flex gap-2 sm:gap-3">
         {slides.map((_, index) => (
           <button
             key={index}
@@ -137,8 +137,8 @@ export const BannerCarousel = ({
             className={cn(
               "transition-all duration-300 rounded-full",
               index === currentIndex
-                ? "w-12 h-3 bg-primary shadow-lg"
-                : "w-3 h-3 bg-muted hover:bg-primary/50"
+                ? "w-8 sm:w-10 md:w-12 h-2 sm:h-3 bg-primary shadow-lg"
+                : "w-2 sm:w-3 h-2 sm:h-3 bg-muted hover:bg-primary/50"
             )}
             aria-label={`Go to slide ${index + 1}`}
           />
