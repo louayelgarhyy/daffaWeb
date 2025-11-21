@@ -1,0 +1,31 @@
+{
+  "header": {
+    "title": "تسوق جميع العبايات",
+    "description": "اكتشف مجموعتنا الكاملة من الأزياء المحتشمة الأنيقة"
+  },
+  "filters": {
+    "title": "الفلاتر",
+    "showingResults": "عرض {{count}} منتج"
+  },
+  "sorting": {
+    "label": "ترتيب حسب:",
+    "featured": "مميز",
+    "priceLowToHigh": "السعر: من الأقل للأعلى",
+    "priceHighToLow": "السعر: من الأعلى للأقل",
+    "newest": "الأحدث",
+    "bestRating": "الأعلى تقييماً"
+  },
+  "products": {
+    "classicBlack": "عباية سوداء كلاسيكية",
+    "elegantNavy": "عباية كحلي أنيقة",
+    "modernGrey": "عباية رمادية عصرية",
+    "premiumWhite": "عباية بيضاء فاخرة",
+    "designerBeige": "عباية بيج مصممة",
+    "luxuryChampagne": "عباية شامبانيا فاخرة",
+    "embroideredBlack": "عباية سوداء مطرزة",
+    "casualDenim": "عباية دنيم كاجوال"
+  },
+  "actions": {
+    "loadMore": "تحميل المزيد من المنتجات"
+  }
+}

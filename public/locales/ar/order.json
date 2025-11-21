@@ -1,0 +1,105 @@
+{
+  "confirmation": {
+    "title": "شكراً لك على طلبك!",
+    "subtitle": "تم تقديم طلبك بنجاح",
+    "orderNumber": "رقم الطلب",
+    "orderDate": "تاريخ الطلب",
+    "estimatedDelivery": "التوصيل المتوقع",
+    "checkEmail": "لقد أرسلنا رسالة تأكيد إلى {{email}}",
+    "actions": {
+      "viewDetails": "عرض تفاصيل الطلب",
+      "continueShopping": "متابعة التسوق",
+      "printReceipt": "طباعة الإيصال"
+    }
+  },
+  "details": {
+    "title": "تفاصيل الطلب",
+    "orderNumber": "الطلب #{{number}}",
+    "placedOn": "تم الطلب في {{date}}",
+    "status": "الحالة"
+  },
+  "status": {
+    "processing": "قيد المعالجة",
+    "confirmed": "مؤكد",
+    "preparing": "قيد التحضير",
+    "shipped": "تم الشحن",
+    "outForDelivery": "في طريقه للتوصيل",
+    "delivered": "تم التوصيل",
+    "cancelled": "ملغي",
+    "refunded": "مسترد"
+  },
+  "timeline": {
+    "title": "تتبع الطلب",
+    "orderPlaced": "تم تقديم الطلب",
+    "orderPlacedDesc": "لقد تلقينا طلبك",
+    "orderConfirmed": "تم تأكيد الطلب",
+    "orderConfirmedDesc": "تم تأكيد طلبك",
+    "preparing": "جاري تحضير الطلب",
+    "preparingDesc": "جاري تحضير منتجاتك",
+    "shipped": "تم الشحن",
+    "shippedDesc": "طلبك في الطريق",
+    "outForDelivery": "في طريقه للتوصيل",
+    "outForDeliveryDesc": "سيصل طلبك اليوم",
+    "delivered": "تم التوصيل",
+    "deliveredDesc": "تم توصيل الطلب بنجاح",
+    "expectedDate": "متوقع: {{date}}"
+  },
+  "items": {
+    "title": "المنتجات المطلوبة",
+    "quantity": "الكمية",
+    "size": "المقاس",
+    "price": "السعر",
+    "total": "المجموع"
+  },
+  "summary": {
+    "title": "ملخص الطلب",
+    "subtotal": "المجموع الفرعي",
+    "shipping": "الشحن",
+    "discount": "الخصم",
+    "total": "المجموع",
+    "free": "مجاني"
+  },
+  "shipping": {
+    "title": "عنوان الشحن",
+    "method": "طريقة الشحن",
+    "trackingNumber": "رقم التتبع",
+    "carrier": "شركة الشحن",
+    "trackShipment": "تتبع الشحنة"
+  },
+  "payment": {
+    "title": "معلومات الدفع",
+    "method": "طريقة الدفع",
+    "status": "حالة الدفع",
+    "paid": "مدفوع",
+    "pending": "قيد الانتظار",
+    "cod": "الدفع عند الاستلام",
+    "card": "بطاقة تنتهي بـ ****{{last4}}"
+  },
+  "customer": {
+    "title": "معلومات العميل",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "phone": "الهاتف"
+  },
+  "actions": {
+    "downloadInvoice": "تحميل الفاتورة",
+    "printOrder": "طباعة الطلب",
+    "cancelOrder": "إلغاء الطلب",
+    "needHelp": "تحتاج مساعدة؟",
+    "contactSupport": "اتصل بالدعم",
+    "requestReturn": "طلب إرجاع"
+  },
+  "support": {
+    "title": "تحتاج مساعدة؟",
+    "description": "فريق خدمة العملاء لدينا هنا لمساعدتك في أي استفسارات حول طلبك.",
+    "contactUs": "اتصل بنا",
+    "phone": "الهاتف: {{phone}}",
+    "email": "البريد الإلكتروني: {{email}}",
+    "hours": "متاح: الأحد-الخميس، 9 صباحاً-6 مساءً"
+  },
+  "notFound": {
+    "title": "الطلب غير موجود",
+    "message": "لم نتمكن من العثور على طلب بهذا الرقم. يرجى التحقق من رقم الطلب والمحاولة مرة أخرى.",
+    "backToShop": "العودة للمتجر"
+  }
+}

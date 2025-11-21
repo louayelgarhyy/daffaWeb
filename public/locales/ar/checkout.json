@@ -1,0 +1,102 @@
+{
+  "title": "إتمام الطلب",
+  "steps": {
+    "information": "المعلومات",
+    "shipping": "الشحن",
+    "payment": "الدفع"
+  },
+  "contact": {
+    "title": "معلومات الاتصال",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "your.email@example.com",
+    "phone": "رقم الهاتف",
+    "phonePlaceholder": "+966 5X XXX XXXX"
+  },
+  "savedAddresses": {
+    "title": "العناوين المحفوظة",
+    "selectAddress": "اختر عنواناً محفوظاً",
+    "useNewAddress": "استخدام عنوان جديد",
+    "saveThisAddress": "حفظ هذا العنوان للاستخدام المستقبلي"
+  },
+  "shipping": {
+    "title": "عنوان الشحن",
+    "fullName": "الاسم الكامل",
+    "fullNamePlaceholder": "أدخل اسمك الكامل",
+    "addressLine1": "العنوان - السطر 1",
+    "addressLine1Placeholder": "عنوان الشارع، صندوق بريد",
+    "addressLine2": "العنوان - السطر 2 (اختياري)",
+    "addressLine2Placeholder": "شقة، جناح، وحدة، مبنى، طابق، إلخ",
+    "city": "المدينة",
+    "cityPlaceholder": "أدخل المدينة",
+    "region": "المنطقة/الولاية",
+    "regionPlaceholder": "اختر المنطقة",
+    "postalCode": "الرمز البريدي",
+    "postalCodePlaceholder": "أدخل الرمز البريدي",
+    "country": "الدولة",
+    "countryPlaceholder": "اختر الدولة"
+  },
+  "shippingMethod": {
+    "title": "طريقة الشحن",
+    "standard": "شحن قياسي",
+    "standardDesc": "التوصيل في 5-7 أيام عمل",
+    "standardPrice": "مجاني",
+    "express": "شحن سريع",
+    "expressDesc": "التوصيل في 2-3 أيام عمل",
+    "expressPrice": "20.00 ر.ق"
+  },
+  "payment": {
+    "title": "طريقة الدفع",
+    "cod": "الدفع عند الاستلام",
+    "codDesc": "ادفع عند استلام طلبك",
+    "card": "بطاقة ائتمان/خصم",
+    "cardDesc": "قريباً",
+    "cardDisabled": "ستكون طريقة الدفع هذه متاحة قريباً"
+  },
+  "orderSummary": {
+    "title": "ملخص الطلب",
+    "items": "{{count}} منتج",
+    "items_other": "{{count}} منتجات",
+    "subtotal": "المجموع الفرعي",
+    "shipping": "الشحن",
+    "discount": "الخصم",
+    "total": "المجموع",
+    "free": "مجاني"
+  },
+  "discount": {
+    "title": "رمز الخصم",
+    "placeholder": "أدخل رمز الخصم",
+    "apply": "تطبيق",
+    "applied": "تم تطبيق الخصم!",
+    "invalid": "رمز خصم غير صالح"
+  },
+  "actions": {
+    "backToCart": "العودة للسلة",
+    "placeOrder": "تأكيد الطلب",
+    "processing": "جاري المعالجة..."
+  },
+  "validation": {
+    "emailRequired": "البريد الإلكتروني مطلوب",
+    "emailInvalid": "يرجى إدخال بريد إلكتروني صحيح",
+    "phoneRequired": "رقم الهاتف مطلوب",
+    "phoneInvalid": "يرجى إدخال رقم هاتف صحيح",
+    "nameRequired": "الاسم الكامل مطلوب",
+    "nameMin": "يجب أن يكون الاسم حرفين على الأقل",
+    "addressRequired": "العنوان مطلوب",
+    "cityRequired": "المدينة مطلوبة",
+    "regionRequired": "المنطقة مطلوبة",
+    "postalCodeRequired": "الرمز البريدي مطلوب",
+    "countryRequired": "الدولة مطلوبة",
+    "shippingMethodRequired": "يرجى اختيار طريقة الشحن",
+    "paymentMethodRequired": "يرجى اختيار طريقة الدفع"
+  },
+  "countries": {
+    "sa": "المملكة العربية القطرية",
+    "ae": "الإمارات العربية المتحدة",
+    "kw": "الكويت",
+    "qa": "قطر",
+    "bh": "البحرين",
+    "om": "عمان",
+    "jo": "الأردن",
+    "eg": "مصر"
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "brand": {
+    "name": "Daffa for Abayat",
+    "tagline": "Elegant modest fashion for the modern woman",
+    "description": "Elegant modest fashion for the modern woman. Quality craftsmanship meets timeless style."
+  },
+  "nav": {
+    "home": "Home",
+    "shop": "Shop",
+    "collections": "Collections",
+    "about": "About",
+    "contact": "Contact",
+    "search": "Search",
+    "wishlist": "Wishlist",
+    "account": "Account",
+    "cart": "Cart"
+  },
+  "accountMenu": {
+    "myOrders": "My Orders",
+    "myAddresses": "My Addresses",
+    "editProfile": "Edit Profile",
+    "signIn": "Sign In",
+    "signOut": "Sign Out"
+  },
+  "myOrders": {
+    "title": "My Orders",
+    "noOrders": "No orders yet",
+    "noOrdersDesc": "You haven't placed any orders yet. Start shopping!",
+    "viewDetails": "View Details",
+    "orderPlaced": "Order placed"
+  },
+  "addresses": {
+    "title": "My Addresses",
+    "addNew": "Add New Address",
+    "edit": "Edit",
+    "delete": "Delete",
+    "setDefault": "Set as Default",
+    "default": "Default",
+    "noAddresses": "No saved addresses",
+    "noAddressesDesc": "Add an address to make checkout faster",
+    "addressTitle": "Address Title",
+    "titlePlaceholder": "e.g., Home, Work, Office",
+    "saveAddress": "Save Address",
+    "updateAddress": "Update Address",
+    "deleteConfirm": "Delete this address?",
+    "deleteDesc": "This action cannot be undone.",
+    "cancel": "Cancel",
+    "confirmDelete": "Yes, Delete"
+  },
+  "footer": {
+    "quickLinks": "Quick Links",
+    "aboutUs": "About Us",
+    "customerService": "Customer Service",
+    "shippingInfo": "Shipping Info",
+    "returnsRefunds": "Returns & Refunds",
+    "faq": "FAQ",
+    "privacyPolicy": "Privacy Policy",
+    "contactUs": "Contact Us",
+    "address": "123 Fashion Street, City, Country",
+    "phone": "+1 234 567 8900",
+    "email": "info@daffaabayat.com",
+    "copyright": "© {{year}} Daffa for Abayat. All rights reserved."
+  },
+  "buttons": {
+    "shopNow": "Shop Now",
+    "viewAll": "View All",
+    "addToCart": "Add to Cart",
+    "buyNow": "Buy Now",
+    "subscribe": "Subscribe",
+    "continueShopping": "Continue Shopping",
+    "loadMore": "Load More",
+    "backToShop": "Back to Shop",
+    "proceedToCheckout": "Proceed to Checkout",
+    "returnHome": "Return to Home"
+  },
+  "language": {
+    "switchTo": "Switch to",
+    "ar": "العربية",
+    "en": "English"
+  },
+  "common": {
+    "currency": "QAR",
+    "qar": "Qatar Riyal",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "reviews": "reviews",
+    "review": "review",
+    "showingResults": "Showing {{count}} products",
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "size": "Size",
+    "quantity": "Quantity",
+    "price": "Price",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "free": "Free",
+    "discount": "Discount"
+  },
+  "aria": {
+    "dismissBanner": "Dismiss banner",
+    "previousSlide": "Previous slide",
+    "nextSlide": "Next slide",
+    "goToSlide": "Go to slide {{number}}",
+    "search": "Search",
+    "menu": "Menu",
+    "cart": "Shopping cart",
+    "wishlist": "Wishlist",
+    "account": "Account"
+  },
+  "notFound": {
+    "title": "404",
+    "message": "Oops! Page not found",
+    "returnHome": "Return to Home"
+  }
+}

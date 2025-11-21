@@ -1,0 +1,102 @@
+{
+  "title": "Checkout",
+  "steps": {
+    "information": "Information",
+    "shipping": "Shipping",
+    "payment": "Payment"
+  },
+  "contact": {
+    "title": "Contact Information",
+    "email": "Email",
+    "emailPlaceholder": "your.email@example.com",
+    "phone": "Phone Number",
+    "phonePlaceholder": "+966 5X XXX XXXX"
+  },
+  "savedAddresses": {
+    "title": "Saved Addresses",
+    "selectAddress": "Select a saved address",
+    "useNewAddress": "Use a new address",
+    "saveThisAddress": "Save this address for future use"
+  },
+  "shipping": {
+    "title": "Shipping Address",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "Enter your full name",
+    "addressLine1": "Address Line 1",
+    "addressLine1Placeholder": "Street address, P.O. box",
+    "addressLine2": "Address Line 2 (Optional)",
+    "addressLine2Placeholder": "Apartment, suite, unit, building, floor, etc.",
+    "city": "City",
+    "cityPlaceholder": "Enter city",
+    "region": "Region/State",
+    "regionPlaceholder": "Select region",
+    "postalCode": "Postal Code",
+    "postalCodePlaceholder": "Enter postal code",
+    "country": "Country",
+    "countryPlaceholder": "Select country"
+  },
+  "shippingMethod": {
+    "title": "Shipping Method",
+    "standard": "Standard Shipping",
+    "standardDesc": "Delivery in 5-7 business days",
+    "standardPrice": "Free",
+    "express": "Express Shipping",
+    "expressDesc": "Delivery in 2-3 business days",
+    "expressPrice": "QAR 20.00"
+  },
+  "payment": {
+    "title": "Payment Method",
+    "cod": "Cash on Delivery",
+    "codDesc": "Pay when you receive your order",
+    "card": "Credit/Debit Card",
+    "cardDesc": "Coming Soon",
+    "cardDisabled": "This payment method will be available soon"
+  },
+  "orderSummary": {
+    "title": "Order Summary",
+    "items": "{{count}} item",
+    "items_other": "{{count}} items",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "discount": "Discount",
+    "total": "Total",
+    "free": "Free"
+  },
+  "discount": {
+    "title": "Discount Code",
+    "placeholder": "Enter discount code",
+    "apply": "Apply",
+    "applied": "Discount applied!",
+    "invalid": "Invalid discount code"
+  },
+  "actions": {
+    "backToCart": "Back to Cart",
+    "placeOrder": "Place Order",
+    "processing": "Processing..."
+  },
+  "validation": {
+    "emailRequired": "Email is required",
+    "emailInvalid": "Please enter a valid email address",
+    "phoneRequired": "Phone number is required",
+    "phoneInvalid": "Please enter a valid phone number",
+    "nameRequired": "Full name is required",
+    "nameMin": "Name must be at least 2 characters",
+    "addressRequired": "Address is required",
+    "cityRequired": "City is required",
+    "regionRequired": "Region is required",
+    "postalCodeRequired": "Postal code is required",
+    "countryRequired": "Country is required",
+    "shippingMethodRequired": "Please select a shipping method",
+    "paymentMethodRequired": "Please select a payment method"
+  },
+  "countries": {
+    "sa": "Qatar Arabia",
+    "ae": "United Arab Emirates",
+    "kw": "Kuwait",
+    "qa": "Qatar",
+    "bh": "Bahrain",
+    "om": "Oman",
+    "jo": "Jordan",
+    "eg": "Egypt"
+  }
+}

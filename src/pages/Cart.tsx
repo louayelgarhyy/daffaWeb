@@ -2,8 +2,12 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Trash2, Plus, Minus, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Cart = () => {
+  const { t, i18n } = useTranslation(['cart', 'common']);
+  const isRTL = i18n.language === 'ar';
+
   // Mock cart items
   const [cartItems, setCartItems] = useState([
     {
@@ -46,11 +50,11 @@ const Cart = () => {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center space-y-4">
           <ShoppingBag className="h-16 w-16 mx-auto text-muted-foreground" />
-          <h2 className="text-2xl font-bold text-foreground">Your cart is empty</h2>
-          <p className="text-muted-foreground">Add some beautiful abayas to your cart!</p>
+          <h2 className="text-2xl font-bold text-foreground">{t('cart:empty.title')}</h2>
+          <p className="text-muted-foreground">{t('cart:empty.description')}</p>
           <Link to="/shop">
             <Button className="bg-primary hover:bg-primary-hover text-primary-foreground">
-              Continue Shopping
+              {t('cart:empty.cta')}
             </Button>
           </Link>
         </div>
@@ -62,8 +66,8 @@ const Cart = () => {
     <div className="min-h-screen bg-background">
       <div className="bg-card-secondary py-12 border-b border-border">
         <div className="container px-4">
-          <h1 className="text-4xl font-bold text-foreground">Shopping Cart</h1>
-          <p className="text-muted-foreground mt-2">{cartItems.length} items in your cart</p>
+          <h1 className="text-4xl font-bold text-foreground">{t('cart:title')}</h1>
+          <p className="text-muted-foreground mt-2">{t('cart:itemCount', { count: cartItems.length })}</p>
         </div>
       </div>
 
@@ -80,8 +84,10 @@ const Cart = () => {
                 />
                 <div className="flex-1 space-y-2">
                   <h3 className="font-semibold text-foreground">{item.name}</h3>
-                  <p className="text-sm text-muted-foreground">Size: {item.size}</p>
-                  <p className="text-lg font-bold text-primary">${item.price.toFixed(2)}</p>
+                  <p className="text-sm text-muted-foreground">{t('cart:item.size')} {item.size}</p>
+                  <p className="text-lg font-bold text-primary">
+                    {isRTL ? `${item.price.toFixed(2)} ${t('common:common.currency')}` : `${t('common:common.currency')} ${item.price.toFixed(2)}`}
+                  </p>
                   
                   <div className="flex items-center gap-3 mt-4">
                     <div className="flex items-center gap-2 border border-border rounded-lg">
@@ -126,40 +132,51 @@ const Cart = () => {
           {/* Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-card border border-border rounded-lg p-6 sticky top-20">
-              <h2 className="text-xl font-bold text-foreground mb-6">Order Summary</h2>
+              <h2 className="text-xl font-bold text-foreground mb-6">{t('cart:summary.orderSummary')}</h2>
               
               <div className="space-y-4 mb-6">
                 <div className="flex justify-between text-muted-foreground">
-                  <span>Subtotal</span>
-                  <span className="font-semibold">${subtotal.toFixed(2)}</span>
+                  <span>{t('cart:summary.subtotal')}</span>
+                  <span className="font-semibold">
+                    {isRTL ? `${subtotal.toFixed(2)} ${t('common:common.currency')}` : `${t('common:common.currency')} ${subtotal.toFixed(2)}`}
+                  </span>
                 </div>
                 <div className="flex justify-between text-muted-foreground">
-                  <span>Shipping</span>
+                  <span>{t('cart:summary.shipping')}</span>
                   <span className="font-semibold">
-                    {shipping === 0 ? "FREE" : `$${shipping.toFixed(2)}`}
+                    {shipping === 0
+                      ? t('cart:summary.free')
+                      : isRTL
+                        ? `${shipping.toFixed(2)} ${t('common:common.currency')}`
+                        : `${t('common:common.currency')} ${shipping.toFixed(2)}`
+                    }
                   </span>
                 </div>
                 {shipping === 0 && (
-                  <p className="text-xs text-success">🎉 You got free shipping!</p>
+                  <p className="text-xs text-success">{t('cart:summary.freeShippingAchieved')}</p>
                 )}
                 {subtotal > 0 && subtotal < 100 && (
                   <p className="text-xs text-muted-foreground">
-                    Add ${(100 - subtotal).toFixed(2)} more for free shipping
+                    {t('cart:summary.freeShippingRemaining', { amount: (100 - subtotal).toFixed(2) })}
                   </p>
                 )}
                 <div className="border-t border-border pt-4 flex justify-between text-lg font-bold text-foreground">
-                  <span>Total</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>{t('cart:summary.total')}</span>
+                  <span>
+                    {isRTL ? `${total.toFixed(2)} ${t('common:common.currency')}` : `${t('common:common.currency')} ${total.toFixed(2)}`}
+                  </span>
                 </div>
               </div>
 
-              <Button className="w-full bg-primary hover:bg-primary-hover text-primary-foreground mb-3">
-                Proceed to Checkout
-              </Button>
-              
+              <Link to="/checkout">
+                <Button className="w-full bg-primary hover:bg-primary-hover text-primary-foreground mb-3">
+                  {t('cart:summary.proceedToCheckout')}
+                </Button>
+              </Link>
+
               <Link to="/shop">
                 <Button variant="outline" className="w-full">
-                  Continue Shopping
+                  {t('cart:actions.continueShopping')}
                 </Button>
               </Link>
             </div>

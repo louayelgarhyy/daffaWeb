@@ -1,0 +1,31 @@
+{
+  "header": {
+    "title": "Shop All Abayas",
+    "description": "Discover our complete collection of elegant modest wear"
+  },
+  "filters": {
+    "title": "Filters",
+    "showingResults": "Showing {{count}} products"
+  },
+  "sorting": {
+    "label": "Sort by:",
+    "featured": "Featured",
+    "priceLowToHigh": "Price: Low to High",
+    "priceHighToLow": "Price: High to Low",
+    "newest": "Newest",
+    "bestRating": "Best Rating"
+  },
+  "products": {
+    "classicBlack": "Classic Black Abaya",
+    "elegantNavy": "Elegant Navy Abaya",
+    "modernGrey": "Modern Grey Abaya",
+    "premiumWhite": "Premium White Abaya",
+    "designerBeige": "Designer Beige Abaya",
+    "luxuryChampagne": "Luxury Champagne Abaya",
+    "embroideredBlack": "Embroidered Black Abaya",
+    "casualDenim": "Casual Denim Abaya"
+  },
+  "actions": {
+    "loadMore": "Load More Products"
+  }
+}

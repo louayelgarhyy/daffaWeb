@@ -9,8 +9,10 @@ import { CustomCursor } from "@/components/ui/custom-cursor";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
+  const { t } = useTranslation(['home', 'common']);
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [isCursorActive, setIsCursorActive] = useState(false);
@@ -22,31 +24,31 @@ const Home = () => {
   const bannerSlides = [
     {
       id: "1",
-      title: "Timeless Elegance in Every Stitch",
-      subtitle: "Discover our collection of handcrafted abayas that blend traditional modesty with modern sophistication",
+      title: t('home:hero.slide1.title'),
+      subtitle: t('home:hero.slide1.description'),
       image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1920&h=600&fit=crop",
       cta: {
-        label: "Shop Now",
+        label: t('home:hero.slide1.cta'),
         onClick: () => navigate("/shop")
       }
     },
     {
       id: "2",
-      title: "New Collection 2024",
-      subtitle: "Embrace contemporary fashion with our latest designs crafted for the modern woman",
+      title: t('home:hero.slide2.title'),
+      subtitle: t('home:hero.slide2.description'),
       image: "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=1920&h=600&fit=crop",
       cta: {
-        label: "Explore Collection",
+        label: t('home:hero.slide2.cta'),
         onClick: () => navigate("/shop")
       }
     },
     {
       id: "3",
-      title: "Premium Quality Fabrics",
-      subtitle: "Experience luxury and comfort with our carefully selected premium materials",
+      title: t('home:hero.slide3.title'),
+      subtitle: t('home:hero.slide3.description'),
       image: "https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=1920&h=600&fit=crop",
       cta: {
-        label: "View Fabrics",
+        label: t('home:hero.slide3.cta'),
         onClick: () => navigate("/shop")
       }
     }
@@ -56,7 +58,7 @@ const Home = () => {
   const featuredProducts = [
     {
       id: "1",
-      name: "Classic Black Abaya",
+      name: t('home:products.classicBlack'),
       price: 89.99,
       image: "https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=400&h=500&fit=crop",
       rating: 4.8,
@@ -64,7 +66,7 @@ const Home = () => {
     },
     {
       id: "2",
-      name: "Elegant Navy Abaya",
+      name: t('home:products.elegantNavy'),
       price: 94.99,
       image: "https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=400&h=500&fit=crop",
       rating: 4.9,
@@ -72,7 +74,7 @@ const Home = () => {
     },
     {
       id: "3",
-      name: "Modern Grey Abaya",
+      name: t('home:products.modernGrey'),
       price: 79.99,
       image: "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=400&h=500&fit=crop",
       rating: 4.7,
@@ -80,7 +82,7 @@ const Home = () => {
     },
     {
       id: "4",
-      name: "Premium White Abaya",
+      name: t('home:products.premiumWhite'),
       price: 99.99,
       image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=500&fit=crop",
       rating: 4.9,
@@ -96,9 +98,9 @@ const Home = () => {
       {/* Promotional Banner */}
       <Banner
         variant="promotional"
-        message="🎉 Grand Opening Sale! Get 25% off on all items this week only!"
+        message={t('home:banner.grandOpening')}
         action={{
-          label: "Shop Now",
+          label: t('common:buttons.shopNow'),
           onClick: () => navigate("/shop")
         }}
         className="animate-in slide-in-from-top duration-500"
@@ -124,10 +126,10 @@ const Home = () => {
         }`}>
           <div className="text-center mb-8 md:mb-12">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 md:mb-4 px-4">
-              Featured Collection
+              {t('home:featured.title')}
             </h2>
             <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
-              Explore our carefully curated selection of the finest abayas, designed for the modern woman.
+              {t('home:featured.description')}
             </p>
           </div>
         </div>
@@ -155,13 +157,13 @@ const Home = () => {
         <Animation type="fade" delay={400} duration={600}>
           <div className="text-center mt-8 md:mt-12">
             <Link to="/shop">
-              <Button 
-                variant="outline" 
-                size="lg" 
+              <Button
+                variant="outline"
+                size="lg"
                 className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl w-full sm:w-auto"
               >
-                View All Products
-                <ArrowRight className="ml-2 h-4 w-4" />
+                {t('home:featured.viewAll')}
+                <ArrowRight className="ms-2 h-4 w-4" />
               </Button>
             </Link>
           </div>
@@ -180,7 +182,7 @@ const Home = () => {
               : 'opacity-0 translate-y-20'
           }`}>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center text-foreground mb-8 md:mb-12 px-4">
-              Why Choose Daffa?
+              {t('home:whyChoose.title')}
             </h2>
           </div>
           
@@ -205,19 +207,19 @@ const Home = () => {
             
             <div className="relative z-10">
               <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-in slide-in-from-bottom duration-700">
-                Join Our Community
+                {t('home:cta.title')}
               </h2>
               <p className="text-lg mb-8 opacity-90 animate-in slide-in-from-bottom duration-700 delay-100">
-                Subscribe to get special offers, new arrivals, and styling tips.
+                {t('home:cta.description')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto animate-in slide-in-from-bottom duration-700 delay-200">
                 <input
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder={t('home:cta.emailPlaceholder')}
                   className="flex-1 px-4 py-3 rounded-lg text-foreground bg-background border-0 focus:ring-2 focus:ring-accent transform hover:scale-105 transition-transform duration-300"
                 />
                 <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300">
-                  Subscribe
+                  {t('home:cta.subscribe')}
                 </Button>
               </div>
             </div>

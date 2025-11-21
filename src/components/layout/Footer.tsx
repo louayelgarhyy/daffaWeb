@@ -1,18 +1,21 @@
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const Footer = () => {
+  const { t } = useTranslation('common');
+
   return (
     <footer className="bg-card-secondary border-t border-border mt-20">
       <div className="container px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
           <div className="space-y-4">
-            <h3 className="text-lg font-bold text-primary">Daffa for Abayat</h3>
+            <h3 className="text-lg font-bold text-primary">{t('brand.name')}</h3>
             <p className="text-sm text-muted-foreground">
-              Elegant modest fashion for the modern woman. Quality craftsmanship meets timeless style.
+              {t('brand.description')}
             </p>
-            <div className="flex space-x-3">
+            <div className="flex gap-3">
               <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
@@ -27,26 +30,26 @@ export const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold mb-4">Quick Links</h4>
+            <h4 className="font-semibold mb-4">{t('footer.quickLinks')}</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link to="/about" className="text-muted-foreground hover:text-primary transition-colors">
-                  About Us
+                  {t('footer.aboutUs')}
                 </Link>
               </li>
               <li>
                 <Link to="/shop" className="text-muted-foreground hover:text-primary transition-colors">
-                  Shop
+                  {t('nav.shop')}
                 </Link>
               </li>
               <li>
                 <Link to="/collections" className="text-muted-foreground hover:text-primary transition-colors">
-                  Collections
+                  {t('nav.collections')}
                 </Link>
               </li>
               <li>
                 <Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">
-                  Contact
+                  {t('nav.contact')}
                 </Link>
               </li>
             </ul>
@@ -54,26 +57,26 @@ export const Footer = () => {
 
           {/* Customer Service */}
           <div>
-            <h4 className="font-semibold mb-4">Customer Service</h4>
+            <h4 className="font-semibold mb-4">{t('footer.customerService')}</h4>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link to="/shipping" className="text-muted-foreground hover:text-primary transition-colors">
-                  Shipping Info
+                  {t('footer.shippingInfo')}
                 </Link>
               </li>
               <li>
                 <Link to="/returns" className="text-muted-foreground hover:text-primary transition-colors">
-                  Returns & Refunds
+                  {t('footer.returnsRefunds')}
                 </Link>
               </li>
               <li>
                 <Link to="/faq" className="text-muted-foreground hover:text-primary transition-colors">
-                  FAQ
+                  {t('footer.faq')}
                 </Link>
               </li>
               <li>
                 <Link to="/privacy" className="text-muted-foreground hover:text-primary transition-colors">
-                  Privacy Policy
+                  {t('footer.privacyPolicy')}
                 </Link>
               </li>
             </ul>
@@ -81,26 +84,26 @@ export const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className="font-semibold mb-4">Contact Us</h4>
+            <h4 className="font-semibold mb-4">{t('footer.contactUs')}</h4>
             <ul className="space-y-3 text-sm">
-              <li className="flex items-start space-x-2">
+              <li className="flex items-start gap-2">
                 <MapPin className="h-4 w-4 mt-0.5 text-primary flex-shrink-0" />
-                <span className="text-muted-foreground">123 Fashion Street, City, Country</span>
+                <span className="text-muted-foreground">{t('footer.address')}</span>
               </li>
-              <li className="flex items-center space-x-2">
+              <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-primary flex-shrink-0" />
-                <span className="text-muted-foreground">+1 234 567 8900</span>
+                <span className="text-muted-foreground">{t('footer.phone')}</span>
               </li>
-              <li className="flex items-center space-x-2">
+              <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-primary flex-shrink-0" />
-                <span className="text-muted-foreground">info@daffaabayat.com</span>
+                <span className="text-muted-foreground">{t('footer.email')}</span>
               </li>
             </ul>
           </div>
         </div>
 
         <div className="mt-12 pt-8 border-t border-border text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Daffa for Abayat. All rights reserved.</p>
+          <p>{t('footer.copyright', { year: new Date().getFullYear() })}</p>
         </div>
       </div>
     </footer>

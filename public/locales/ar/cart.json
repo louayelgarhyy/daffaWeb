@@ -1,0 +1,30 @@
+{
+  "title": "عربة التسوق",
+  "itemCount": "{{count}} منتج في السلة",
+  "itemCount_other": "{{count}} منتجات في السلة",
+  "empty": {
+    "title": "سلتك فارغة",
+    "description": "أضف بعض العبايات الجميلة إلى سلتك!",
+    "cta": "متابعة التسوق"
+  },
+  "item": {
+    "size": "المقاس:",
+    "quantity": "الكمية:",
+    "remove": "إزالة"
+  },
+  "summary": {
+    "orderSummary": "ملخص الطلب",
+    "subtotal": "المجموع الفرعي",
+    "shipping": "الشحن",
+    "free": "مجاني",
+    "freeShippingAchieved": "🎉 حصلت على شحن مجاني!",
+    "freeShippingRemaining": "أضف {{amount}} ر.ق للحصول على شحن مجاني",
+    "total": "المجموع",
+    "proceedToCheckout": "إتمام الطلب"
+  },
+  "actions": {
+    "continueShopping": "متابعة التسوق",
+    "updateCart": "تحديث السلة",
+    "clearCart": "إفراغ السلة"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "breadcrumb": {
+    "home": "Home",
+    "shop": "Shop"
+  },
+  "details": {
+    "reviews": "reviews",
+    "review": "review",
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "size": "Size",
+    "quantity": "Quantity",
+    "addToCart": "Add to Cart",
+    "buyNow": "Buy Now",
+    "backToShop": "Back to Shop",
+    "addedToCart": "Added to cart!",
+    "addedToCartDescription": "{{quantity}} x {{name}} (Size: {{size}})"
+  },
+  "description": {
+    "title": "Product Features",
+    "classicBlack": "Experience timeless elegance with our Classic Black Abaya. Crafted from premium fabric, this piece combines traditional modesty with modern sophistication. Perfect for any occasion, its flowing silhouette and attention to detail make it a wardrobe essential."
+  },
+  "features": {
+    "title": "Features",
+    "premiumFabric": "Premium quality fabric",
+    "comfortableFit": "Comfortable fit",
+    "easyCare": "Easy care - machine washable",
+    "multipleSizes": "Available in multiple sizes",
+    "modestDesign": "Modest and elegant design"
+  },
+  "benefits": {
+    "freeShipping": {
+      "title": "Free Shipping",
+      "description": "On orders over $100"
+    },
+    "qualityGuarantee": {
+      "title": "Quality Guarantee",
+      "description": "Premium materials & craftsmanship"
+    },
+    "easyReturns": {
+      "title": "Easy Returns",
+      "description": "30-day return policy"
+    }
+  }
+}

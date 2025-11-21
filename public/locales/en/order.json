@@ -1,0 +1,105 @@
+{
+  "confirmation": {
+    "title": "Thank You for Your Order!",
+    "subtitle": "Your order has been successfully placed",
+    "orderNumber": "Order Number",
+    "orderDate": "Order Date",
+    "estimatedDelivery": "Estimated Delivery",
+    "checkEmail": "We've sent a confirmation email to {{email}}",
+    "actions": {
+      "viewDetails": "View Order Details",
+      "continueShopping": "Continue Shopping",
+      "printReceipt": "Print Receipt"
+    }
+  },
+  "details": {
+    "title": "Order Details",
+    "orderNumber": "Order #{{number}}",
+    "placedOn": "Placed on {{date}}",
+    "status": "Status"
+  },
+  "status": {
+    "processing": "Processing",
+    "confirmed": "Confirmed",
+    "preparing": "Preparing",
+    "shipped": "Shipped",
+    "outForDelivery": "Out for Delivery",
+    "delivered": "Delivered",
+    "cancelled": "Cancelled",
+    "refunded": "Refunded"
+  },
+  "timeline": {
+    "title": "Order Timeline",
+    "orderPlaced": "Order Placed",
+    "orderPlacedDesc": "We have received your order",
+    "orderConfirmed": "Order Confirmed",
+    "orderConfirmedDesc": "Your order has been confirmed",
+    "preparing": "Preparing Order",
+    "preparingDesc": "Your items are being prepared",
+    "shipped": "Shipped",
+    "shippedDesc": "Your order is on the way",
+    "outForDelivery": "Out for Delivery",
+    "outForDeliveryDesc": "Your order will arrive today",
+    "delivered": "Delivered",
+    "deliveredDesc": "Order successfully delivered",
+    "expectedDate": "Expected: {{date}}"
+  },
+  "items": {
+    "title": "Items Ordered",
+    "quantity": "Qty",
+    "size": "Size",
+    "price": "Price",
+    "total": "Total"
+  },
+  "summary": {
+    "title": "Order Summary",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "discount": "Discount",
+    "total": "Total",
+    "free": "Free"
+  },
+  "shipping": {
+    "title": "Shipping Address",
+    "method": "Shipping Method",
+    "trackingNumber": "Tracking Number",
+    "carrier": "Carrier",
+    "trackShipment": "Track Shipment"
+  },
+  "payment": {
+    "title": "Payment Information",
+    "method": "Payment Method",
+    "status": "Payment Status",
+    "paid": "Paid",
+    "pending": "Pending",
+    "cod": "Cash on Delivery",
+    "card": "Card ending in ****{{last4}}"
+  },
+  "customer": {
+    "title": "Customer Information",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone"
+  },
+  "actions": {
+    "downloadInvoice": "Download Invoice",
+    "printOrder": "Print Order",
+    "cancelOrder": "Cancel Order",
+    "needHelp": "Need Help?",
+    "contactSupport": "Contact Support",
+    "requestReturn": "Request Return"
+  },
+  "support": {
+    "title": "Need Assistance?",
+    "description": "Our customer service team is here to help you with any questions about your order.",
+    "contactUs": "Contact Us",
+    "phone": "Phone: {{phone}}",
+    "email": "Email: {{email}}",
+    "hours": "Available: Sun-Thu, 9AM-6PM"
+  },
+  "notFound": {
+    "title": "Order Not Found",
+    "message": "We couldn't find an order with this number. Please check the order number and try again.",
+    "backToShop": "Back to Shop"
+  }
+}

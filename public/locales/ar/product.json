@@ -1,0 +1,45 @@
+{
+  "breadcrumb": {
+    "home": "الرئيسية",
+    "shop": "تسوق"
+  },
+  "details": {
+    "reviews": "تقييم",
+    "review": "تقييم",
+    "inStock": "متوفر",
+    "outOfStock": "غير متوفر",
+    "size": "المقاس",
+    "quantity": "الكمية",
+    "addToCart": "أضف للسلة",
+    "buyNow": "اشتر الآن",
+    "backToShop": "العودة للمتجر",
+    "addedToCart": "تمت الإضافة للسلة!",
+    "addedToCartDescription": "{{quantity}} x {{name}} (المقاس: {{size}})"
+  },
+  "description": {
+    "title": "مميزات المنتج",
+    "classicBlack": "استمتع بالأناقة الخالدة مع عبايتنا السوداء الكلاسيكية. مصنوعة من قماش فاخر، هذه القطعة تجمع بين الاحتشام التقليدي والرقي العصري. مثالية لأي مناسبة، بشكلها المنسدل واهتمامها بالتفاصيل تجعلها قطعة أساسية في خزانة ملابسك."
+  },
+  "features": {
+    "title": "المميزات",
+    "premiumFabric": "قماش فاخر عالي الجودة",
+    "comfortableFit": "ملائمة مريحة",
+    "easyCare": "سهلة العناية - قابلة للغسيل في الغسالة",
+    "multipleSizes": "متوفرة بمقاسات متعددة",
+    "modestDesign": "تصميم محتشم وأنيق"
+  },
+  "benefits": {
+    "freeShipping": {
+      "title": "شحن مجاني",
+      "description": "للطلبات التي تزيد عن 100 دولار"
+    },
+    "qualityGuarantee": {
+      "title": "ضمان الجودة",
+      "description": "مواد ممتازة وحرفية عالية"
+    },
+    "easyReturns": {
+      "title": "إرجاع سهل",
+      "description": "سياسة إرجاع لمدة 30 يوماً"
+    }
+  }
+}

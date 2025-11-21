@@ -1,0 +1,116 @@
+{
+  "brand": {
+    "name": "دفة للعبايات",
+    "tagline": "أزياء محتشمة أنيقة للمرأة العصرية",
+    "description": "أزياء محتشمة أنيقة للمرأة العصرية. الحرفية عالية الجودة تلتقي بالأسلوب الخالد."
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "shop": "تسوق",
+    "collections": "المجموعات",
+    "about": "من نحن",
+    "contact": "اتصل بنا",
+    "search": "بحث",
+    "wishlist": "المفضلة",
+    "account": "حسابي",
+    "cart": "السلة"
+  },
+  "accountMenu": {
+    "myOrders": "طلباتي",
+    "myAddresses": "عناويني",
+    "editProfile": "تعديل الملف الشخصي",
+    "signIn": "تسجيل الدخول",
+    "signOut": "تسجيل الخروج"
+  },
+  "myOrders": {
+    "title": "طلباتي",
+    "noOrders": "لا توجد طلبات بعد",
+    "noOrdersDesc": "لم تقم بتقديم أي طلبات حتى الآن. ابدأ التسوق!",
+    "viewDetails": "عرض التفاصيل",
+    "orderPlaced": "تم الطلب في"
+  },
+  "addresses": {
+    "title": "عناويني",
+    "addNew": "إضافة عنوان جديد",
+    "edit": "تعديل",
+    "delete": "حذف",
+    "setDefault": "تعيين كافتراضي",
+    "default": "افتراضي",
+    "noAddresses": "لا توجد عناوين محفوظة",
+    "noAddressesDesc": "أضف عنواناً لجعل الدفع أسرع",
+    "addressTitle": "عنوان العنوان",
+    "titlePlaceholder": "مثل: المنزل، العمل، المكتب",
+    "saveAddress": "حفظ العنوان",
+    "updateAddress": "تحديث العنوان",
+    "deleteConfirm": "حذف هذا العنوان؟",
+    "deleteDesc": "لا يمكن التراجع عن هذا الإجراء.",
+    "cancel": "إلغاء",
+    "confirmDelete": "نعم، احذف"
+  },
+  "footer": {
+    "quickLinks": "روابط سريعة",
+    "aboutUs": "من نحن",
+    "customerService": "خدمة العملاء",
+    "shippingInfo": "معلومات الشحن",
+    "returnsRefunds": "المرتجعات والاستردادات",
+    "faq": "الأسئلة الشائعة",
+    "privacyPolicy": "سياسة الخصوصية",
+    "contactUs": "اتصل بنا",
+    "address": "123 شارع الأزياء، المدينة، الدولة",
+    "phone": "+1 234 567 8900",
+    "email": "info@daffaabayat.com",
+    "copyright": "© {{year}} دفة للعبايات. جميع الحقوق محفوظية."
+  },
+  "buttons": {
+    "shopNow": "تسوق الآن",
+    "viewAll": "عرض الكل",
+    "addToCart": "أضف للسلة",
+    "buyNow": "اشتر الآن",
+    "subscribe": "اشترك",
+    "continueShopping": "متابعة التسوق",
+    "loadMore": "تحميل المزيد",
+    "backToShop": "العودة للمتجر",
+    "proceedToCheckout": "إتمام الطلب",
+    "returnHome": "العودة للرئيسية"
+  },
+  "language": {
+    "switchTo": "التبديل إلى",
+    "ar": "العربية",
+    "en": "English"
+  },
+  "common": {
+    "currency": "ر.ق",
+    "qar": "ريال قطري",
+    "loading": "جاري التحميل...",
+    "error": "حدث خطأ",
+    "reviews": "تقييم",
+    "review": "تقييم",
+    "showingResults": "عرض {{count}} منتج",
+    "inStock": "متوفر",
+    "outOfStock": "غير متوفر",
+    "size": "المقاس",
+    "quantity": "الكمية",
+    "price": "السعر",
+    "total": "المجموع",
+    "subtotal": "المجموع الفرعي",
+    "shipping": "الشحن",
+    "free": "مجاني",
+    "discount": "خصم"
+  },
+  "aria": {
+    "dismissBanner": "إغلاق الإعلان",
+    "previousSlide": "الشريحة السابقة",
+    "nextSlide": "الشريحة التالية",
+    "goToSlide": "الانتقال إلى الشريحة {{number}}",
+    "search": "بحث",
+    "menu": "القائمة",
+    "cart": "عربة التسوق",
+    "wishlist": "قائمة الأمنيات",
+    "account": "الحساب"
+  },
+  "notFound": {
+    "title": "404",
+    "message": "عذراً! الصفحة غير موجودة",
+    "returnHome": "العودة للرئيسية"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "title": "Shopping Cart",
+  "itemCount": "{{count}} item in your cart",
+  "itemCount_other": "{{count}} items in your cart",
+  "empty": {
+    "title": "Your cart is empty",
+    "description": "Add some beautiful abayas to your cart!",
+    "cta": "Continue Shopping"
+  },
+  "item": {
+    "size": "Size:",
+    "quantity": "Quantity:",
+    "remove": "Remove"
+  },
+  "summary": {
+    "orderSummary": "Order Summary",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "free": "FREE",
+    "freeShippingAchieved": "🎉 You got free shipping!",
+    "freeShippingRemaining": "Add QAR {{amount}} more for free shipping",
+    "total": "Total",
+    "proceedToCheckout": "Proceed to Checkout"
+  },
+  "actions": {
+    "continueShopping": "Continue Shopping",
+    "updateCart": "Update Cart",
+    "clearCart": "Clear Cart"
+  }
+}

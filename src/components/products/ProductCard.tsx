@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Heart, ShoppingCart, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface ProductCardProps {
   id: string;
@@ -23,7 +24,9 @@ export const ProductCard = ({
   reviews = 0,
   discount,
 }: ProductCardProps) => {
+  const { t, i18n } = useTranslation('common');
   const [isLiked, setIsLiked] = useState(false);
+  const isRTL = i18n.language === 'ar';
 
   return (
     <Card className="group relative overflow-hidden border-border hover:shadow-lg transition-all duration-300">
@@ -35,7 +38,7 @@ export const ProductCard = ({
             className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
           />
           {discount && (
-            <div className="absolute top-3 left-3 bg-destructive text-destructive-foreground px-3 py-1 rounded-full text-sm font-semibold">
+            <div className={`absolute top-3 ${isRTL ? 'right-3' : 'left-3'} bg-destructive text-destructive-foreground px-3 py-1 rounded-full text-sm font-semibold`}>
               -{discount}%
             </div>
           )}
@@ -44,7 +47,7 @@ export const ProductCard = ({
               e.preventDefault();
               setIsLiked(!isLiked);
             }}
-            className={`absolute top-3 right-3 p-2 rounded-full bg-background/80 backdrop-blur-sm transition-colors ${
+            className={`absolute top-3 ${isRTL ? 'left-3' : 'right-3'} p-2 rounded-full bg-background/80 backdrop-blur-sm transition-colors ${
               isLiked ? "text-destructive" : "text-foreground hover:text-destructive"
             }`}
           >
@@ -61,7 +64,7 @@ export const ProductCard = ({
         </Link>
 
         {rating > 0 && (
-          <div className="flex items-center space-x-1 text-sm">
+          <div className="flex items-center gap-1 text-sm">
             <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
             <span className="font-medium">{rating}</span>
             <span className="text-muted-foreground">({reviews})</span>
@@ -73,14 +76,16 @@ export const ProductCard = ({
             {discount ? (
               <>
                 <p className="text-lg font-bold text-primary">
-                  ${(price * (1 - discount / 100)).toFixed(2)}
+                  {isRTL ? `${(price * (1 - discount / 100)).toFixed(2)} ${t('common.currency')}` : `${t('common.currency')} ${(price * (1 - discount / 100)).toFixed(2)}`}
                 </p>
                 <p className="text-sm text-muted-foreground line-through">
-                  ${price.toFixed(2)}
+                  {isRTL ? `${price.toFixed(2)} ${t('common.currency')}` : `${t('common.currency')} ${price.toFixed(2)}`}
                 </p>
               </>
             ) : (
-              <p className="text-lg font-bold text-primary">${price.toFixed(2)}</p>
+              <p className="text-lg font-bold text-primary">
+                {isRTL ? `${price.toFixed(2)} ${t('common.currency')}` : `${t('common.currency')} ${price.toFixed(2)}`}
+              </p>
             )}
           </div>
 

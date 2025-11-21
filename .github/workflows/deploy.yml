@@ -1,0 +1,73 @@
+# GitHub Actions Workflow for Deploying to GitHub Pages
+# This workflow automatically builds and deploys your React app whenever you push to main branch
+
+name: Deploy to GitHub Pages
+
+# When to run this workflow
+on:
+  push:
+    branches:
+      - main  # Trigger on push to main branch
+  workflow_dispatch:  # Allow manual trigger from GitHub Actions tab
+
+# Required permissions for GitHub Pages deployment
+permissions:
+  contents: read      # Read repository contents
+  pages: write        # Write to GitHub Pages
+  id-token: write     # Required for GitHub Pages deployment
+
+# Ensure only one deployment runs at a time
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Build and deploy job
+  deploy:
+    # Use latest Ubuntu environment
+    runs-on: ubuntu-latest
+
+    # Set up GitHub Pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      # Step 1: Download your code from GitHub
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Install Node.js (version 20 LTS)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'  # Cache npm dependencies for faster builds
+
+      # Step 3: Install all dependencies from package.json
+      - name: Install dependencies
+        run: npm ci  # 'ci' is faster and more reliable than 'install' for CI/CD
+
+      # Step 4: Build the production version of your site
+      # This runs 'npm run build' which creates the dist/ folder
+      - name: Build project
+        run: npm run build
+        env:
+          NODE_ENV: production  # Ensures production mode build
+
+      # Step 5: Configure GitHub Pages settings
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      # Step 6: Upload the built files (dist/ folder) as an artifact
+      # This packages your site for deployment
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'  # Upload the build output directory
+
+      # Step 7: Deploy the artifact to GitHub Pages
+      # This publishes your site to the internet!
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

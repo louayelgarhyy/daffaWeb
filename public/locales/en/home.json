@@ -1,0 +1,43 @@
+{
+  "banner": {
+    "grandOpening": "🎉 Grand Opening Sale! Get 25% off on all items this week only!"
+  },
+  "hero": {
+    "slide1": {
+      "title": "Timeless Elegance in Every Stitch",
+      "description": "Discover our collection of handcrafted abayas that blend traditional modesty with modern sophistication",
+      "cta": "Shop Now"
+    },
+    "slide2": {
+      "title": "New Collection 2024",
+      "description": "Embrace contemporary fashion with our latest designs crafted for the modern woman",
+      "cta": "Explore Collection"
+    },
+    "slide3": {
+      "title": "Premium Quality Fabrics",
+      "description": "Experience luxury and comfort with our carefully selected premium materials",
+      "cta": "View Fabrics"
+    }
+  },
+  "featured": {
+    "title": "Featured Collection",
+    "description": "Explore our carefully curated selection of the finest abayas, designed for the modern woman.",
+    "viewAll": "View All Products"
+  },
+  "products": {
+    "classicBlack": "Classic Black Abaya",
+    "elegantNavy": "Elegant Navy Abaya",
+    "modernGrey": "Modern Grey Abaya",
+    "premiumWhite": "Premium White Abaya"
+  },
+  "whyChoose": {
+    "title": "Why Choose Daffa?",
+    "description": "We offer the finest abayas with high quality and competitive prices"
+  },
+  "cta": {
+    "title": "Join Our Community",
+    "description": "Subscribe to get special offers, new arrivals, and styling tips.",
+    "emailPlaceholder": "Enter your email",
+    "subscribe": "Subscribe"
+  }
+}

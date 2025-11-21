@@ -3,15 +3,17 @@ import { ProductCard } from "@/components/products/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SlidersHorizontal } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const Shop = () => {
+  const { t } = useTranslation(['shop', 'common']);
   const [sortBy, setSortBy] = useState("featured");
 
   // Mock products data
   const products = [
     {
       id: "1",
-      name: "Classic Black Abaya",
+      name: t('shop:products.classicBlack'),
       price: 89.99,
       image: "https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=400&h=500&fit=crop",
       rating: 4.8,
@@ -19,7 +21,7 @@ const Shop = () => {
     },
     {
       id: "2",
-      name: "Elegant Navy Abaya",
+      name: t('shop:products.elegantNavy'),
       price: 94.99,
       image: "https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=400&h=500&fit=crop",
       rating: 4.9,
@@ -27,7 +29,7 @@ const Shop = () => {
     },
     {
       id: "3",
-      name: "Modern Grey Abaya",
+      name: t('shop:products.modernGrey'),
       price: 79.99,
       image: "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=400&h=500&fit=crop",
       rating: 4.7,
@@ -36,7 +38,7 @@ const Shop = () => {
     },
     {
       id: "4",
-      name: "Premium White Abaya",
+      name: t('shop:products.premiumWhite'),
       price: 99.99,
       image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=500&fit=crop",
       rating: 4.9,
@@ -44,7 +46,7 @@ const Shop = () => {
     },
     {
       id: "5",
-      name: "Designer Beige Abaya",
+      name: t('shop:products.designerBeige'),
       price: 109.99,
       image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400&h=500&fit=crop",
       rating: 4.8,
@@ -53,7 +55,7 @@ const Shop = () => {
     },
     {
       id: "6",
-      name: "Luxury Champagne Abaya",
+      name: t('shop:products.luxuryChampagne'),
       price: 119.99,
       image: "https://images.unsplash.com/photo-1558769132-cb1aea1f8cf5?w=400&h=500&fit=crop",
       rating: 5.0,
@@ -61,7 +63,7 @@ const Shop = () => {
     },
     {
       id: "7",
-      name: "Embroidered Black Abaya",
+      name: t('shop:products.embroideredBlack'),
       price: 129.99,
       image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=500&fit=crop",
       rating: 4.9,
@@ -69,7 +71,7 @@ const Shop = () => {
     },
     {
       id: "8",
-      name: "Casual Denim Abaya",
+      name: t('shop:products.casualDenim'),
       price: 84.99,
       image: "https://images.unsplash.com/photo-1467043237213-65f2da53396f?w=400&h=500&fit=crop",
       rating: 4.6,
@@ -83,9 +85,9 @@ const Shop = () => {
       {/* Page Header */}
       <div className="bg-card-secondary py-12 border-b border-border">
         <div className="container px-4">
-          <h1 className="text-4xl font-bold text-foreground mb-2">Shop All Abayas</h1>
+          <h1 className="text-4xl font-bold text-foreground mb-2">{t('shop:header.title')}</h1>
           <p className="text-muted-foreground">
-            Discover our complete collection of elegant modest wear
+            {t('shop:header.description')}
           </p>
         </div>
       </div>
@@ -95,26 +97,26 @@ const Shop = () => {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <div className="flex items-center gap-3">
             <Button variant="outline" size="sm">
-              <SlidersHorizontal className="h-4 w-4 mr-2" />
-              Filters
+              <SlidersHorizontal className="h-4 w-4 me-2" />
+              {t('shop:filters.title')}
             </Button>
             <span className="text-sm text-muted-foreground">
-              Showing {products.length} products
+              {t('common:common.showingResults', { count: products.length })}
             </span>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">Sort by:</span>
+            <span className="text-sm text-muted-foreground">{t('shop:sorting.label')}</span>
             <Select value={sortBy} onValueChange={setSortBy}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="featured">Featured</SelectItem>
-                <SelectItem value="price-low">Price: Low to High</SelectItem>
-                <SelectItem value="price-high">Price: High to Low</SelectItem>
-                <SelectItem value="newest">Newest</SelectItem>
-                <SelectItem value="rating">Best Rating</SelectItem>
+                <SelectItem value="featured">{t('shop:sorting.featured')}</SelectItem>
+                <SelectItem value="price-low">{t('shop:sorting.priceLowToHigh')}</SelectItem>
+                <SelectItem value="price-high">{t('shop:sorting.priceHighToLow')}</SelectItem>
+                <SelectItem value="newest">{t('shop:sorting.newest')}</SelectItem>
+                <SelectItem value="rating">{t('shop:sorting.bestRating')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -130,7 +132,7 @@ const Shop = () => {
         {/* Load More */}
         <div className="text-center mt-12">
           <Button variant="outline" size="lg" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-            Load More Products
+            {t('shop:actions.loadMore')}
           </Button>
         </div>
       </div>
