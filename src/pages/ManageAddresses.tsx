@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { MapPin, Plus } from "lucide-react";
 import { toast } from "sonner";
+import { PageTransition } from "@/components/PageTransition";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -118,7 +119,8 @@ const ManageAddresses = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <PageTransition>
+      <div className="min-h-screen bg-background">
       <div className="bg-card-secondary py-12 border-b border-border">
         <div className="container px-4">
           <div className="flex items-center justify-between">
@@ -179,7 +181,8 @@ const ManageAddresses = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </div>
+      </div>
+    </PageTransition>
   );
 };
 

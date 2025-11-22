@@ -10,22 +10,26 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { Checkbox } from "@/components/ui/checkbox";
 import { checkoutSchema, CheckoutFormValues } from "@/lib/validations";
 import type { Order, CartItem, TimelineEvent, SavedAddress } from "@/types/order";
 import { getSavedAddresses, saveAddress } from "@/lib/addressUtils";
+import { AddAddressDialog } from "@/components/address/AddAddressDialog";
+import { OrderSuccessDialog } from "@/components/OrderSuccessDialog";
+import { PageTransition } from "@/components/PageTransition";
+import { useAuth } from "@/hooks/use-auth";
 
 const Checkout = () => {
   const { t, i18n } = useTranslation(['checkout', 'common']);
   const isRTL = i18n.language === 'ar';
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [isProcessing, setIsProcessing] = useState(false);
   const [savedAddresses, setSavedAddresses] = useState<SavedAddress[]>([]);
   const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
-  const [useNewAddress, setUseNewAddress] = useState(false);
-  const [saveThisAddress, setSaveThisAddress] = useState(false);
+  const [isAddAddressDialogOpen, setIsAddAddressDialogOpen] = useState(false);
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
+  const [currentOrderId, setCurrentOrderId] = useState<string | null>(null);
 
   // Mock cart items (in real app, would come from context/state management)
   const cartItems: CartItem[] = [
@@ -60,7 +64,6 @@ const Checkout = () => {
     defaultValues: {
       shippingMethod: 'standard',
       paymentMethod: 'cod',
-      country: 'sa',
     },
   });
 
@@ -73,50 +76,41 @@ const Checkout = () => {
     const addresses = getSavedAddresses();
     setSavedAddresses(addresses);
 
-    // Auto-select default address if available and no address is selected yet
+    // Auto-select default address if available
     const defaultAddress = addresses.find(addr => addr.isDefault);
-    if (defaultAddress && !selectedAddressId && !useNewAddress) {
+    if (defaultAddress && !selectedAddressId) {
       setSelectedAddressId(defaultAddress.id);
-      prefillAddressForm(defaultAddress);
     }
   }, []);
-
-  // Pre-fill form when an address is selected
-  const prefillAddressForm = (address: SavedAddress) => {
-    setValue('fullName', address.fullName);
-    setValue('addressLine1', address.addressLine1);
-    setValue('addressLine2', address.addressLine2 || '');
-    setValue('city', address.city);
-    setValue('region', address.region);
-    setValue('postalCode', address.postalCode);
-    setValue('country', address.country);
-  };
 
   // Handle address selection
   const handleAddressSelect = (addressId: string) => {
     setSelectedAddressId(addressId);
-    setUseNewAddress(false);
-    const address = savedAddresses.find(addr => addr.id === addressId);
-    if (address) {
-      prefillAddressForm(address);
-    }
   };
 
-  // Handle "use new address" selection
-  const handleUseNewAddress = () => {
-    setSelectedAddressId(null);
-    setUseNewAddress(true);
-    // Clear form
-    setValue('fullName', '');
-    setValue('addressLine1', '');
-    setValue('addressLine2', '');
-    setValue('city', '');
-    setValue('region', '');
-    setValue('postalCode', '');
-    setValue('country', 'sa');
+  // Handle new address addition from dialog
+  const handleAddAddress = (addressData: Omit<SavedAddress, 'id'>) => {
+    // Save the new address
+    const newAddress = saveAddress(addressData);
+
+    // Reload saved addresses
+    const updatedAddresses = getSavedAddresses();
+    setSavedAddresses(updatedAddresses);
+
+    // Auto-select the newly added address
+    setSelectedAddressId(newAddress.id);
+
+    // Show success message
+    toast.success(t('common:addresses.addedSuccess'));
   };
 
   const onSubmit = async (data: CheckoutFormValues) => {
+    // Validate that an address is selected
+    if (!selectedAddressId) {
+      toast.error(t('checkout:validation.addressRequired', { defaultValue: 'Please select or add a shipping address' }));
+      return;
+    }
+
     setIsProcessing(true);
 
     // Simulate processing delay
@@ -167,25 +161,17 @@ const Checkout = () => {
       },
     ];
 
-    // Get address title if a saved address was selected
-    const selectedAddress = selectedAddressId ? savedAddresses.find(addr => addr.id === selectedAddressId) : null;
+    // Get the selected address
+    const selectedAddress = savedAddresses.find(addr => addr.id === selectedAddressId);
 
-    // Save new address if user checked the box
-    if (saveThisAddress && useNewAddress) {
-      saveAddress({
-        title: 'Address ' + (savedAddresses.length + 1), // Default title
-        fullName: data.fullName,
-        addressLine1: data.addressLine1,
-        addressLine2: data.addressLine2,
-        city: data.city,
-        region: data.region,
-        postalCode: data.postalCode,
-        country: data.country,
-        isDefault: savedAddresses.length === 0, // Set as default if it's the first address
-      });
+    // This should never happen due to validation above, but TypeScript safety
+    if (!selectedAddress) {
+      toast.error(t('checkout:validation.addressRequired', { defaultValue: 'Please select or add a shipping address' }));
+      setIsProcessing(false);
+      return;
     }
 
-    // Create order object
+    // Create order object using the selected saved address
     const order: Order = {
       id: orderId,
       orderNumber,
@@ -198,22 +184,22 @@ const Checkout = () => {
       discount: 0,
       total,
       shippingAddress: {
-        fullName: data.fullName,
-        addressLine1: data.addressLine1,
-        addressLine2: data.addressLine2,
-        city: data.city,
-        region: data.region,
-        postalCode: data.postalCode,
-        country: data.country,
+        fullName: selectedAddress.fullName,
+        addressLine1: selectedAddress.addressLine1,
+        addressLine2: selectedAddress.addressLine2,
+        city: selectedAddress.city,
+        region: selectedAddress.region,
+        postalCode: selectedAddress.postalCode,
+        country: selectedAddress.country,
       },
-      addressTitle: selectedAddress?.title, // Include address title if selected
+      addressTitle: selectedAddress.title,
       shippingMethod: data.shippingMethod,
       paymentMethod: data.paymentMethod,
       paymentStatus: data.paymentMethod === 'cod' ? 'pending' : 'paid',
       customerInfo: {
-        email: data.email,
-        phone: data.phone,
-        name: data.fullName,
+        email: '',
+        phone: user ? `${user.countryCode}${user.phone}` : '',
+        name: selectedAddress.fullName,
       },
       timeline,
     };
@@ -227,15 +213,16 @@ const Checkout = () => {
     // localStorage.removeItem('cart');
 
     setIsProcessing(false);
-    toast.success(t('order:confirmation.title'));
 
-    // Navigate to order confirmation
-    navigate(`/order-confirmation/${orderId}`);
+    // Store order ID and show success dialog
+    setCurrentOrderId(orderId);
+    setShowSuccessDialog(true);
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="bg-card-secondary py-8 border-b border-border">
+    <PageTransition>
+      <div className="min-h-screen bg-background">
+        <div className="bg-card-secondary py-8 border-b border-border">
         <div className="container px-4">
           <Link to="/cart" className="inline-flex items-center text-sm text-primary hover:underline mb-4">
             <ChevronLeft className="h-4 w-4 me-1" />
@@ -250,39 +237,8 @@ const Checkout = () => {
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Left Column - Forms */}
             <div className="lg:col-span-2 space-y-8">
-              {/* Contact Information */}
-              <div className="bg-card border border-border rounded-lg p-6">
-                <h2 className="text-xl font-bold text-foreground mb-6">{t('checkout:contact.title')}</h2>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="email">{t('checkout:contact.email')}</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      placeholder={t('checkout:contact.emailPlaceholder')}
-                      {...register('email')}
-                    />
-                    {errors.email && (
-                      <p className="text-sm text-destructive">{t(errors.email.message as string)}</p>
-                    )}
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">{t('checkout:contact.phone')}</Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      placeholder={t('checkout:contact.phonePlaceholder')}
-                      {...register('phone')}
-                    />
-                    {errors.phone && (
-                      <p className="text-sm text-destructive">{t(errors.phone.message as string)}</p>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* Saved Addresses */}
-              {savedAddresses.length > 0 && (
+              {/* Saved Addresses or Add Address Button */}
+              {savedAddresses.length > 0 ? (
                 <div className="bg-card border border-border rounded-lg p-6">
                   <div className="flex items-center justify-between mb-6">
                     <h2 className="text-xl font-bold text-foreground">{t('checkout:savedAddresses.title')}</h2>
@@ -330,148 +286,26 @@ const Checkout = () => {
                       </div>
                     ))}
                   </div>
-
-                  <button
-                    type="button"
-                    onClick={handleUseNewAddress}
-                    className={`w-full mt-3 border rounded-lg p-4 text-start transition-all ${
-                      useNewAddress
-                        ? 'border-primary bg-primary/5 ring-2 ring-primary/20'
-                        : 'border-border hover:border-primary/50'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
-                        useNewAddress ? 'border-primary bg-primary' : 'border-border'
-                      }`}>
-                        {useNewAddress && <div className="w-2 h-2 rounded-full bg-primary-foreground" />}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Plus className="h-4 w-4 text-primary" />
-                        <span className="font-semibold text-foreground">{t('checkout:savedAddresses.useNewAddress')}</span>
-                      </div>
-                    </div>
-                  </button>
+                </div>
+              ) : (
+                <div className="bg-card border border-border rounded-lg p-6">
+                  <div className="flex flex-col items-center justify-center py-8">
+                    <MapPin className="h-12 w-12 text-muted-foreground mb-4" />
+                    <h2 className="text-xl font-bold text-foreground mb-2">{t('checkout:savedAddresses.noAddresses')}</h2>
+                    <p className="text-sm text-muted-foreground mb-6 text-center">
+                      {t('checkout:savedAddresses.noAddressesDesc')}
+                    </p>
+                    <Button
+                      type="button"
+                      onClick={() => setIsAddAddressDialogOpen(true)}
+                      className="flex items-center gap-2"
+                    >
+                      <Plus className="h-4 w-4" />
+                      {t('checkout:savedAddresses.addAddress')}
+                    </Button>
+                  </div>
                 </div>
               )}
-
-              {/* Shipping Address */}
-              <div className="bg-card border border-border rounded-lg p-6">
-                <h2 className="text-xl font-bold text-foreground mb-6">{t('checkout:shipping.title')}</h2>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="fullName">{t('checkout:shipping.fullName')}</Label>
-                    <Input
-                      id="fullName"
-                      placeholder={t('checkout:shipping.fullNamePlaceholder')}
-                      {...register('fullName')}
-                    />
-                    {errors.fullName && (
-                      <p className="text-sm text-destructive">{t(errors.fullName.message as string)}</p>
-                    )}
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="country">{t('checkout:shipping.country')}</Label>
-                      <Select
-                        defaultValue="sa"
-                        onValueChange={(value) => setValue('country', value)}
-                      >
-                        <SelectTrigger id="country">
-                          <SelectValue placeholder={t('checkout:shipping.countryPlaceholder')} />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="sa">{t('checkout:countries.sa')}</SelectItem>
-                          <SelectItem value="ae">{t('checkout:countries.ae')}</SelectItem>
-                          <SelectItem value="kw">{t('checkout:countries.kw')}</SelectItem>
-                          <SelectItem value="qa">{t('checkout:countries.qa')}</SelectItem>
-                          <SelectItem value="bh">{t('checkout:countries.bh')}</SelectItem>
-                          <SelectItem value="om">{t('checkout:countries.om')}</SelectItem>
-                          <SelectItem value="jo">{t('checkout:countries.jo')}</SelectItem>
-                          <SelectItem value="eg">{t('checkout:countries.eg')}</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      {errors.country && (
-                        <p className="text-sm text-destructive">{t(errors.country.message as string)}</p>
-                      )}
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="city">{t('checkout:shipping.city')}</Label>
-                      <Input
-                        id="city"
-                        placeholder={t('checkout:shipping.cityPlaceholder')}
-                        {...register('city')}
-                      />
-                      {errors.city && (
-                        <p className="text-sm text-destructive">{t(errors.city.message as string)}</p>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="addressLine1">{t('checkout:shipping.addressLine1')}</Label>
-                    <Input
-                      id="addressLine1"
-                      placeholder={t('checkout:shipping.addressLine1Placeholder')}
-                      {...register('addressLine1')}
-                    />
-                    {errors.addressLine1 && (
-                      <p className="text-sm text-destructive">{t(errors.addressLine1.message as string)}</p>
-                    )}
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="addressLine2">{t('checkout:shipping.addressLine2')}</Label>
-                    <Input
-                      id="addressLine2"
-                      placeholder={t('checkout:shipping.addressLine2Placeholder')}
-                      {...register('addressLine2')}
-                    />
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="region">{t('checkout:shipping.region')}</Label>
-                      <Input
-                        id="region"
-                        placeholder={t('checkout:shipping.regionPlaceholder')}
-                        {...register('region')}
-                      />
-                      {errors.region && (
-                        <p className="text-sm text-destructive">{t(errors.region.message as string)}</p>
-                      )}
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="postalCode">{t('checkout:shipping.postalCode')}</Label>
-                      <Input
-                        id="postalCode"
-                        placeholder={t('checkout:shipping.postalCodePlaceholder')}
-                        {...register('postalCode')}
-                      />
-                      {errors.postalCode && (
-                        <p className="text-sm text-destructive">{t(errors.postalCode.message as string)}</p>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Save address checkbox - only show when using new address */}
-                  {useNewAddress && (
-                    <div className="flex items-center space-x-2 pt-4 border-t border-border">
-                      <Checkbox
-                        id="saveAddress"
-                        checked={saveThisAddress}
-                        onCheckedChange={(checked) => setSaveThisAddress(checked as boolean)}
-                      />
-                      <Label htmlFor="saveAddress" className="text-sm font-normal cursor-pointer">
-                        {t('checkout:savedAddresses.saveThisAddress')}
-                      </Label>
-                    </div>
-                  )}
-                </div>
-              </div>
 
               {/* Shipping Method */}
               <div className="bg-card border border-border rounded-lg p-6">
@@ -632,7 +466,27 @@ const Checkout = () => {
           </div>
         </form>
       </div>
+
+      {/* Add Address Dialog */}
+      <AddAddressDialog
+        open={isAddAddressDialogOpen}
+        onOpenChange={setIsAddAddressDialogOpen}
+        onSubmit={handleAddAddress}
+      />
+
+      {/* Order Success Dialog */}
+      <OrderSuccessDialog
+        open={showSuccessDialog}
+        orderId={currentOrderId}
+        onClose={() => {
+          setShowSuccessDialog(false);
+          if (currentOrderId) {
+            navigate(`/order-confirmation/${currentOrderId}`);
+          }
+        }}
+      />
     </div>
+    </PageTransition>
   );
 };
 

@@ -4,6 +4,9 @@ import { Heart, ShoppingCart, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/hooks/use-auth";
+import { LoginRequiredDialog } from "@/components/LoginRequiredDialog";
+import { toast } from "sonner";
 
 interface ProductCardProps {
   id: string;
@@ -25,8 +28,22 @@ export const ProductCard = ({
   discount,
 }: ProductCardProps) => {
   const { t, i18n } = useTranslation('common');
+  const { isAuthenticated } = useAuth();
   const [isLiked, setIsLiked] = useState(false);
+  const [showLoginDialog, setShowLoginDialog] = useState(false);
   const isRTL = i18n.language === 'ar';
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    if (!isAuthenticated) {
+      setShowLoginDialog(true);
+      return;
+    }
+
+    // Add to cart functionality (to be fully implemented)
+    toast.success(t('buttons.addToCart', { defaultValue: 'Added to cart!' }));
+  };
 
   return (
     <Card className="group relative overflow-hidden border-border hover:shadow-lg transition-all duration-300">
@@ -92,15 +109,17 @@ export const ProductCard = ({
           <Button
             size="icon"
             className="bg-primary hover:bg-primary-hover text-primary-foreground rounded-full"
-            onClick={(e) => {
-              e.preventDefault();
-              // Add to cart functionality will be implemented later
-            }}
+            onClick={handleAddToCart}
           >
             <ShoppingCart className="h-4 w-4" />
           </Button>
         </div>
       </CardContent>
+
+      <LoginRequiredDialog
+        open={showLoginDialog}
+        onOpenChange={setShowLoginDialog}
+      />
     </Card>
   );
 };

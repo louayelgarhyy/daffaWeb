@@ -1,0 +1,34 @@
+{
+  "hero": {
+    "title": "About Us",
+    "subtitle": "Discover the story behind Daffa for Abayat - where tradition meets contemporary elegance"
+  },
+  "mission": {
+    "title": "Our Mission",
+    "description": "At Daffa for Abayat, we are passionate about providing modest fashion that celebrates elegance, tradition, and modern style. Our mission is to empower women with beautiful, high-quality abayas that make them feel confident and graceful in every moment.",
+    "subtitle": "We believe that modesty and fashion can coexist beautifully, and we're committed to bringing you the finest collection of abayas that reflect your unique style and values."
+  },
+  "values": {
+    "title": "Our Values",
+    "quality": {
+      "title": "Premium Quality",
+      "description": "We source the finest fabrics and materials to ensure every abaya meets our high standards of excellence."
+    },
+    "craftsmanship": {
+      "title": "Expert Craftsmanship",
+      "description": "Each piece is carefully crafted by skilled artisans who pay attention to every detail."
+    },
+    "authenticity": {
+      "title": "Authentic Design",
+      "description": "Our designs honor traditional modesty while embracing contemporary fashion trends."
+    },
+    "service": {
+      "title": "Customer First",
+      "description": "Your satisfaction is our priority. We're dedicated to providing exceptional service and support."
+    }
+  },
+  "story": {
+    "title": "Our Story",
+    "description": "Founded with a vision to redefine modest fashion, Daffa for Abayat has grown from a small boutique to a trusted name in elegant abaya wear. We understand that every woman deserves to feel beautiful and confident, and our collection is designed to celebrate diversity, elegance, and individuality."
+  }
+}

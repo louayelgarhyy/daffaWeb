@@ -8,16 +8,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { useAuth } from "@/hooks/use-auth";
 
 export const Header = () => {
   const { t } = useTranslation('common');
+  const navigate = useNavigate();
+  const { isAuthenticated, user, logout } = useAuth();
   const [cartCount, setCartCount] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isSignedIn, setIsSignedIn] = useState(false); // Mock auth state
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
@@ -83,14 +85,54 @@ export const Header = () => {
                   <Heart className="h-5 w-5" />
                   <span>{t('nav.wishlist')}</span>
                 </Link>
-                <Link
-                  to="/account"
-                  className="flex items-center gap-3 text-lg font-medium transition-colors hover:text-primary"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <User className="h-5 w-5" />
-                  <span>{t('nav.account')}</span>
-                </Link>
+                {isAuthenticated ? (
+                  <>
+                    <Link
+                      to="/my-orders"
+                      className="flex items-center gap-3 text-lg font-medium transition-colors hover:text-primary"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <Package className="h-5 w-5" />
+                      <span>{t('accountMenu.myOrders')}</span>
+                    </Link>
+                    <Link
+                      to="/addresses"
+                      className="flex items-center gap-3 text-lg font-medium transition-colors hover:text-primary"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <MapPin className="h-5 w-5" />
+                      <span>{t('accountMenu.myAddresses')}</span>
+                    </Link>
+                    <Link
+                      to="/profile"
+                      className="flex items-center gap-3 text-lg font-medium transition-colors hover:text-primary"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <UserCog className="h-5 w-5" />
+                      <span>{t('accountMenu.editProfile')}</span>
+                    </Link>
+                    <button
+                      className="flex items-center gap-3 text-lg font-medium transition-colors hover:text-primary text-start"
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        logout();
+                        navigate('/');
+                      }}
+                    >
+                      <LogOut className="h-5 w-5" />
+                      <span>{t('accountMenu.signOut')}</span>
+                    </button>
+                  </>
+                ) : (
+                  <Link
+                    to="/login"
+                    className="flex items-center gap-3 text-lg font-medium transition-colors hover:text-primary"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <LogIn className="h-5 w-5" />
+                    <span>{t('accountMenu.signIn')}</span>
+                  </Link>
+                )}
               </div>
             </nav>
           </SheetContent>
@@ -140,8 +182,16 @@ export const Header = () => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-48">
-              {isSignedIn ? (
+              {isAuthenticated ? (
                 <>
+                  {user && (
+                    <>
+                      <div className="px-2 py-1.5 text-sm font-medium">
+                        {user.name}
+                      </div>
+                      <DropdownMenuSeparator />
+                    </>
+                  )}
                   <DropdownMenuItem asChild>
                     <Link to="/my-orders" className="flex items-center gap-2 cursor-pointer">
                       <Package className="h-4 w-4" />
@@ -163,7 +213,10 @@ export const Header = () => {
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     className="flex items-center gap-2 cursor-pointer"
-                    onClick={() => setIsSignedIn(false)}
+                    onClick={() => {
+                      logout();
+                      navigate('/');
+                    }}
                   >
                     <LogOut className="h-4 w-4" />
                     <span>{t('accountMenu.signOut')}</span>
@@ -172,7 +225,7 @@ export const Header = () => {
               ) : (
                 <DropdownMenuItem
                   className="flex items-center gap-2 cursor-pointer"
-                  onClick={() => setIsSignedIn(true)}
+                  onClick={() => navigate('/login')}
                 >
                   <LogIn className="h-4 w-4" />
                   <span>{t('accountMenu.signIn')}</span>

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-E-commerce website for modest fashion (Daffa for Abayat) built with:
+E-commerce website for modest fashion (DAFFAfor Abayat) built with:
 - **React 18.3** + **TypeScript 5.8** + **Vite**
 - **shadcn/ui** (52 components) built on Radix UI
 - **Tailwind CSS** with custom design system

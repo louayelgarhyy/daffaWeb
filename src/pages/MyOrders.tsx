@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Package, ChevronRight, ShoppingBag } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { PageTransition } from "@/components/PageTransition";
 import { Badge } from "@/components/ui/badge";
 import type { Order } from "@/types/order";
 
@@ -48,7 +49,8 @@ const MyOrders = () => {
 
   if (sortedOrders.length === 0) {
     return (
-      <div className="min-h-screen bg-background">
+      <PageTransition>
+        <div className="min-h-screen bg-background">
         <div className="bg-card-secondary py-12 border-b border-border">
           <div className="container px-4">
             <h1 className="text-4xl font-bold text-foreground">{t('common:myOrders.title')}</h1>
@@ -68,12 +70,14 @@ const MyOrders = () => {
             </Link>
           </div>
         </div>
-      </div>
+        </div>
+      </PageTransition>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <PageTransition>
+      <div className="min-h-screen bg-background">
       <div className="bg-card-secondary py-12 border-b border-border">
         <div className="container px-4">
           <h1 className="text-4xl font-bold text-foreground">{t('common:myOrders.title')}</h1>
@@ -156,7 +160,8 @@ const MyOrders = () => {
           ))}
         </div>
       </div>
-    </div>
+      </div>
+    </PageTransition>
   );
 };
 

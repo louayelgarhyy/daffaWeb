@@ -1,0 +1,49 @@
+{
+  "hero": {
+    "title": "تواصل معنا",
+    "subtitle": "نحب أن نسمع منك. تواصل معنا بأي أسئلة أو ملاحظات."
+  },
+  "form": {
+    "title": "أرسل لنا رسالة",
+    "name": "الاسم الكامل",
+    "namePlaceholder": "أدخل اسمك",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "phone": "رقم الهاتف",
+    "phonePlaceholder": "أدخل رقم هاتفك",
+    "subject": "الموضوع",
+    "subjectPlaceholder": "ما هو الموضوع؟",
+    "message": "الرسالة",
+    "messagePlaceholder": "اكتب رسالتك هنا...",
+    "submit": "إرسال الرسالة",
+    "sending": "جارٍ الإرسال..."
+  },
+  "info": {
+    "title": "تواصل معنا",
+    "phone": {
+      "title": "الهاتف",
+      "value": "+974 1234 5678"
+    },
+    "email": {
+      "title": "البريد الإلكتروني",
+      "value": "info@daffaabayat.com"
+    },
+    "address": {
+      "title": "العنوان",
+      "value": "123 شارع الموضة، الدوحة، قطر"
+    }
+  },
+  "validation": {
+    "nameRequired": "الاسم مطلوب",
+    "nameMin": "يجب أن يكون الاسم على الأقل حرفين",
+    "emailRequired": "البريد الإلكتروني مطلوب",
+    "emailInvalid": "يرجى إدخال عنوان بريد إلكتروني صحيح",
+    "phoneRequired": "رقم الهاتف مطلوب",
+    "phoneInvalid": "يرجى إدخال رقم هاتف صحيح",
+    "subjectRequired": "الموضوع مطلوب",
+    "messageRequired": "الرسالة مطلوبة",
+    "messageMin": "يجب أن تكون الرسالة على الأقل 10 أحرف"
+  },
+  "success": "شكراً لرسالتك! سنتواصل معك قريباً.",
+  "error": "حدث خطأ ما. يرجى المحاولة مرة أخرى."
+}

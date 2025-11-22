@@ -1,4 +1,4 @@
-# Daffa for Abayat - Elegant Modest Fashion
+# DAFFAfor Abayat - Elegant Modest Fashion
 
 E-commerce website for premium abayas combining traditional modesty with modern sophistication.
 

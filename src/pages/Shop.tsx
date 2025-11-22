@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ProductCard } from "@/components/products/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { PageTransition } from "@/components/PageTransition";
 import { SlidersHorizontal } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -81,7 +82,8 @@ const Shop = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <PageTransition>
+      <div className="min-h-screen bg-background">
       {/* Page Header */}
       <div className="bg-card-secondary py-12 border-b border-border">
         <div className="container px-4">
@@ -136,7 +138,8 @@ const Shop = () => {
           </Button>
         </div>
       </div>
-    </div>
+      </div>
+    </PageTransition>
   );
 };
 

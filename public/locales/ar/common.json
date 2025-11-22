@@ -45,7 +45,8 @@
     "deleteConfirm": "حذف هذا العنوان؟",
     "deleteDesc": "لا يمكن التراجع عن هذا الإجراء.",
     "cancel": "إلغاء",
-    "confirmDelete": "نعم، احذف"
+    "confirmDelete": "نعم، احذف",
+    "addedSuccess": "تم إضافة العنوان بنجاح"
   },
   "footer": {
     "quickLinks": "روابط سريعة",

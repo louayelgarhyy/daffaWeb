@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Heart, Star, Truck, Shield, RefreshCw, ChevronLeft } from "lucide-react";
 import { toast } from "sonner";
+import { PageTransition } from "@/components/PageTransition";
 import { useTranslation } from "react-i18next";
 
 const ProductDetail = () => {
@@ -50,7 +51,8 @@ const ProductDetail = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <PageTransition>
+      <div className="min-h-screen bg-background">
       <div className="container px-4 py-8">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-6">
@@ -218,7 +220,8 @@ const ProductDetail = () => {
           </ul>
         </div>
       </div>
-    </div>
+      </div>
+    </PageTransition>
   );
 };
 

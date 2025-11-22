@@ -10,7 +10,7 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Daffa Abayat Brand Colors - Exact Match to Mobile App */
+    /* DAFFAAbayat Brand Colors - Exact Match to Mobile App */
     --background: 0 0% 100%; /* #FFFFFF */
     --foreground: 213 41% 6%; /* #090E14 - black text */
 

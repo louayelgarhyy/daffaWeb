@@ -6,6 +6,7 @@ import { BannerCarousel } from "@/components/ui/banner-carousel";
 import { Animation } from "@/components/ui/animation";
 import { Banner } from "@/components/ui/banner";
 import { CustomCursor } from "@/components/ui/custom-cursor";
+import { PageTransition } from "@/components/PageTransition";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useState } from "react";
@@ -91,12 +92,13 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Custom Cursor Effect */}
-      {!isMobile && <CustomCursor isActive={isCursorActive} />}
-      
-      {/* Promotional Banner */}
-      <Banner
+    <PageTransition>
+      <div className="min-h-screen bg-background">
+        {/* Custom Cursor Effect */}
+        {!isMobile && <CustomCursor isActive={isCursorActive} />}
+
+        {/* Promotional Banner */}
+        <Banner
         variant="promotional"
         message={t('home:banner.grandOpening')}
         action={{
@@ -108,8 +110,8 @@ const Home = () => {
 
       {/* Hero Carousel Section */}
       <div 
-        onMouseEnter={() => !isMobile && setIsCursorActive(true)}
-        onMouseLeave={() => !isMobile && setIsCursorActive(false)}
+        // onMouseEnter={() => !isMobile && setIsCursorActive(true)}
+        // onMouseLeave={() => !isMobile && setIsCursorActive(false)}
       >
         <BannerCarousel slides={bannerSlides} />
       </div>
@@ -226,7 +228,8 @@ const Home = () => {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+    </PageTransition>
   );
 };
 

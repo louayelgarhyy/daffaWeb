@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { CheckCircle2, Package, Printer, ShoppingBag } from "lucide-react";
+import { PageTransition } from "@/components/PageTransition";
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -41,8 +42,9 @@ const OrderConfirmation = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="container px-4 py-12">
+    <PageTransition>
+      <div className="min-h-screen bg-background">
+        <div className="container px-4 py-12">
         {/* Success Icon & Message */}
         <div className="max-w-3xl mx-auto text-center mb-12">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-success/10 rounded-full mb-6">
@@ -246,7 +248,8 @@ const OrderConfirmation = () => {
           </p>
         </div>
       </div>
-    </div>
+      </div>
+    </PageTransition>
   );
 };
 

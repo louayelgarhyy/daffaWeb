@@ -115,14 +115,14 @@ export const BannerCarousel = ({
       {/* Navigation Arrows */}
       <button
         onClick={handlePrev}
-        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 bg-background/80 hover:bg-background text-foreground p-2 sm:p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 backdrop-blur-sm"
+        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 bg-background/10 hover:bg-background text-foreground p-2 sm:p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 backdrop-blur-sm"
         aria-label="Previous slide"
       >
         <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6" />
       </button>
       <button
         onClick={handleNext}
-        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 bg-background/80 hover:bg-background text-foreground p-2 sm:p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 backdrop-blur-sm"
+        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 bg-background/10 hover:bg-background text-foreground p-2 sm:p-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 backdrop-blur-sm"
         aria-label="Next slide"
       >
         <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6" />

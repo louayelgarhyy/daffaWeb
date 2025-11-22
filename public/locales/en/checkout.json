@@ -16,7 +16,10 @@
     "title": "Saved Addresses",
     "selectAddress": "Select a saved address",
     "useNewAddress": "Use a new address",
-    "saveThisAddress": "Save this address for future use"
+    "saveThisAddress": "Save this address for future use",
+    "noAddresses": "No Saved Addresses",
+    "noAddressesDesc": "Add an address to proceed with checkout",
+    "addAddress": "Add Address"
   },
   "shipping": {
     "title": "Shipping Address",
@@ -73,6 +76,12 @@
     "backToCart": "Back to Cart",
     "placeOrder": "Place Order",
     "processing": "Processing..."
+  },
+  "success": {
+    "title": "Order Placed Successfully!",
+    "orderNumber": "Order #",
+    "message": "Thank you for your order. You will be redirected to order details...",
+    "viewOrder": "View Order Details"
   },
   "validation": {
     "emailRequired": "Email is required",

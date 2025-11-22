@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Trash2, Plus, Minus, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
+import { PageTransition } from "@/components/PageTransition";
 import { useTranslation } from "react-i18next";
 
 const Cart = () => {
@@ -47,24 +48,27 @@ const Cart = () => {
 
   if (cartItems.length === 0) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center space-y-4">
-          <ShoppingBag className="h-16 w-16 mx-auto text-muted-foreground" />
-          <h2 className="text-2xl font-bold text-foreground">{t('cart:empty.title')}</h2>
-          <p className="text-muted-foreground">{t('cart:empty.description')}</p>
-          <Link to="/shop">
-            <Button className="bg-primary hover:bg-primary-hover text-primary-foreground">
-              {t('cart:empty.cta')}
-            </Button>
-          </Link>
+      <PageTransition>
+        <div className="min-h-screen bg-background flex items-center justify-center">
+          <div className="text-center space-y-4">
+            <ShoppingBag className="h-16 w-16 mx-auto text-muted-foreground" />
+            <h2 className="text-2xl font-bold text-foreground">{t('cart:empty.title')}</h2>
+            <p className="text-muted-foreground">{t('cart:empty.description')}</p>
+            <Link to="/shop">
+              <Button className="bg-primary hover:bg-primary-hover text-primary-foreground">
+                {t('cart:empty.cta')}
+              </Button>
+            </Link>
+          </div>
         </div>
-      </div>
+      </PageTransition>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="bg-card-secondary py-12 border-b border-border">
+    <PageTransition>
+      <div className="min-h-screen bg-background">
+        <div className="bg-card-secondary py-12 border-b border-border">
         <div className="container px-4">
           <h1 className="text-4xl font-bold text-foreground">{t('cart:title')}</h1>
           <p className="text-muted-foreground mt-2">{t('cart:itemCount', { count: cartItems.length })}</p>
@@ -183,7 +187,8 @@ const Cart = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </PageTransition>
   );
 };
 

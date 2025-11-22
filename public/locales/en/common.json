@@ -1,6 +1,6 @@
 {
   "brand": {
-    "name": "Daffa for Abayat",
+    "name": "DAFFAfor Abayat",
     "tagline": "Elegant modest fashion for the modern woman",
     "description": "Elegant modest fashion for the modern woman. Quality craftsmanship meets timeless style."
   },
@@ -45,7 +45,8 @@
     "deleteConfirm": "Delete this address?",
     "deleteDesc": "This action cannot be undone.",
     "cancel": "Cancel",
-    "confirmDelete": "Yes, Delete"
+    "confirmDelete": "Yes, Delete",
+    "addedSuccess": "Address added successfully"
   },
   "footer": {
     "quickLinks": "Quick Links",
@@ -59,7 +60,7 @@
     "address": "123 Fashion Street, City, Country",
     "phone": "+1 234 567 8900",
     "email": "info@daffaabayat.com",
-    "copyright": "© {{year}} Daffa for Abayat. All rights reserved."
+    "copyright": "© {{year}} DAFFAfor Abayat. All rights reserved."
   },
   "buttons": {
     "shopNow": "Shop Now",

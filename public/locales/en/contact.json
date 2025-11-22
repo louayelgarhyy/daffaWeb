@@ -1,0 +1,49 @@
+{
+  "hero": {
+    "title": "Contact Us",
+    "subtitle": "We'd love to hear from you. Reach out with any questions or feedback."
+  },
+  "form": {
+    "title": "Send us a Message",
+    "name": "Full Name",
+    "namePlaceholder": "Enter your name",
+    "email": "Email Address",
+    "emailPlaceholder": "Enter your email",
+    "phone": "Phone Number",
+    "phonePlaceholder": "Enter your phone number",
+    "subject": "Subject",
+    "subjectPlaceholder": "What is this regarding?",
+    "message": "Message",
+    "messagePlaceholder": "Write your message here...",
+    "submit": "Send Message",
+    "sending": "Sending..."
+  },
+  "info": {
+    "title": "Get in Touch",
+    "phone": {
+      "title": "Phone",
+      "value": "+974 1234 5678"
+    },
+    "email": {
+      "title": "Email",
+      "value": "info@daffaabayat.com"
+    },
+    "address": {
+      "title": "Address",
+      "value": "123 Fashion Street, Doha, Qatar"
+    }
+  },
+  "validation": {
+    "nameRequired": "Name is required",
+    "nameMin": "Name must be at least 2 characters",
+    "emailRequired": "Email is required",
+    "emailInvalid": "Please enter a valid email address",
+    "phoneRequired": "Phone number is required",
+    "phoneInvalid": "Please enter a valid phone number",
+    "subjectRequired": "Subject is required",
+    "messageRequired": "Message is required",
+    "messageMin": "Message must be at least 10 characters"
+  },
+  "success": "Thank you for your message! We'll get back to you soon.",
+  "error": "Something went wrong. Please try again."
+}

@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { PageTransition } from "@/components/PageTransition";
 import {
   Package,
   MapPin,
@@ -83,7 +84,8 @@ const OrderDetails = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <PageTransition>
+      <div className="min-h-screen bg-background">
       {/* Header */}
       <div className="bg-card-secondary py-8 border-b border-border">
         <div className="container px-4">
@@ -376,7 +378,8 @@ const OrderDetails = () => {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </PageTransition>
   );
 };
 
