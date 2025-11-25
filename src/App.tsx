@@ -21,6 +21,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import CategoryPage from "./pages/CategoryPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -90,6 +91,12 @@ const AppContent = () => {
                 <Route path="/about" element={<About />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/profile" element={<NotFound />} />
+
+                {/* Category routes */}
+                <Route path="/:category" element={<CategoryPage />} />
+                <Route path="/:category/:subcategory" element={<CategoryPage />} />
+
+                {/* 404 - Must be last */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </AnimatePresence>

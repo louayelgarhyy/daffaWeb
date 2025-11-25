@@ -7,6 +7,8 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/use-auth";
 import { LoginRequiredDialog } from "@/components/LoginRequiredDialog";
 import { toast } from "sonner";
+import { subcategories } from "@/data/subcategories";
+import { Badge } from "@/components/ui/badge";
 
 interface ProductCardProps {
   id: string;
@@ -16,6 +18,9 @@ interface ProductCardProps {
   rating?: number;
   reviews?: number;
   discount?: number;
+  categoryId?: string;
+  subcategoryId?: string;
+  delay?: number;
 }
 
 export const ProductCard = ({
@@ -26,12 +31,21 @@ export const ProductCard = ({
   rating = 0,
   reviews = 0,
   discount,
+  subcategoryId,
 }: ProductCardProps) => {
   const { t, i18n } = useTranslation('common');
   const { isAuthenticated } = useAuth();
   const [isLiked, setIsLiked] = useState(false);
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const isRTL = i18n.language === 'ar';
+
+  // Get subcategory name for badge
+  const subcategory = subcategoryId
+    ? subcategories.find(sub => sub.id === subcategoryId)
+    : null;
+  const subcategoryName = subcategory
+    ? (isRTL ? subcategory.nameAr : subcategory.name)
+    : null;
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -79,6 +93,12 @@ export const ProductCard = ({
             {name}
           </h3>
         </Link>
+
+        {subcategoryName && (
+          <Badge variant="secondary" className="text-xs">
+            {subcategoryName}
+          </Badge>
+        )}
 
         {rating > 0 && (
           <div className="flex items-center gap-1 text-sm">

@@ -1,0 +1,37 @@
+{
+  "title": "Categories",
+  "allProducts": {
+    "name": "All Products",
+    "description": "Browse all our modest fashion collection"
+  },
+  "abayas": {
+    "name": "Abayas",
+    "description": "Elegant abayas for every occasion",
+    "subcategories": {
+      "embroidered": {
+        "name": "Embroidered Abayas",
+        "description": "Beautifully embroidered abayas with intricate designs"
+      },
+      "plain": {
+        "name": "Plain Abayas",
+        "description": "Simple and elegant plain abayas for everyday wear"
+      },
+      "casual": {
+        "name": "Casual Abayas",
+        "description": "Comfortable and stylish abayas for daily activities"
+      },
+      "formal": {
+        "name": "Formal Abayas",
+        "description": "Luxurious abayas perfect for special occasions and parties"
+      },
+      "butterfly": {
+        "name": "Butterfly Abayas",
+        "description": "Flowing butterfly-style abayas with wide sleeves"
+      },
+      "open": {
+        "name": "Open Abayas",
+        "description": "Modern open-front abayas with elegant draping"
+      }
+    }
+  }
+}

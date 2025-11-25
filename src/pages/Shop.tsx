@@ -1,85 +1,35 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { ProductCard } from "@/components/products/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PageTransition } from "@/components/PageTransition";
+import { CategoryFilterModal } from "@/components/products/CategoryFilterModal";
 import { SlidersHorizontal } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { products as allProducts } from "@/data/products";
 
 const Shop = () => {
   const { t } = useTranslation(['shop', 'common']);
   const [sortBy, setSortBy] = useState("featured");
+  const [filterOpen, setFilterOpen] = useState(false);
 
-  // Mock products data
-  const products = [
-    {
-      id: "1",
-      name: t('shop:products.classicBlack'),
-      price: 89.99,
-      image: "https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=400&h=500&fit=crop",
-      rating: 4.8,
-      reviews: 124
-    },
-    {
-      id: "2",
-      name: t('shop:products.elegantNavy'),
-      price: 94.99,
-      image: "https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?w=400&h=500&fit=crop",
-      rating: 4.9,
-      reviews: 98
-    },
-    {
-      id: "3",
-      name: t('shop:products.modernGrey'),
-      price: 79.99,
-      image: "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=400&h=500&fit=crop",
-      rating: 4.7,
-      reviews: 156,
-      discount: 15
-    },
-    {
-      id: "4",
-      name: t('shop:products.premiumWhite'),
-      price: 99.99,
-      image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=500&fit=crop",
-      rating: 4.9,
-      reviews: 203
-    },
-    {
-      id: "5",
-      name: t('shop:products.designerBeige'),
-      price: 109.99,
-      image: "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400&h=500&fit=crop",
-      rating: 4.8,
-      reviews: 87,
-      discount: 20
-    },
-    {
-      id: "6",
-      name: t('shop:products.luxuryChampagne'),
-      price: 119.99,
-      image: "https://images.unsplash.com/photo-1558769132-cb1aea1f8cf5?w=400&h=500&fit=crop",
-      rating: 5.0,
-      reviews: 145
-    },
-    {
-      id: "7",
-      name: t('shop:products.embroideredBlack'),
-      price: 129.99,
-      image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400&h=500&fit=crop",
-      rating: 4.9,
-      reviews: 112
-    },
-    {
-      id: "8",
-      name: t('shop:products.casualDenim'),
-      price: 84.99,
-      image: "https://images.unsplash.com/photo-1467043237213-65f2da53396f?w=400&h=500&fit=crop",
-      rating: 4.6,
-      reviews: 78,
-      discount: 10
+  // Sort products based on selected option
+  const products = useMemo(() => {
+    let sorted = [...allProducts];
+
+    switch (sortBy) {
+      case "price-low":
+        return sorted.sort((a, b) => a.price - b.price);
+      case "price-high":
+        return sorted.sort((a, b) => b.price - a.price);
+      case "rating":
+        return sorted.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+      case "newest":
+        return sorted.reverse();
+      default:
+        return sorted;
     }
-  ];
+  }, [sortBy]);
 
   return (
     <PageTransition>
@@ -98,7 +48,11 @@ const Shop = () => {
         {/* Filters and Sort */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <div className="flex items-center gap-3">
-            <Button variant="outline" size="sm">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setFilterOpen(true)}
+            >
               <SlidersHorizontal className="h-4 w-4 me-2" />
               {t('shop:filters.title')}
             </Button>
@@ -126,8 +80,8 @@ const Shop = () => {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((product) => (
-            <ProductCard key={product.id} {...product} />
+          {products.map((product, index) => (
+            <ProductCard key={product.id} {...product} delay={index * 100} />
           ))}
         </div>
 
@@ -138,6 +92,9 @@ const Shop = () => {
           </Button>
         </div>
       </div>
+
+      {/* Mobile Filter Modal */}
+      <CategoryFilterModal open={filterOpen} onOpenChange={setFilterOpen} />
       </div>
     </PageTransition>
   );

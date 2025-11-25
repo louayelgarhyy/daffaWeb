@@ -1,0 +1,58 @@
+import type { Subcategory } from '@/types/product';
+
+export const subcategories: Subcategory[] = [
+  {
+    id: 'embroidered',
+    name: 'Embroidered Abayas',
+    nameAr: 'عبايات مطرزة',
+    slug: 'embroidered',
+    categoryId: 'abayas',
+    description: 'Beautifully embroidered abayas with intricate designs',
+    descriptionAr: 'عبايات مطرزة بشكل جميل مع تصاميم معقدة',
+  },
+  {
+    id: 'plain',
+    name: 'Plain Abayas',
+    nameAr: 'عبايات سادة',
+    slug: 'plain',
+    categoryId: 'abayas',
+    description: 'Simple and elegant plain abayas for everyday wear',
+    descriptionAr: 'عبايات سادة بسيطة وأنيقة للاستخدام اليومي',
+  },
+  {
+    id: 'casual',
+    name: 'Casual Abayas',
+    nameAr: 'عبايات كاجوال',
+    slug: 'casual',
+    categoryId: 'abayas',
+    description: 'Comfortable and stylish abayas for daily activities',
+    descriptionAr: 'عبايات مريحة وأنيقة للأنشطة اليومية',
+  },
+  {
+    id: 'formal',
+    name: 'Formal Abayas',
+    nameAr: 'عبايات رسمية',
+    slug: 'formal',
+    categoryId: 'abayas',
+    description: 'Luxurious abayas perfect for special occasions and parties',
+    descriptionAr: 'عبايات فاخرة مثالية للمناسبات الخاصة والحفلات',
+  },
+  {
+    id: 'butterfly',
+    name: 'Butterfly Abayas',
+    nameAr: 'عبايات فراشة',
+    slug: 'butterfly',
+    categoryId: 'abayas',
+    description: 'Flowing butterfly-style abayas with wide sleeves',
+    descriptionAr: 'عبايات بأسلوب الفراشة المتدفق مع أكمام واسعة',
+  },
+  {
+    id: 'open',
+    name: 'Open Abayas',
+    nameAr: 'عبايات مفتوحة',
+    slug: 'open',
+    categoryId: 'abayas',
+    description: 'Modern open-front abayas with elegant draping',
+    descriptionAr: 'عبايات حديثة مفتوحة من الأمام مع تصاميم أنيقة',
+  },
+];

@@ -12,6 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { CategoryNav } from "@/components/layout/CategoryNav";
 import { useAuth } from "@/hooks/use-auth";
 
 export const Header = () => {
@@ -22,6 +23,7 @@ export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
+    <>
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
       <div className="container flex h-16 items-center justify-between px-4">
         {/* Mobile Menu */}
@@ -247,5 +249,7 @@ export const Header = () => {
         </div>
       </div>
     </header>
+    <CategoryNav />
+    </>
   );
 };
