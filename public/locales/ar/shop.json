@@ -5,7 +5,25 @@
   },
   "filters": {
     "title": "الفلاتر",
-    "showingResults": "عرض {{count}} منتج"
+    "showingResults": "عرض {{count}} منتج",
+    "filter": "فلتر",
+    "products": "منتجات",
+    "sortBy": "ترتيب حسب",
+    "priceRange": "نطاق السعر",
+    "rating": "التقييم",
+    "availability": "التوفر",
+    "sizes": "المقاسات",
+    "inStockOnly": "متوفر فقط",
+    "onSale": "عرض خاص",
+    "anyRating": "أي تقييم",
+    "starsAndUp": "{{rating}}+ نجوم",
+    "fiveStars": "5 نجوم",
+    "applyFilters": "تطبيق الفلاتر",
+    "clearAll": "مسح الكل",
+    "featured": "مميز",
+    "priceLow": "السعر: من الأقل للأعلى",
+    "priceHigh": "السعر: من الأعلى للأقل",
+    "newest": "الأحدث"
   },
   "sorting": {
     "label": "ترتيب حسب:",
@@ -27,5 +45,9 @@
   },
   "actions": {
     "loadMore": "تحميل المزيد من المنتجات"
-  }
+  },
+  "noProductsMatchFilters": "لا توجد منتجات تطابق الفلاتر",
+  "clearFilters": "مسح الفلاتر",
+  "noProducts": "لم يتم العثور على منتجات",
+  "loadMore": "تحميل المزيد"
 }

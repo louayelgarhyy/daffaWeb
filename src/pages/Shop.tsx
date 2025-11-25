@@ -1,21 +1,43 @@
 import { useState, useMemo } from "react";
 import { ProductCard } from "@/components/products/ProductCard";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PageTransition } from "@/components/PageTransition";
-import { CategoryFilterModal } from "@/components/products/CategoryFilterModal";
+import { ProductFilterModal } from "@/components/products/ProductFilterModal";
 import { SlidersHorizontal } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { products as allProducts } from "@/data/products";
+import { filterProducts, getAvailableSizes, getDefaultFilters, getActiveFilterCount } from "@/utils/filterProducts";
+import type { ProductFilters } from "@/types/filters";
 
 const Shop = () => {
   const { t } = useTranslation(['shop', 'common']);
   const [sortBy, setSortBy] = useState("featured");
   const [filterOpen, setFilterOpen] = useState(false);
+  const [appliedFilters, setAppliedFilters] = useState<ProductFilters>(() =>
+    getDefaultFilters(allProducts)
+  );
 
-  // Sort products based on selected option
+  // Calculate default filters and available sizes
+  const defaultFilters = useMemo(() => getDefaultFilters(allProducts), []);
+  const availableSizes = useMemo(() => getAvailableSizes(allProducts), []);
+
+  // Apply attribute filters
+  const filteredProducts = useMemo(() =>
+    filterProducts(allProducts, appliedFilters),
+    [appliedFilters]
+  );
+
+  // Calculate active filter count
+  const activeFilterCount = useMemo(() =>
+    getActiveFilterCount(appliedFilters, defaultFilters),
+    [appliedFilters, defaultFilters]
+  );
+
+  // Sort filtered products
   const products = useMemo(() => {
-    let sorted = [...allProducts];
+    let sorted = [...filteredProducts];
 
     switch (sortBy) {
       case "price-low":
@@ -29,7 +51,7 @@ const Shop = () => {
       default:
         return sorted;
     }
-  }, [sortBy]);
+  }, [filteredProducts, sortBy]);
 
   return (
     <PageTransition>
@@ -52,9 +74,18 @@ const Shop = () => {
               variant="outline"
               size="sm"
               onClick={() => setFilterOpen(true)}
+              className="relative"
             >
               <SlidersHorizontal className="h-4 w-4 me-2" />
               {t('shop:filters.title')}
+              {activeFilterCount > 0 && (
+                <Badge
+                  variant="default"
+                  className="ms-2 h-5 w-5 p-0 flex items-center justify-center rounded-full text-xs"
+                >
+                  {activeFilterCount}
+                </Badge>
+              )}
             </Button>
             <span className="text-sm text-muted-foreground">
               {t('common:common.showingResults', { count: products.length })}
@@ -79,22 +110,47 @@ const Shop = () => {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((product, index) => (
-            <ProductCard key={product.id} {...product} delay={index * 100} />
-          ))}
-        </div>
+        {products.length > 0 ? (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {products.map((product, index) => (
+                <ProductCard key={product.id} {...product} delay={index * 100} />
+              ))}
+            </div>
 
-        {/* Load More */}
-        <div className="text-center mt-12">
-          <Button variant="outline" size="lg" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-            {t('shop:actions.loadMore')}
-          </Button>
-        </div>
+            {/* Load More */}
+            {products.length >= 12 && (
+              <div className="text-center mt-12">
+                <Button variant="outline" size="lg" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+                  {t('shop:actions.loadMore')}
+                </Button>
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="text-center py-16 space-y-4">
+            <p className="text-muted-foreground text-lg">
+              {t('shop:noProductsMatchFilters')}
+            </p>
+            <Button
+              variant="outline"
+              onClick={() => setAppliedFilters(defaultFilters)}
+            >
+              {t('shop:clearFilters')}
+            </Button>
+          </div>
+        )}
       </div>
 
-      {/* Mobile Filter Modal */}
-      <CategoryFilterModal open={filterOpen} onOpenChange={setFilterOpen} />
+      {/* Filter Modal */}
+      <ProductFilterModal
+        open={filterOpen}
+        onOpenChange={setFilterOpen}
+        filters={appliedFilters}
+        onApplyFilters={setAppliedFilters}
+        availableProducts={allProducts}
+        availableSizes={availableSizes}
+      />
       </div>
     </PageTransition>
   );

@@ -5,7 +5,25 @@
   },
   "filters": {
     "title": "Filters",
-    "showingResults": "Showing {{count}} products"
+    "showingResults": "Showing {{count}} products",
+    "filter": "Filter",
+    "products": "products",
+    "sortBy": "Sort by",
+    "priceRange": "Price Range",
+    "rating": "Rating",
+    "availability": "Availability",
+    "sizes": "Sizes",
+    "inStockOnly": "In Stock Only",
+    "onSale": "On Sale",
+    "anyRating": "Any Rating",
+    "starsAndUp": "{{rating}}+ Stars",
+    "fiveStars": "5 Stars",
+    "applyFilters": "Apply Filters",
+    "clearAll": "Clear All",
+    "featured": "Featured",
+    "priceLow": "Price: Low to High",
+    "priceHigh": "Price: High to Low",
+    "newest": "Newest"
   },
   "sorting": {
     "label": "Sort by:",
@@ -27,5 +45,9 @@
   },
   "actions": {
     "loadMore": "Load More Products"
-  }
+  },
+  "noProductsMatchFilters": "No products match your filters",
+  "clearFilters": "Clear Filters",
+  "noProducts": "No products found",
+  "loadMore": "Load More"
 }
