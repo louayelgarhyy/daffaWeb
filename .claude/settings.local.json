@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(git log:*)",
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []

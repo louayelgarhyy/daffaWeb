@@ -133,3 +133,17 @@ The production build can be deployed to any static hosting service:
 ## License
 
 All rights reserved.
+
+## Lovable Integration
+
+This project was originally created with [Lovable](https://lovable.dev) and maintains integration for AI-assisted development.
+
+### Editing via Lovable
+
+- **Project URL:** https://lovable.dev/projects/5275f443-aee7-435f-aabf-b484ef43a523
+- Use the Lovable dashboard to make AI-assisted changes
+- Changes pushed to GitHub will sync back to Lovable automatically
+
+### How It Works
+
+The project uses `lovable-tagger` plugin in development mode to tag React components, enabling Lovable to understand and modify your component structure intelligently.
