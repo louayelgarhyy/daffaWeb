@@ -30,6 +30,25 @@
     "modernGrey": "عباية رمادية عصرية",
     "premiumWhite": "عباية بيضاء فاخرة"
   },
+  "sections": {
+    "allAbayas": {
+      "title": "جميع العبايات",
+      "subtitle": "تصفح جميع تصاميم العبايات",
+      "viewMore": "عرض المزيد"
+    },
+    "bestSellers": {
+      "title": "الأكثر مبيعا",
+      "subtitle": "المنتجات الأكثر مبيعاً"
+    },
+    "latestLooks": {
+      "title": "أحدث إطلالة",
+      "subtitle": "أحدث التصاميم العصرية"
+    },
+    "testimonials": {
+      "title": "آراء العملاء",
+      "subtitle": "ماذا يقول عملاؤنا عنا"
+    }
+  },
   "whyChoose": {
     "title": "لماذا تختار دفة؟",
     "description": "نقدم أرقى العبايات بجودة عالية وأسعار منافسة"

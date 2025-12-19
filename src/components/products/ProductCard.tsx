@@ -60,9 +60,9 @@ export const ProductCard = ({
   };
 
   return (
-    <Card className="group relative overflow-hidden border-border hover:shadow-lg transition-all duration-300">
+    <Card className="group relative overflow-hidden border border-border hover:shadow-md transition-all duration-300 bg-card">
       <Link to={`/product/${id}`}>
-        <div className="relative aspect-[3/4] overflow-hidden bg-card-secondary">
+        <div className="relative h-[17rem] overflow-hidden bg-card-secondary">
           <img
             src={image}
             alt={name}
@@ -89,7 +89,7 @@ export const ProductCard = ({
 
       <CardContent className="p-4 space-y-3">
         <Link to={`/product/${id}`}>
-          <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
+          <h3 className="font-semibold text-foreground group-hover:text-foreground/70 transition-colors">
             {name}
           </h3>
         </Link>
@@ -112,7 +112,7 @@ export const ProductCard = ({
           <div className="space-y-1">
             {discount ? (
               <>
-                <p className="text-lg font-bold text-primary">
+                <p className="text-lg font-bold text-foreground">
                   {isRTL ? `${(price * (1 - discount / 100)).toFixed(2)} ${t('common.currency')}` : `${t('common.currency')} ${(price * (1 - discount / 100)).toFixed(2)}`}
                 </p>
                 <p className="text-sm text-muted-foreground line-through">
@@ -120,7 +120,7 @@ export const ProductCard = ({
                 </p>
               </>
             ) : (
-              <p className="text-lg font-bold text-primary">
+              <p className="text-lg font-bold text-foreground">
                 {isRTL ? `${price.toFixed(2)} ${t('common.currency')}` : `${t('common.currency')} ${price.toFixed(2)}`}
               </p>
             )}
@@ -128,7 +128,7 @@ export const ProductCard = ({
 
           <Button
             size="icon"
-            className="bg-primary hover:bg-primary-hover text-primary-foreground rounded-full"
+            className="bg-foreground hover:bg-foreground/90 text-background rounded-full transition-colors"
             onClick={handleAddToCart}
           >
             <ShoppingCart className="h-4 w-4" />

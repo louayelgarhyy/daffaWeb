@@ -61,11 +61,17 @@ export default {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      backdropBlur: {
+        xs: "2px",
+        sm: "4px",
+        "20": "20px", // For serdababaya.com loading overlay
+      },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "spin-slow": "spin 3s linear infinite",
         "spin-reverse": "spin-reverse 3s linear infinite",
+        "bounce-scale": "bounce-scale 1s ease-in-out infinite",
       },
       keyframes: {
         ...({
@@ -91,6 +97,14 @@ export default {
             },
             to: {
               transform: "rotate(0deg)",
+            },
+          },
+          "bounce-scale": {
+            "0%, 100%": {
+              transform: "scale(0.7)",
+            },
+            "50%": {
+              transform: "scale(1.2)",
             },
           },
         } as const),

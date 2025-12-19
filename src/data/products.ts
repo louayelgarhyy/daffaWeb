@@ -13,6 +13,7 @@ export const products: Product[] = [
     subcategoryId: 'embroidered',
     inStock: true,
     sizes: ['S', 'M', 'L', 'XL'],
+    tags: ['all', 'bestseller'],
   },
   {
     id: "2",
@@ -26,6 +27,7 @@ export const products: Product[] = [
     subcategoryId: 'formal',
     inStock: true,
     sizes: ['S', 'M', 'L', 'XL'],
+    tags: ['all', 'bestseller'],
   },
   {
     id: "3",
@@ -40,6 +42,7 @@ export const products: Product[] = [
     subcategoryId: 'casual',
     inStock: true,
     sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    tags: ['all'],
   },
   {
     id: "4",
@@ -53,6 +56,7 @@ export const products: Product[] = [
     subcategoryId: 'plain',
     inStock: true,
     sizes: ['S', 'M', 'L', 'XL'],
+    tags: ['all', 'bestseller'],
   },
   {
     id: "5",
@@ -67,6 +71,7 @@ export const products: Product[] = [
     subcategoryId: 'formal',
     inStock: true,
     sizes: ['M', 'L', 'XL'],
+    tags: ['all', 'new'],
   },
   {
     id: "6",
@@ -80,6 +85,7 @@ export const products: Product[] = [
     subcategoryId: 'formal',
     inStock: true,
     sizes: ['S', 'M', 'L', 'XL'],
+    tags: ['all', 'bestseller'],
   },
   {
     id: "7",
@@ -93,6 +99,7 @@ export const products: Product[] = [
     subcategoryId: 'embroidered',
     inStock: true,
     sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    tags: ['all', 'bestseller'],
   },
   {
     id: "8",
@@ -107,6 +114,7 @@ export const products: Product[] = [
     subcategoryId: 'casual',
     inStock: true,
     sizes: ['S', 'M', 'L', 'XL'],
+    tags: ['all'],
   },
   {
     id: "9",
@@ -120,6 +128,7 @@ export const products: Product[] = [
     subcategoryId: 'butterfly',
     inStock: true,
     sizes: ['M', 'L', 'XL'],
+    tags: ['bestseller'],
   },
   {
     id: "10",
@@ -133,6 +142,7 @@ export const products: Product[] = [
     subcategoryId: 'open',
     inStock: true,
     sizes: ['S', 'M', 'L', 'XL'],
+    tags: ['bestseller', 'new'],
   },
   {
     id: "11",
@@ -146,6 +156,7 @@ export const products: Product[] = [
     subcategoryId: 'plain',
     inStock: true,
     sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    tags: ['new'],
   },
   {
     id: "12",
@@ -160,6 +171,7 @@ export const products: Product[] = [
     subcategoryId: 'butterfly',
     inStock: true,
     sizes: ['M', 'L', 'XL'],
+    tags: ['bestseller', 'new'],
   },
   {
     id: "13",
@@ -173,6 +185,7 @@ export const products: Product[] = [
     subcategoryId: 'open',
     inStock: true,
     sizes: ['S', 'M', 'L', 'XL'],
+    tags: ['new'],
   },
   {
     id: "14",
@@ -186,6 +199,7 @@ export const products: Product[] = [
     subcategoryId: 'embroidered',
     inStock: true,
     sizes: ['S', 'M', 'L', 'XL'],
+    tags: ['bestseller', 'new'],
   },
   {
     id: "15",
@@ -200,6 +214,7 @@ export const products: Product[] = [
     subcategoryId: 'casual',
     inStock: true,
     sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    tags: ['new'],
   },
 ];
 

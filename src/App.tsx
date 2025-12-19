@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { AuthProvider } from "@/hooks/use-auth";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -30,12 +31,13 @@ const AppContent = () => {
   const location = useLocation();
 
   return (
-    <AuthProvider>
-      <div className="flex flex-col min-h-screen">
-        <Header />
-        <main className="flex-1">
-          <AnimatePresence mode="wait">
-            <Routes location={location} key={location.pathname}>
+    <ThemeProvider defaultTheme="light" storageKey="abaya-theme">
+      <AuthProvider>
+        <div className="flex flex-col min-h-screen">
+          <Header />
+          <main className="flex-1">
+            <AnimatePresence mode="wait">
+              <Routes location={location} key={location.pathname}>
                 {/* Public routes */}
                 <Route path="/" element={<Home />} />
                 <Route path="/shop" element={<Shop />} />
@@ -104,7 +106,8 @@ const AppContent = () => {
           <Footer />
         </div>
       </AuthProvider>
-    );
+    </ThemeProvider>
+  );
 };
 
 const App = () => (

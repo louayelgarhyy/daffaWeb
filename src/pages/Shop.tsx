@@ -57,7 +57,7 @@ const Shop = () => {
     <PageTransition>
       <div className="min-h-screen bg-background">
       {/* Page Header */}
-      <div className="bg-card-secondary py-12 border-b border-border">
+      <div className="bg-background py-12 border-b border-border">
         <div className="container px-4">
           <h1 className="text-4xl font-bold text-foreground mb-2">{t('shop:header.title')}</h1>
           <p className="text-muted-foreground">

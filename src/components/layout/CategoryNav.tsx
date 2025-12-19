@@ -12,7 +12,7 @@ export const CategoryNav = () => {
   const isArabic = i18n.language === 'ar';
 
   return (
-    <nav className="hidden md:block bg-card border-b border-border">
+    <nav className="hidden md:block bg-background border-b border-border sticky top-16 z-40">
       <div className="container px-4">
         <ul className="flex items-center gap-8 py-4">
           {categories.map((category) => {
@@ -32,7 +32,7 @@ export const CategoryNav = () => {
                 <Link
                   to={category.id === 'all' ? '/shop' : `/${category.slug}`}
                   className={cn(
-                    "flex items-center gap-2 text-foreground hover:text-primary transition-colors font-medium",
+                    "flex items-center gap-2 text-foreground hover:text-foreground/70 transition-colors font-medium",
                     "py-2"
                   )}
                 >
@@ -47,14 +47,14 @@ export const CategoryNav = () => {
 
                 {/* Subcategories Dropdown */}
                 {hasSubcategories && hoveredCategory === category.id && (
-                  <div className="absolute top-full left-0 mt-0 bg-card border border-border rounded-md shadow-lg py-2 min-w-[220px] z-50">
+                  <div className="absolute top-full left-0 mt-0 bg-card border border-border rounded-none shadow-xl py-2 min-w-[220px] z-50">
                     {categorySubcategories.map((subcategory) => {
                       const subcategoryName = isArabic ? subcategory.nameAr : subcategory.name;
                       return (
                         <Link
                           key={subcategory.id}
                           to={`/${category.slug}/${subcategory.slug}`}
-                          className="block px-4 py-2 text-sm text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                          className="block px-4 py-2 text-sm text-foreground hover:bg-secondary transition-colors"
                         >
                           {subcategoryName}
                         </Link>

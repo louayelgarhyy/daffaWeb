@@ -79,6 +79,11 @@
     "ar": "العربية",
     "en": "English"
   },
+  "theme": {
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode",
+    "toggleTheme": "Toggle theme"
+  },
   "common": {
     "currency": "QAR",
     "qar": "Qatar Riyal",

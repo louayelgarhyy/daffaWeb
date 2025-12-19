@@ -37,4 +37,5 @@ export interface Product {
   inStock?: boolean;
   categoryId: string;
   subcategoryId?: string;
+  tags?: ('all' | 'bestseller' | 'new')[];
 }

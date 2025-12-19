@@ -30,6 +30,25 @@
     "modernGrey": "Modern Grey Abaya",
     "premiumWhite": "Premium White Abaya"
   },
+  "sections": {
+    "allAbayas": {
+      "title": "All Abayas",
+      "subtitle": "Browse all abaya designs",
+      "viewMore": "View More"
+    },
+    "bestSellers": {
+      "title": "Best Sellers",
+      "subtitle": "Our top-selling products"
+    },
+    "latestLooks": {
+      "title": "Latest Looks",
+      "subtitle": "Newest modern designs"
+    },
+    "testimonials": {
+      "title": "Customer Reviews",
+      "subtitle": "What our customers say about us"
+    }
+  },
   "whyChoose": {
     "title": "Why Choose Daffa?",
     "description": "We offer the finest abayas with high quality and competitive prices"

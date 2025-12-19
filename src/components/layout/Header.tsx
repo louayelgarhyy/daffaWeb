@@ -1,4 +1,4 @@
-import { ShoppingCart, Search, Menu, Heart, User, Package, UserCog, LogIn, LogOut, MapPin } from "lucide-react";
+import { ShoppingCart, Search, Menu, Heart, User, Package, UserCog, LogIn, LogOut, MapPin, Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -14,11 +14,13 @@ import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { CategoryNav } from "@/components/layout/CategoryNav";
 import { useAuth } from "@/hooks/use-auth";
+import { useTheme } from "@/components/ThemeProvider";
 
 export const Header = () => {
   const { t } = useTranslation('common');
   const navigate = useNavigate();
   const { isAuthenticated, user, logout } = useAuth();
+  const { theme, setTheme } = useTheme();
   const [cartCount, setCartCount] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -87,6 +89,22 @@ export const Header = () => {
                   <Heart className="h-5 w-5" />
                   <span>{t('nav.wishlist')}</span>
                 </Link>
+                <button
+                  className="flex items-center gap-3 text-lg font-medium transition-colors hover:text-primary text-start"
+                  onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                >
+                  {theme === "dark" ? (
+                    <>
+                      <Sun className="h-5 w-5" />
+                      <span>{t('theme.lightMode')}</span>
+                    </>
+                  ) : (
+                    <>
+                      <Moon className="h-5 w-5" />
+                      <span>{t('theme.darkMode')}</span>
+                    </>
+                  )}
+                </button>
                 {isAuthenticated ? (
                   <>
                     <Link
@@ -174,6 +192,18 @@ export const Header = () => {
           </Button>
           <Button variant="ghost" size="icon" className="hidden md:inline-flex">
             <Heart className="h-5 w-5" />
+          </Button>
+
+          {/* Dark Mode Toggle */}
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="hidden md:inline-flex"
+          >
+            <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+            <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <span className="sr-only">{t('theme.toggleTheme')}</span>
           </Button>
 
           {/* Account Dropdown */}

@@ -78,7 +78,7 @@ export const BannerCarousel = ({
               transform: index === currentIndex ? "scale(1)" : "scale(1.1)"
             }}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-background/98 via-background/85 to-transparent" />
           </div>
 
           <div className="container relative z-10 h-full flex items-center px-4 sm:px-6">
@@ -137,8 +137,8 @@ export const BannerCarousel = ({
             className={cn(
               "transition-all duration-300 rounded-full",
               index === currentIndex
-                ? "w-8 sm:w-10 md:w-12 h-2 sm:h-3 bg-primary shadow-lg"
-                : "w-2 sm:w-3 h-2 sm:h-3 bg-muted hover:bg-primary/50"
+                ? "w-8 sm:w-10 md:w-12 h-2 sm:h-3 bg-foreground shadow-lg"
+                : "w-2 sm:w-3 h-2 sm:h-3 bg-muted hover:bg-foreground/50"
             )}
             aria-label={`Go to slide ${index + 1}`}
           />
