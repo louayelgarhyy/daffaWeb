@@ -60,7 +60,17 @@ export const AddressForm = ({ address, onSubmit, onCancel, submitLabel }: Addres
   const isDefault = watch('isDefault');
 
   const handleFormSubmit = (data: AddressFormValues) => {
-    onSubmit(data);
+    onSubmit({
+      title: data.title,
+      fullName: data.fullName,
+      addressLine1: data.addressLine1,
+      addressLine2: data.addressLine2,
+      city: data.city,
+      region: data.region,
+      postalCode: data.postalCode,
+      country: data.country,
+      isDefault: data.isDefault,
+    });
   };
 
   return (
