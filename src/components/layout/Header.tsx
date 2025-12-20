@@ -1,4 +1,4 @@
-import { ShoppingCart, Search, Menu, Heart, User, Package, UserCog, LogIn, LogOut, MapPin, Moon, Sun } from "lucide-react";
+import { ShoppingCart, Search, Menu, Heart, User, Package, UserCog, LogIn, LogOut, MapPin, Moon, Sun, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import {
@@ -12,17 +12,21 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import { CategoryNav } from "@/components/layout/CategoryNav";
 import { useAuth } from "@/hooks/use-auth";
 import { useTheme } from "@/components/ThemeProvider";
+import { categories } from "@/data/categories";
+import { subcategories } from "@/data/subcategories";
+import { cn } from "@/lib/utils";
 
 export const Header = () => {
-  const { t } = useTranslation('common');
+  const { t, i18n } = useTranslation('common');
   const navigate = useNavigate();
   const { isAuthenticated, user, logout } = useAuth();
   const { theme, setTheme } = useTheme();
   const [cartCount, setCartCount] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
+  const isArabic = i18n.language === 'ar';
 
   return (
     <>
@@ -36,42 +40,39 @@ export const Header = () => {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="w-[300px] sm:w-[400px]">
-            <nav className="flex flex-col space-y-6 mt-8">
-              <Link
-                to="/"
-                className="text-lg font-medium transition-colors hover:text-primary"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {t('nav.home')}
-              </Link>
-              <Link
-                to="/shop"
-                className="text-lg font-medium transition-colors hover:text-primary"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {t('nav.shop')}
-              </Link>
-              <Link
-                to="/collections"
-                className="text-lg font-medium transition-colors hover:text-primary"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {t('nav.collections')}
-              </Link>
-              <Link
-                to="/about"
-                className="text-lg font-medium transition-colors hover:text-primary"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {t('nav.about')}
-              </Link>
-              <Link
-                to="/contact"
-                className="text-lg font-medium transition-colors hover:text-primary"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {t('nav.contact')}
-              </Link>
+            <nav className="flex flex-col space-y-4 mt-8">
+              {categories.map((category) => {
+                const categorySubcategories = subcategories.filter(
+                  (sub) => sub.categoryId === category.id
+                );
+                const categoryName = i18n.language === 'ar' ? category.nameAr : category.name;
+
+                return (
+                  <div key={category.id}>
+                    <Link
+                      to={category.id === 'all' ? '/shop' : `/${category.slug}`}
+                      className="text-lg font-medium transition-colors hover:text-primary block"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {categoryName}
+                    </Link>
+                    {categorySubcategories.length > 0 && (
+                      <div className="ps-4 mt-2 space-y-2">
+                        {categorySubcategories.map((sub) => (
+                          <Link
+                            key={sub.id}
+                            to={`/${category.slug}/${sub.slug}`}
+                            className="text-sm text-muted-foreground hover:text-primary block"
+                            onClick={() => setMobileMenuOpen(false)}
+                          >
+                            {i18n.language === 'ar' ? sub.nameAr : sub.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
               <div className="pt-6 border-t border-border space-y-4">
                 <Link
                   to="/search"
@@ -165,23 +166,57 @@ export const Header = () => {
           </h1>
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation - Categories */}
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-          <Link to="/" className="transition-colors hover:text-primary">
-            {t('nav.home')}
-          </Link>
-          <Link to="/shop" className="transition-colors hover:text-primary">
-            {t('nav.shop')}
-          </Link>
-          <Link to="/collections" className="transition-colors hover:text-primary">
-            {t('nav.collections')}
-          </Link>
-          <Link to="/about" className="transition-colors hover:text-primary">
-            {t('nav.about')}
-          </Link>
-          <Link to="/contact" className="transition-colors hover:text-primary">
-            {t('nav.contact')}
-          </Link>
+          {categories.map((category) => {
+            const categorySubcategories = subcategories.filter(
+              (sub) => sub.categoryId === category.id
+            );
+            const hasSubcategories = categorySubcategories.length > 0;
+            const categoryName = isArabic ? category.nameAr : category.name;
+
+            return (
+              <div
+                key={category.id}
+                className="relative"
+                onMouseEnter={() => hasSubcategories && setHoveredCategory(category.id)}
+                onMouseLeave={() => setHoveredCategory(null)}
+              >
+                <Link
+                  to={category.id === 'all' ? '/shop' : `/${category.slug}`}
+                  className={cn(
+                    "flex items-center gap-1 transition-colors hover:text-primary py-2",
+                  )}
+                >
+                  {categoryName}
+                  {hasSubcategories && (
+                    <ChevronDown className={cn(
+                      "h-4 w-4 transition-transform",
+                      hoveredCategory === category.id && "rotate-180"
+                    )} />
+                  )}
+                </Link>
+
+                {/* Subcategories Dropdown */}
+                {hasSubcategories && hoveredCategory === category.id && (
+                  <div className="absolute top-full start-0 mt-0 bg-card border border-border rounded-md shadow-xl py-2 min-w-[200px] z-50">
+                    {categorySubcategories.map((subcategory) => {
+                      const subcategoryName = isArabic ? subcategory.nameAr : subcategory.name;
+                      return (
+                        <Link
+                          key={subcategory.id}
+                          to={`/${category.slug}/${subcategory.slug}`}
+                          className="block px-4 py-2 text-sm text-foreground hover:bg-secondary transition-colors"
+                        >
+                          {subcategoryName}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </nav>
 
         {/* Actions */}
@@ -279,7 +314,6 @@ export const Header = () => {
         </div>
       </div>
     </header>
-    <CategoryNav />
     </>
   );
 };
