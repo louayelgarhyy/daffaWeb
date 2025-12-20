@@ -53,6 +53,11 @@ export default {
           foreground: "hsl(var(--card-foreground))",
           secondary: "hsl(var(--card-secondary))",
         },
+        announcement: {
+          DEFAULT: "hsl(var(--announcement))",
+          foreground: "hsl(var(--announcement-foreground))",
+        },
+        "heading-underline": "hsl(var(--heading-underline))",
         shadow: "hsl(var(--shadow))",
         shimmer: "hsl(var(--shimmer))",
       },
@@ -72,6 +77,7 @@ export default {
         "spin-slow": "spin 3s linear infinite",
         "spin-reverse": "spin-reverse 3s linear infinite",
         "bounce-scale": "bounce-scale 1s ease-in-out infinite",
+        "marquee": "marquee 25s linear infinite",
       },
       keyframes: {
         ...({
@@ -105,6 +111,14 @@ export default {
             },
             "50%": {
               transform: "scale(1.2)",
+            },
+          },
+          "marquee": {
+            "0%": {
+              transform: "translateX(0%)",
+            },
+            "100%": {
+              transform: "translateX(-50%)",
             },
           },
         } as const),

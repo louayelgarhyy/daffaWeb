@@ -1,6 +1,4 @@
-import { Button } from "@/components/ui/button";
-import { Link, useNavigate } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { ProductCard } from "@/components/products/ProductCard";
 import { BannerCarousel } from "@/components/ui/banner-carousel";
 import { SectionHeading } from "@/components/home/SectionHeading";
@@ -13,6 +11,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { products } from "@/data/products";
 import { testimonials } from "@/data/testimonials";
+import { Button } from "@/components/ui/button";
 
 const Home = () => {
   const { t } = useTranslation(['home', 'common']);
@@ -88,19 +87,20 @@ const Home = () => {
         }`}>
           <SectionHeading
             title={t('home:sections.allAbayas.title')}
-            subtitle={t('home:sections.allAbayas.subtitle')}
+            viewAllLink="/shop"
+            viewAllLabel={t('home:sections.allAbayas.viewMore')}
           />
         </div>
 
         <div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
           onMouseEnter={() => !isMobile && setIsCursorActive(true)}
           onMouseLeave={() => !isMobile && setIsCursorActive(false)}
         >
           {allProducts.map((product, index) => (
             <div
               key={product.id}
-              className={`transform transition-all duration-700 hover:scale-105 ${
+              className={`transform transition-all duration-700 hover:scale-[1.02] ${
                 featuredRef.isVisible
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-20'
@@ -111,22 +111,10 @@ const Home = () => {
             </div>
           ))}
         </div>
-
-        <div className="text-center mt-8 md:mt-12">
-          <Link to="/shop">
-            <Button
-              size="lg"
-              className="bg-foreground text-background hover:bg-foreground/90 transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl"
-            >
-              {t('home:sections.allAbayas.viewMore')}
-              <ArrowRight className="ms-2 h-4 w-4" />
-            </Button>
-          </Link>
-        </div>
       </section>
 
       {/* Best Sellers Section */}
-      <section className="bg-secondary py-12 md:py-16">
+      <section ref={featuresRef.elementRef} className="bg-secondary py-12 md:py-16">
         <div className="container px-4">
           <div className={`transition-all duration-1000 ${
             featuresRef.isVisible
@@ -135,15 +123,16 @@ const Home = () => {
           }`}>
             <SectionHeading
               title={t('home:sections.bestSellers.title')}
-              subtitle={t('home:sections.bestSellers.subtitle')}
+              viewAllLink="/shop?filter=bestseller"
+              viewAllLabel={t('home:sections.bestSellers.viewMore', { defaultValue: 'عرض الكل' })}
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {bestSellers.map((product, index) => (
               <div
                 key={product.id}
-                className={`transform transition-all duration-700 hover:scale-105 ${
+                className={`transform transition-all duration-700 hover:scale-[1.02] ${
                   featuresRef.isVisible
                     ? 'opacity-100 translate-y-0'
                     : 'opacity-0 translate-y-20'
@@ -166,15 +155,16 @@ const Home = () => {
         }`}>
           <SectionHeading
             title={t('home:sections.latestLooks.title')}
-            subtitle={t('home:sections.latestLooks.subtitle')}
+            viewAllLink="/shop?filter=new"
+            viewAllLabel={t('home:sections.latestLooks.viewMore', { defaultValue: 'عرض الكل' })}
           />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {latestLooks.map((product, index) => (
             <div
               key={product.id}
-              className={`transform transition-all duration-700 hover:scale-105 ${
+              className={`transform transition-all duration-700 hover:scale-[1.02] ${
                 ctaRef.isVisible
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-20'

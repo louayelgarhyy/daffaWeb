@@ -80,6 +80,13 @@ Inspired by serdababaya.com's sophisticated minimalist design.
     --shadow: 0 0% 90%;
     --shimmer: 0 0% 93%;
 
+    /* Announcement bar - Golden/Beige like serdababaya.com */
+    --announcement: 39 35% 78%; /* Golden beige #D4C4A8 */
+    --announcement-foreground: 0 0% 0%; /* Black text */
+
+    /* Section heading underline accent */
+    --heading-underline: 39 35% 65%; /* Darker golden for underline */
+
     --radius: 0.5rem;
 
     /* Gradient overlays - Black gradients for hero sections */
@@ -130,6 +137,13 @@ Inspired by serdababaya.com's sophisticated minimalist design.
 
     --shadow: 0 0% 4%;
     --shimmer: 180 3% 25%;
+
+    /* Announcement bar - Muted golden for dark mode */
+    --announcement: 39 25% 25%; /* Darker golden */
+    --announcement-foreground: 0 0% 95%; /* Light text */
+
+    /* Section heading underline accent */
+    --heading-underline: 39 30% 45%; /* Golden for dark mode */
   }
 }
 

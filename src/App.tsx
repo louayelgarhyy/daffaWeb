@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
 import ProductDetail from "./pages/ProductDetail";
@@ -34,6 +35,7 @@ const AppContent = () => {
     <ThemeProvider defaultTheme="light" storageKey="abaya-theme">
       <AuthProvider>
         <div className="flex flex-col min-h-screen">
+          <AnnouncementBar />
           <Header />
           <main className="flex-1">
             <AnimatePresence mode="wait">
