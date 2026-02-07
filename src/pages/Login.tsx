@@ -43,18 +43,18 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const success = await login({
+      const result = await login({
         countryCode: data.countryCode,
         phone: data.phone,
         password: data.password,
         rememberMe: data.rememberMe,
       });
 
-      if (success) {
+      if (result.success) {
         toast.success(t('success.loginSuccess'));
         navigate(returnUrl);
       } else {
-        toast.error(t('validation.invalidCredentials'));
+        toast.error(result.error || t('validation.invalidCredentials'));
       }
     } catch (error) {
       console.error('Login error:', error);

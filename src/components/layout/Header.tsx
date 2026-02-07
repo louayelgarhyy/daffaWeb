@@ -13,6 +13,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { useAuth } from "@/hooks/use-auth";
+import { useCart } from "@/hooks/use-cart";
 import { useTheme } from "@/components/ThemeProvider";
 import { categories } from "@/data/categories";
 import { subcategories } from "@/data/subcategories";
@@ -22,8 +23,8 @@ export const Header = () => {
   const { t, i18n } = useTranslation('common');
   const navigate = useNavigate();
   const { isAuthenticated, user, logout } = useAuth();
+  const { itemsCount } = useCart();
   const { theme, setTheme } = useTheme();
-  const [cartCount, setCartCount] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const isArabic = i18n.language === 'ar';
@@ -304,9 +305,9 @@ export const Header = () => {
           <Link to="/cart">
             <Button variant="ghost" size="icon" className="relative">
               <ShoppingCart className="h-5 w-5" />
-              {cartCount > 0 && (
+              {itemsCount > 0 && (
                 <span className="absolute -top-1 -end-1 flex h-5 w-5 items-center justify-center rounded-full bg-accent text-[10px] font-bold text-accent-foreground">
-                  {cartCount}
+                  {itemsCount}
                 </span>
               )}
             </Button>
