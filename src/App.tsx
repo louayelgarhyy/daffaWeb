@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { AuthProvider } from "@/hooks/use-auth";
+import { CartProvider } from "@/hooks/use-cart";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { Header } from "@/components/layout/Header";
@@ -34,7 +35,8 @@ const AppContent = () => {
   return (
     <ThemeProvider defaultTheme="light" storageKey="abaya-theme">
       <AuthProvider>
-        <div className="flex flex-col min-h-screen">
+        <CartProvider>
+          <div className="flex flex-col min-h-screen">
           <AnnouncementBar />
           <Header />
           <main className="flex-1">
@@ -105,8 +107,9 @@ const AppContent = () => {
               </Routes>
             </AnimatePresence>
           </main>
-          <Footer />
-        </div>
+            <Footer />
+          </div>
+        </CartProvider>
       </AuthProvider>
     </ThemeProvider>
   );
