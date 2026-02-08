@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/use-auth";
+import { useCart } from "@/hooks/use-cart";
 import { LoginRequiredDialog } from "@/components/LoginRequiredDialog";
-import { toast } from "sonner";
 import { subcategories } from "@/data/subcategories";
 import { Badge } from "@/components/ui/badge";
 
@@ -35,6 +35,7 @@ export const ProductCard = ({
 }: ProductCardProps) => {
   const { t, i18n } = useTranslation('common');
   const { isAuthenticated } = useAuth();
+  const { addToCart, isLoading: isAddingToCart } = useCart();
   const [isLiked, setIsLiked] = useState(false);
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const isRTL = i18n.language === 'ar';
@@ -47,7 +48,7 @@ export const ProductCard = ({
     ? (isRTL ? subcategory.nameAr : subcategory.name)
     : null;
 
-  const handleAddToCart = (e: React.MouseEvent) => {
+  const handleAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault();
 
     if (!isAuthenticated) {
@@ -55,8 +56,11 @@ export const ProductCard = ({
       return;
     }
 
-    // Add to cart functionality (to be fully implemented)
-    toast.success(t('buttons.addToCart', { defaultValue: 'Added to cart!' }));
+    // Convert string id to number and call cart API
+    const productId = parseInt(id, 10);
+    if (!isNaN(productId)) {
+      await addToCart(productId, 1);
+    }
   };
 
   return (
@@ -130,6 +134,7 @@ export const ProductCard = ({
             size="icon"
             className="bg-foreground hover:bg-foreground/90 text-background rounded-full transition-colors"
             onClick={handleAddToCart}
+            disabled={isAddingToCart}
           >
             <ShoppingCart className="h-4 w-4" />
           </Button>
