@@ -7,17 +7,42 @@ import { CustomCursor } from "@/components/ui/custom-cursor";
 import { PageTransition } from "@/components/PageTransition";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { products } from "@/data/products";
+import { useProducts } from "@/hooks/use-products";
 import { testimonials } from "@/data/testimonials";
 import { Button } from "@/components/ui/button";
+import { ProductSkeleton } from "@/components/products/ProductSkeleton";
+import type { ApiProduct } from "@/lib/api/types";
+
+// Convert API product to component props format
+const mapApiProductToCard = (product: ApiProduct, lang: string) => ({
+  id: String(product.id),
+  name: lang === 'ar' && product.name_ar ? product.name_ar : product.name,
+  nameAr: product.name_ar,
+  price: product.price,
+  image: product.images?.[0]?.url || 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=400&h=500&fit=crop',
+  rating: 4.5,
+  reviews: 0,
+  categoryId: product.category_id ? String(product.category_id) : 'all',
+  inStock: product.is_active,
+  sizes: product.size ? [product.size] : ['S', 'M', 'L', 'XL'],
+});
 
 const Home = () => {
-  const { t } = useTranslation(['home', 'common']);
+  const { t, i18n } = useTranslation(['home', 'common']);
   const navigate = useNavigate();
   const isMobile = useIsMobile();
   const [isCursorActive, setIsCursorActive] = useState(false);
+  
+  // Fetch products from API
+  const { products: apiProducts, isLoading } = useProducts(1, 24);
+  
+  // Map API products to display format
+  const products = useMemo(() => 
+    apiProducts.map(p => mapApiProductToCard(p, i18n.language)),
+    [apiProducts, i18n.language]
+  );
   
   const featuredRef = useScrollAnimation({ threshold: 0.2 });
   const featuresRef = useScrollAnimation({ threshold: 0.3 });
@@ -56,10 +81,36 @@ const Home = () => {
     }
   ];
 
-  // Filter products by tags for homepage sections
-  const allProducts = products.filter(p => p.tags?.includes('all')).slice(0, 8);
-  const bestSellers = products.filter(p => p.tags?.includes('bestseller')).slice(0, 8);
-  const latestLooks = products.filter(p => p.tags?.includes('new')).slice(0, 8);
+  // Split products into sections for homepage
+  const allProducts = products.slice(0, 8);
+  const bestSellers = products.slice(8, 16);
+  const latestLooks = products.slice(16, 24);
+
+  // Loading skeleton component
+  const ProductsGrid = ({ items, isLoading: loading }: { items: typeof products; isLoading: boolean }) => {
+    if (loading) {
+      return (
+        <>
+          {Array.from({ length: 8 }).map((_, i) => (
+            <ProductSkeleton key={i} />
+          ))}
+        </>
+      );
+    }
+    return (
+      <>
+        {items.map((product, index) => (
+          <div
+            key={product.id}
+            className="transform transition-all duration-700 hover:scale-[1.02]"
+            style={{ transitionDelay: `${index * 100}ms` }}
+          >
+            <ProductCard {...product} />
+          </div>
+        ))}
+      </>
+    );
+  };
 
   return (
     <PageTransition>
@@ -97,19 +148,7 @@ const Home = () => {
           onMouseEnter={() => !isMobile && setIsCursorActive(true)}
           onMouseLeave={() => !isMobile && setIsCursorActive(false)}
         >
-          {allProducts.map((product, index) => (
-            <div
-              key={product.id}
-              className={`transform transition-all duration-700 hover:scale-[1.02] ${
-                featuredRef.isVisible
-                  ? 'opacity-100 translate-y-0'
-                  : 'opacity-0 translate-y-20'
-              }`}
-              style={{ transitionDelay: `${index * 100}ms` }}
-            >
-              <ProductCard {...product} />
-            </div>
-          ))}
+          <ProductsGrid items={allProducts} isLoading={isLoading} />
         </div>
       </section>
 
@@ -129,19 +168,7 @@ const Home = () => {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            {bestSellers.map((product, index) => (
-              <div
-                key={product.id}
-                className={`transform transition-all duration-700 hover:scale-[1.02] ${
-                  featuresRef.isVisible
-                    ? 'opacity-100 translate-y-0'
-                    : 'opacity-0 translate-y-20'
-                }`}
-                style={{ transitionDelay: `${index * 100}ms` }}
-              >
-                <ProductCard {...product} />
-              </div>
-            ))}
+            <ProductsGrid items={bestSellers} isLoading={isLoading} />
           </div>
         </div>
       </section>
@@ -161,19 +188,7 @@ const Home = () => {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-          {latestLooks.map((product, index) => (
-            <div
-              key={product.id}
-              className={`transform transition-all duration-700 hover:scale-[1.02] ${
-                ctaRef.isVisible
-                  ? 'opacity-100 translate-y-0'
-                  : 'opacity-0 translate-y-20'
-              }`}
-              style={{ transitionDelay: `${index * 100}ms` }}
-            >
-              <ProductCard {...product} />
-            </div>
-          ))}
+          <ProductsGrid items={latestLooks} isLoading={isLoading} />
         </div>
       </section>
 
