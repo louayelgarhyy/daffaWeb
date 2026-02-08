@@ -36,7 +36,12 @@ const Home = () => {
   const [isCursorActive, setIsCursorActive] = useState(false);
   
   // Fetch products from API
-  const { products: apiProducts, isLoading } = useProducts(1, 24);
+  const {
+    products: apiProducts,
+    isLoading,
+    error: productsError,
+    refresh: refreshProducts,
+  } = useProducts(1, 24);
   
   // Map API products to display format
   const products = useMemo(() => 
@@ -142,6 +147,15 @@ const Home = () => {
             viewAllLabel={t('home:sections.allAbayas.viewMore')}
           />
         </div>
+
+        {productsError && !isLoading && (
+          <div className="mb-4 rounded-lg border border-border bg-muted p-4 text-sm text-foreground flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <span className="leading-relaxed">{productsError}</span>
+            <Button variant="secondary" size="sm" onClick={refreshProducts}>
+              {i18n.language === 'ar' ? 'إعادة المحاولة' : 'Retry'}
+            </Button>
+          </div>
+        )}
 
         <div
           className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
