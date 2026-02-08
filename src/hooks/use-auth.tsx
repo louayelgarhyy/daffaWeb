@@ -28,6 +28,29 @@ const COUNTRY_CODE_TO_ID: Record<string, number> = {
   '+20': 8,   // Egypt
 };
 
+// Extract user from API response (handles different response structures)
+const extractUserFromResponse = (response: unknown): ApiUser | null => {
+  if (!response || typeof response !== 'object') return null;
+  
+  const r = response as Record<string, unknown>;
+  
+  // Try common patterns: response.user, response.data.user, response.data, or direct user object
+  if (r.user && typeof r.user === 'object' && 'id' in (r.user as object)) {
+    return r.user as ApiUser;
+  }
+  if (r.data && typeof r.data === 'object') {
+    const data = r.data as Record<string, unknown>;
+    if ('id' in data) return data as unknown as ApiUser;
+    if (data.user && typeof data.user === 'object') return data.user as ApiUser;
+  }
+  // Direct user object
+  if ('id' in r && 'phone' in r) {
+    return r as unknown as ApiUser;
+  }
+  
+  return null;
+};
+
 // Convert API user to app User type
 const mapApiUserToUser = (apiUser: ApiUser, countryCode: string): User => ({
   id: String(apiUser.id),
@@ -73,7 +96,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         country_id: countryId,
       });
 
-      const authenticatedUser = mapApiUserToUser(response.user, credentials.countryCode);
+      // Safely extract user from response
+      const apiUser = extractUserFromResponse(response);
+      
+      if (!apiUser) {
+        console.error('Login response structure:', JSON.stringify(response, null, 2));
+        return { success: false, error: 'Invalid response from server' };
+      }
+
+      const authenticatedUser = mapApiUserToUser(apiUser, credentials.countryCode);
       
       setUser(authenticatedUser);
       localStorage.setItem(AUTH_USER_KEY, JSON.stringify(authenticatedUser));
@@ -125,9 +156,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         country_id: countryId,
       });
 
+      // Safely extract user from response
+      const apiUser = extractUserFromResponse(response);
+      
+      if (!apiUser) {
+        console.error('Verify code response structure:', JSON.stringify(response, null, 2));
+        return { success: false, error: 'Invalid response from server' };
+      }
+
       // Get the country code from ID (reverse lookup)
       const countryCode = Object.entries(COUNTRY_CODE_TO_ID).find(([, id]) => id === countryId)?.[0] || '+974';
-      const authenticatedUser = mapApiUserToUser(response.user, countryCode);
+      const authenticatedUser = mapApiUserToUser(apiUser, countryCode);
       
       setUser(authenticatedUser);
       localStorage.setItem(AUTH_USER_KEY, JSON.stringify(authenticatedUser));

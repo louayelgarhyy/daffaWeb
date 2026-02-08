@@ -117,7 +117,7 @@ const Login = () => {
 
             {/* Remember Me & Forgot Password */}
             <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center gap-2">
                 <Checkbox
                   id="rememberMe"
                   checked={watch('rememberMe')}
