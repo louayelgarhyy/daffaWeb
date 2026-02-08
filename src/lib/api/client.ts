@@ -25,15 +25,26 @@ export const clearAuthToken = (): void => {
 };
 
 // Default headers for all requests
-const getHeaders = (includeAuth: boolean = true): HeadersInit => {
+const getHeaders = (includeAuth: boolean = true, method: string = 'GET'): HeadersInit => {
   const lang = getLanguage();
-  const headers: HeadersInit = {
-    'Content-Type': 'application/json',
+  const upperMethod = method.toUpperCase();
+  const isReadMethod = upperMethod === 'GET' || upperMethod === 'HEAD';
+
+  // NOTE:
+  // - For public GET/HEAD requests, avoid custom headers and Content-Type.
+  //   This prevents unnecessary CORS preflight requests on many backends.
+  // - For write requests (POST/PUT/DELETE), we include Content-Type and any
+  //   backend-specific headers.
+  const headers: Record<string, string> = {
     'Accept': 'application/json',
-    'lang': lang,
     'Accept-Language': lang,
-    'currency': 'qar',
   };
+
+  if (!isReadMethod) {
+    headers['Content-Type'] = 'application/json';
+    headers['lang'] = lang;
+    headers['currency'] = 'qar';
+  }
 
   if (includeAuth) {
     const token = getAuthToken();
@@ -66,11 +77,12 @@ async function fetchApi<T>(
   includeAuth: boolean = true
 ): Promise<T> {
   const url = `${BASE_URL}${endpoint}`;
-  
+  const method = (options.method || 'GET').toString();
+
   const response = await fetch(url, {
     ...options,
     headers: {
-      ...getHeaders(includeAuth),
+      ...getHeaders(includeAuth, method),
       ...options.headers,
     },
   });
