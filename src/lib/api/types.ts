@@ -37,12 +37,13 @@ export interface RegisterCodeResponse {
 }
 
 export interface ApiUser {
-  id: number;
+  id: number | string;
   name: string;
   phone: string;
-  country_id: number;
+  country_id?: number;
   type: string;
-  created_at: string;
+  created_at?: string;
+  token?: string;
 }
 
 // ============ Product Types ============

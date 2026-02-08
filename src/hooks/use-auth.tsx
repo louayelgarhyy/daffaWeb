@@ -57,7 +57,7 @@ const mapApiUserToUser = (apiUser: ApiUser, countryCode: string): User => ({
   name: apiUser.name,
   phone: apiUser.phone,
   countryCode: countryCode,
-  createdAt: apiUser.created_at,
+  createdAt: apiUser.created_at || new Date().toISOString(),
 });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
