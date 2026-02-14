@@ -369,8 +369,10 @@ const Checkout = () => {
                   <div className="space-y-4 mb-6">
                     {items.map((item) => {
                       const product = item.product;
-                      const productName = isRTL && product?.name_ar ? product.name_ar : product?.name || 'Product';
-                      const productImage = product?.images?.[0]?.url || 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=200&h=250&fit=crop';
+                      const productName = product?.name || 'Product';
+                      const productImage = product?.image
+                        ? (product.image.startsWith('http') ? product.image : `https://appdaffah.com/${product.image}`)
+                        : 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=200&h=250&fit=crop';
                       const productPrice = product?.price || 0;
                       
                       return (
@@ -383,7 +385,7 @@ const Checkout = () => {
                           </div>
                           <div className="flex-1 min-w-0">
                             <h4 className="text-sm font-medium text-foreground truncate">{productName}</h4>
-                            <p className="text-xs text-muted-foreground">Size: {product?.size || 'M'}</p>
+                            <p className="text-xs text-muted-foreground">{t('cart:item.size', { ns: 'cart' })}</p>
                             <p className="text-sm font-semibold text-primary mt-1">
                               {isRTL ? `${productPrice.toFixed(2)} ${t('common:common.currency')}` : `${t('common:common.currency')} ${productPrice.toFixed(2)}`}
                             </p>

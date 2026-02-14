@@ -5,6 +5,13 @@ import { useAuth } from './use-auth';
 import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 
+// Helper to normalize cart items from API response
+function normalizeCartItems(response: CartResponse): ApiCartItem[] {
+  if (Array.isArray(response.data)) return response.data;
+  if (response.data && typeof response.data === 'object') return [response.data];
+  return [];
+}
+
 interface CartContextType {
   items: ApiCartItem[];
   total: number;
@@ -12,10 +19,10 @@ interface CartContextType {
   isLoading: boolean;
   error: string | null;
   addToCart: (productId: number, quantity?: number) => Promise<boolean>;
-  updateItemQuantity: (cartItemId: number, quantity: number) => Promise<boolean>;
-  increaseQuantity: (cartItemId: number) => Promise<boolean>;
-  decreaseQuantity: (cartItemId: number) => Promise<boolean>;
-  removeItem: (cartItemId: number) => Promise<boolean>;
+  updateItemQuantity: (cartItemId: string | number, quantity: number) => Promise<boolean>;
+  increaseQuantity: (cartItemId: string | number) => Promise<boolean>;
+  decreaseQuantity: (cartItemId: string | number) => Promise<boolean>;
+  removeItem: (cartItemId: string | number) => Promise<boolean>;
   clearCart: () => Promise<boolean>;
   refreshCart: () => Promise<void>;
 }
@@ -33,9 +40,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   // Update cart state from response
   const updateCartState = (response: CartResponse) => {
-    setItems(response.data || []);
-    setTotal(response.total || 0);
-    setItemsCount(response.items_count || 0);
+    const cartItems = normalizeCartItems(response);
+    setItems(cartItems);
+    setTotal(cartItems.reduce((sum, item) => sum + (item.product?.price || 0) * item.quantity, 0));
+    setItemsCount(cartItems.reduce((sum, item) => sum + item.quantity, 0));
     setError(null);
   };
 
@@ -75,11 +83,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     setIsLoading(true);
     try {
-      const response = await cartApi.addToCart({
+      await cartApi.addToCart({
         daffa_product_id: productId,
         quantity,
       });
-      updateCartState(response);
+      // Refresh full cart since add returns single item
+      await refreshCart();
       toast.success(t('addedToCart', { defaultValue: 'Added to cart!' }));
       return true;
     } catch (err) {
@@ -94,14 +103,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   // Update quantity
-  const updateItemQuantity = async (cartItemId: number, quantity: number): Promise<boolean> => {
+  const updateItemQuantity = async (cartItemId: string | number, quantity: number): Promise<boolean> => {
     if (quantity < 1) {
       return removeItem(cartItemId);
     }
 
     setIsLoading(true);
     try {
-      const response = await cartApi.updateQuantity({ id: cartItemId, quantity });
+      const response = await cartApi.updateQuantity({ id: Number(cartItemId), quantity });
       updateCartState(response);
       return true;
     } catch (err) {
@@ -116,10 +125,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   // Increase quantity
-  const increaseQuantity = async (cartItemId: number): Promise<boolean> => {
+  const increaseQuantity = async (cartItemId: string | number): Promise<boolean> => {
     setIsLoading(true);
     try {
-      const response = await cartApi.increaseQuantity({ id: cartItemId });
+      const response = await cartApi.increaseQuantity({ id: Number(cartItemId) });
       updateCartState(response);
       return true;
     } catch (err) {
@@ -134,10 +143,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   // Decrease quantity
-  const decreaseQuantity = async (cartItemId: number): Promise<boolean> => {
+  const decreaseQuantity = async (cartItemId: string | number): Promise<boolean> => {
     setIsLoading(true);
     try {
-      const response = await cartApi.decreaseQuantity({ id: cartItemId });
+      const response = await cartApi.decreaseQuantity({ id: Number(cartItemId) });
       updateCartState(response);
       return true;
     } catch (err) {
@@ -152,10 +161,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   // Remove item
-  const removeItem = async (cartItemId: number): Promise<boolean> => {
+  const removeItem = async (cartItemId: string | number): Promise<boolean> => {
     setIsLoading(true);
     try {
-      const response = await cartApi.removeCartItem({ id: cartItemId });
+      const response = await cartApi.removeCartItem({ id: Number(cartItemId) });
       updateCartState(response);
       toast.success(t('itemRemoved', { defaultValue: 'Item removed from cart' }));
       return true;

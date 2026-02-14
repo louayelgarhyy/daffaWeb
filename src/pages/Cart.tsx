@@ -121,8 +121,10 @@ const Cart = () => {
             <div className="lg:col-span-2 space-y-4">
               {items.map((item) => {
                 const product = item.product;
-                const productName = isRTL && product?.name_ar ? product.name_ar : product?.name || 'Product';
-                const productImage = product?.images?.[0]?.url || 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=200&h=250&fit=crop';
+                const productName = product?.name || 'Product';
+                const productImage = product?.image 
+                  ? (product.image.startsWith('http') ? product.image : `https://appdaffah.com/${product.image}`)
+                  : 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=200&h=250&fit=crop';
                 const productPrice = product?.price || 0;
                 
                 return (
@@ -134,7 +136,7 @@ const Cart = () => {
                     />
                     <div className="flex-1 space-y-2">
                       <h3 className="font-semibold text-foreground">{productName}</h3>
-                      <p className="text-sm text-muted-foreground">{t('cart:item.size')} {product?.size || 'M'}</p>
+                      <p className="text-sm text-muted-foreground">{t('cart:item.size')}</p>
                       <p className="text-lg font-bold text-primary">
                         {isRTL ? `${productPrice.toFixed(2)} ${t('common:common.currency')}` : `${t('common:common.currency')} ${productPrice.toFixed(2)}`}
                       </p>

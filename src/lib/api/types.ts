@@ -106,18 +106,31 @@ export interface CategoriesResponse {
 }
 
 // ============ Cart Types ============
+export interface ApiCartItemProduct {
+  id: string | number;
+  name: string;
+  name_ar?: string;
+  price: number;
+  old_price?: number | null;
+  currency: string;
+  image: string;
+  is_active: number | boolean;
+}
+
 export interface ApiCartItem {
-  id: number;
+  id: string | number;
+  user_id?: string | number;
   daffa_product_id: number;
   quantity: number;
-  product: ApiProduct;
+  product: ApiCartItemProduct;
   created_at: string;
+  updated_at?: string;
 }
 
 export interface CartResponse {
-  data: ApiCartItem[];
-  total: number;
-  items_count: number;
+  data: ApiCartItem[] | ApiCartItem;
+  success?: boolean;
+  message?: string;
 }
 
 export interface AddToCartRequest {
