@@ -14,6 +14,7 @@ import { getAddressTitleSuggestions } from "@/lib/addressTitles";
 const addressFormSchema = z.object({
   title: z.string().min(2, 'checkout:validation.nameMin').max(50),
   fullName: z.string().min(1, 'checkout:validation.nameRequired'),
+  phone: z.string().optional(),
   addressLine1: z.string().min(1, 'checkout:validation.addressRequired'),
   addressLine2: z.string().optional(),
   city: z.string().min(1, 'checkout:validation.cityRequired'),
@@ -47,6 +48,7 @@ export const AddressForm = ({ address, onSubmit, onCancel, submitLabel }: Addres
     defaultValues: address || {
       title: '',
       fullName: '',
+      phone: '',
       addressLine1: '',
       addressLine2: '',
       city: '',
@@ -63,6 +65,7 @@ export const AddressForm = ({ address, onSubmit, onCancel, submitLabel }: Addres
     onSubmit({
       title: data.title,
       fullName: data.fullName,
+      phone: data.phone,
       addressLine1: data.addressLine1,
       addressLine2: data.addressLine2,
       city: data.city,
@@ -116,7 +119,16 @@ export const AddressForm = ({ address, onSubmit, onCancel, submitLabel }: Addres
         )}
       </div>
 
-      {/* Country */}
+      {/* Phone */}
+      <div className="space-y-2">
+        <Label htmlFor="phone">{t('checkout:shipping.phone', { defaultValue: 'Phone Number' })}</Label>
+        <Input
+          id="phone"
+          placeholder={t('checkout:shipping.phonePlaceholder', { defaultValue: 'Enter phone number' })}
+          {...register('phone')}
+        />
+      </div>
+
       <div className="space-y-2">
         <Label htmlFor="country">{t('checkout:shipping.country')}</Label>
         <Select
