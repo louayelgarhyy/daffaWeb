@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useTranslation } from "react-i18next";
+import { useState, useEffect } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import type { SavedAddress } from "@/types/order";
 import { getAddressTitleSuggestions } from "@/lib/addressTitles";
+import { useCities } from "@/hooks/use-cities";
 
 const addressFormSchema = z.object({
   title: z.string().min(2, 'checkout:validation.nameMin').max(50),
@@ -17,9 +19,9 @@ const addressFormSchema = z.object({
   phone: z.string().optional(),
   addressLine1: z.string().min(1, 'checkout:validation.addressRequired'),
   addressLine2: z.string().optional(),
-  city: z.string().min(1, 'checkout:validation.cityRequired'),
-  region: z.string().min(1, 'checkout:validation.regionRequired'),
-  postalCode: z.string().min(1, 'checkout:validation.postalCodeRequired'),
+  cityId: z.string().min(1, 'checkout:validation.cityRequired'),
+  areaId: z.string().min(1, 'checkout:validation.regionRequired'),
+  postalCode: z.string().optional(),
   country: z.string().min(1, 'checkout:validation.countryRequired'),
   isDefault: z.boolean().default(false),
 });
@@ -36,6 +38,8 @@ interface AddressFormProps {
 export const AddressForm = ({ address, onSubmit, onCancel, submitLabel }: AddressFormProps) => {
   const { t, i18n } = useTranslation(['common', 'checkout']);
   const titleSuggestions = getAddressTitleSuggestions(i18n.language);
+  const { cities, isLoading: citiesLoading, getAreasForCity } = useCities(1);
+  const [areas, setAreas] = useState<{ id: string | number; name: string }[]>([]);
 
   const {
     register,
@@ -45,32 +49,53 @@ export const AddressForm = ({ address, onSubmit, onCancel, submitLabel }: Addres
     formState: { errors },
   } = useForm<AddressFormValues>({
     resolver: zodResolver(addressFormSchema),
-    defaultValues: address || {
-      title: '',
-      fullName: '',
-      phone: '',
-      addressLine1: '',
-      addressLine2: '',
-      city: '',
-      region: '',
-      postalCode: '',
-      country: 'sa',
-      isDefault: false,
+    defaultValues: {
+      title: address?.title || '',
+      fullName: address?.fullName || '',
+      phone: address?.phone || '',
+      addressLine1: address?.addressLine1 || '',
+      addressLine2: address?.addressLine2 || '',
+      cityId: address?.cityId || '',
+      areaId: address?.areaId || '',
+      postalCode: address?.postalCode || '',
+      country: address?.country || 'QA',
+      isDefault: address?.isDefault || false,
     },
   });
 
   const isDefault = watch('isDefault');
+  const selectedCityId = watch('cityId');
+
+  // Update areas when city changes
+  useEffect(() => {
+    if (selectedCityId) {
+      const cityAreas = getAreasForCity(selectedCityId);
+      setAreas(cityAreas);
+      // Reset area if current selection is not in new city's areas
+      const currentArea = watch('areaId');
+      if (currentArea && !cityAreas.find(a => String(a.id) === currentArea)) {
+        setValue('areaId', '');
+      }
+    } else {
+      setAreas([]);
+    }
+  }, [selectedCityId, cities]);
 
   const handleFormSubmit = (data: AddressFormValues) => {
+    const selectedCity = cities.find(c => String(c.id) === data.cityId);
+    const selectedArea = areas.find(a => String(a.id) === data.areaId);
+
     onSubmit({
       title: data.title,
       fullName: data.fullName,
       phone: data.phone,
       addressLine1: data.addressLine1,
       addressLine2: data.addressLine2,
-      city: data.city,
-      region: data.region,
-      postalCode: data.postalCode,
+      city: selectedCity?.name || '',
+      cityId: data.cityId,
+      region: selectedArea?.name || '',
+      areaId: data.areaId,
+      postalCode: data.postalCode || '',
       country: data.country,
       isDefault: data.isDefault,
     });
@@ -89,8 +114,6 @@ export const AddressForm = ({ address, onSubmit, onCancel, submitLabel }: Addres
         {errors.title && (
           <p className="text-sm text-destructive">{t(errors.title.message as string)}</p>
         )}
-
-        {/* Quick select buttons */}
         <div className="flex flex-wrap gap-2">
           {titleSuggestions.map((suggestion) => (
             <Button
@@ -129,28 +152,77 @@ export const AddressForm = ({ address, onSubmit, onCancel, submitLabel }: Addres
         />
       </div>
 
+      {/* Country */}
       <div className="space-y-2">
         <Label htmlFor="country">{t('checkout:shipping.country')}</Label>
         <Select
-          defaultValue={address?.country || 'sa'}
+          defaultValue={address?.country || 'QA'}
           onValueChange={(value) => setValue('country', value)}
         >
           <SelectTrigger id="country">
             <SelectValue placeholder={t('checkout:shipping.countryPlaceholder')} />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="sa">{t('checkout:countries.sa')}</SelectItem>
-            <SelectItem value="ae">{t('checkout:countries.ae')}</SelectItem>
-            <SelectItem value="kw">{t('checkout:countries.kw')}</SelectItem>
-            <SelectItem value="qa">{t('checkout:countries.qa')}</SelectItem>
-            <SelectItem value="bh">{t('checkout:countries.bh')}</SelectItem>
-            <SelectItem value="om">{t('checkout:countries.om')}</SelectItem>
-            <SelectItem value="jo">{t('checkout:countries.jo')}</SelectItem>
-            <SelectItem value="eg">{t('checkout:countries.eg')}</SelectItem>
+            <SelectItem value="SA">{t('checkout:countries.sa')}</SelectItem>
+            <SelectItem value="AE">{t('checkout:countries.ae')}</SelectItem>
+            <SelectItem value="KW">{t('checkout:countries.kw')}</SelectItem>
+            <SelectItem value="QA">{t('checkout:countries.qa')}</SelectItem>
+            <SelectItem value="BH">{t('checkout:countries.bh')}</SelectItem>
+            <SelectItem value="OM">{t('checkout:countries.om')}</SelectItem>
+            <SelectItem value="JO">{t('checkout:countries.jo')}</SelectItem>
+            <SelectItem value="EG">{t('checkout:countries.eg')}</SelectItem>
           </SelectContent>
         </Select>
         {errors.country && (
           <p className="text-sm text-destructive">{t(errors.country.message as string)}</p>
+        )}
+      </div>
+
+      {/* City Dropdown */}
+      <div className="space-y-2">
+        <Label htmlFor="cityId">{t('checkout:shipping.city')}</Label>
+        <Select
+          value={selectedCityId}
+          onValueChange={(value) => setValue('cityId', value)}
+          disabled={citiesLoading}
+        >
+          <SelectTrigger id="cityId">
+            <SelectValue placeholder={citiesLoading ? t('common:loading', { defaultValue: 'Loading...' }) : t('checkout:shipping.cityPlaceholder')} />
+          </SelectTrigger>
+          <SelectContent>
+            {cities.map((city) => (
+              <SelectItem key={city.id} value={String(city.id)}>
+                {city.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        {errors.cityId && (
+          <p className="text-sm text-destructive">{t(errors.cityId.message as string)}</p>
+        )}
+      </div>
+
+      {/* Area Dropdown */}
+      <div className="space-y-2">
+        <Label htmlFor="areaId">{t('checkout:shipping.region')}</Label>
+        <Select
+          value={watch('areaId')}
+          onValueChange={(value) => setValue('areaId', value)}
+          disabled={!selectedCityId || areas.length === 0}
+        >
+          <SelectTrigger id="areaId">
+            <SelectValue placeholder={!selectedCityId ? t('checkout:shipping.selectCityFirst', { defaultValue: 'Select city first' }) : t('checkout:shipping.regionPlaceholder')} />
+          </SelectTrigger>
+          <SelectContent>
+            {areas.map((area) => (
+              <SelectItem key={area.id} value={String(area.id)}>
+                {area.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        {errors.areaId && (
+          <p className="text-sm text-destructive">{t(errors.areaId.message as string)}</p>
         )}
       </div>
 
@@ -177,33 +249,6 @@ export const AddressForm = ({ address, onSubmit, onCancel, submitLabel }: Addres
         />
       </div>
 
-      {/* City & Region */}
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="city">{t('checkout:shipping.city')}</Label>
-          <Input
-            id="city"
-            placeholder={t('checkout:shipping.cityPlaceholder')}
-            {...register('city')}
-          />
-          {errors.city && (
-            <p className="text-sm text-destructive">{t(errors.city.message as string)}</p>
-          )}
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="region">{t('checkout:shipping.region')}</Label>
-          <Input
-            id="region"
-            placeholder={t('checkout:shipping.regionPlaceholder')}
-            {...register('region')}
-          />
-          {errors.region && (
-            <p className="text-sm text-destructive">{t(errors.region.message as string)}</p>
-          )}
-        </div>
-      </div>
-
       {/* Postal Code */}
       <div className="space-y-2">
         <Label htmlFor="postalCode">{t('checkout:shipping.postalCode')}</Label>
@@ -212,9 +257,6 @@ export const AddressForm = ({ address, onSubmit, onCancel, submitLabel }: Addres
           placeholder={t('checkout:shipping.postalCodePlaceholder')}
           {...register('postalCode')}
         />
-        {errors.postalCode && (
-          <p className="text-sm text-destructive">{t(errors.postalCode.message as string)}</p>
-        )}
       </div>
 
       {/* Set as Default */}
