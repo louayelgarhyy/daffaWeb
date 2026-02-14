@@ -177,7 +177,9 @@ export interface CreateAddressRequest {
   address_line_1: string;
   address_line_2?: string;
   city: string;
+  city_id?: string | number;
   region: string;
+  area_id?: string | number;
   postal_code?: string;
   country: string;
   is_default?: boolean;

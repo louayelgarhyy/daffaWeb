@@ -12,7 +12,9 @@ export interface Address {
   addressLine1: string;
   addressLine2?: string;
   city: string;
+  cityId?: string;
   region: string;
+  areaId?: string;
   postalCode: string;
   country: string;
 }
