@@ -42,20 +42,22 @@ export async function getAddress(id: number): Promise<ApiAddress> {
 export async function createAddress(data: CreateAddressRequest): Promise<ApiAddress> {
   // Backend expects: name, phone, street, city_id, region, postal_code, country, is_default, title
   const payload: Record<string, unknown> = {
-    title: data.title || '',
-    name: data.full_name,
+    title: data.title || 'Home',
+    name: data.full_name || '',
     phone: data.phone || '',
-    street: data.address_line_1,
-    address_line_2: data.address_line_2 || '',
-    city_id: 1, // Default city ID - backend requires integer
+    street: data.address_line_1 || '',
+    city_id: 1, // Required by backend - default city ID
     city: data.city || '',
     region: data.region || '',
     postal_code: data.postal_code || '',
-    country: data.country || '',
-    is_default: data.is_default || false,
-    latitude: data.latitude,
-    longitude: data.longitude,
+    country: data.country || 'QA',
+    is_default: data.is_default ? 1 : 0,
   };
+  // Only include optional fields if they have values
+  if (data.address_line_2) payload.address_line_2 = data.address_line_2;
+  if (data.latitude) payload.latitude = data.latitude;
+  if (data.longitude) payload.longitude = data.longitude;
+  
   const response = await post<{ data: ApiAddress }>('/api/v2/daffa-addresses', payload);
   return response.data;
 }
