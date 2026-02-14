@@ -38,12 +38,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Recalculate totals from items
+  const recalcTotals = (cartItems: ApiCartItem[]) => {
+    setTotal(cartItems.reduce((sum, item) => sum + (item.product?.price || 0) * item.quantity, 0));
+    setItemsCount(cartItems.reduce((sum, item) => sum + item.quantity, 0));
+  };
+
   // Update cart state from response
   const updateCartState = (response: CartResponse) => {
     const cartItems = normalizeCartItems(response);
     setItems(cartItems);
-    setTotal(cartItems.reduce((sum, item) => sum + (item.product?.price || 0) * item.quantity, 0));
-    setItemsCount(cartItems.reduce((sum, item) => sum + item.quantity, 0));
+    recalcTotals(cartItems);
     setError(null);
   };
 
@@ -124,39 +129,58 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  // Increase quantity
+  // Increase quantity (optimistic)
   const increaseQuantity = async (cartItemId: string | number): Promise<boolean> => {
-    setIsLoading(true);
+    // Optimistic update
+    const prevItems = items;
+    const updated = items.map(item =>
+      String(item.id) === String(cartItemId) ? { ...item, quantity: item.quantity + 1 } : item
+    );
+    setItems(updated);
+    recalcTotals(updated);
+
     try {
-      const response = await cartApi.increaseQuantity({ id: Number(cartItemId) });
-      updateCartState(response);
+      await cartApi.increaseQuantity({ id: Number(cartItemId) });
       return true;
     } catch (err) {
+      // Rollback on failure
+      setItems(prevItems);
+      recalcTotals(prevItems);
       console.error('Failed to increase quantity:', err);
       if (err instanceof ApiError) {
         toast.error(err.message);
       }
       return false;
-    } finally {
-      setIsLoading(false);
     }
   };
 
-  // Decrease quantity
+  // Decrease quantity (optimistic)
   const decreaseQuantity = async (cartItemId: string | number): Promise<boolean> => {
-    setIsLoading(true);
+    const currentItem = items.find(item => String(item.id) === String(cartItemId));
+    if (currentItem && currentItem.quantity <= 1) {
+      return removeItem(cartItemId);
+    }
+
+    // Optimistic update
+    const prevItems = items;
+    const updated = items.map(item =>
+      String(item.id) === String(cartItemId) ? { ...item, quantity: item.quantity - 1 } : item
+    );
+    setItems(updated);
+    recalcTotals(updated);
+
     try {
-      const response = await cartApi.decreaseQuantity({ id: Number(cartItemId) });
-      updateCartState(response);
+      await cartApi.decreaseQuantity({ id: Number(cartItemId) });
       return true;
     } catch (err) {
+      // Rollback on failure
+      setItems(prevItems);
+      recalcTotals(prevItems);
       console.error('Failed to decrease quantity:', err);
       if (err instanceof ApiError) {
         toast.error(err.message);
       }
       return false;
-    } finally {
-      setIsLoading(false);
     }
   };
 
