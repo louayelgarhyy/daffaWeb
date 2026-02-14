@@ -27,6 +27,7 @@ const mapApiToSavedAddress = (addr: ApiAddress): SavedAddress => ({
   id: String(addr.id),
   title: addr.title || 'Address',
   fullName: addr.full_name,
+  phone: addr.phone,
   addressLine1: addr.address_line_1,
   addressLine2: addr.address_line_2,
   city: addr.city,
@@ -40,6 +41,7 @@ const mapApiToSavedAddress = (addr: ApiAddress): SavedAddress => ({
 const mapSavedToCreate = (addr: Omit<SavedAddress, 'id'>): CreateAddressRequest => ({
   title: addr.title,
   full_name: addr.fullName,
+  phone: addr.phone,
   address_line_1: addr.addressLine1,
   address_line_2: addr.addressLine2,
   city: addr.city,

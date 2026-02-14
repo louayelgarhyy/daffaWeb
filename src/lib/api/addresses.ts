@@ -37,9 +37,26 @@ export async function getAddress(id: number): Promise<ApiAddress> {
 
 /**
  * Create new address
+ * Maps frontend field names to backend expected names
  */
 export async function createAddress(data: CreateAddressRequest): Promise<ApiAddress> {
-  const response = await post<{ data: ApiAddress }>('/api/v2/daffa-addresses', data);
+  // Backend expects: name, phone, street, city_id, region, postal_code, country, is_default, title
+  const payload: Record<string, unknown> = {
+    title: data.title || '',
+    name: data.full_name,
+    phone: data.phone || '',
+    street: data.address_line_1,
+    address_line_2: data.address_line_2 || '',
+    city_id: 1, // Default city ID - backend requires integer
+    city: data.city || '',
+    region: data.region || '',
+    postal_code: data.postal_code || '',
+    country: data.country || '',
+    is_default: data.is_default || false,
+    latitude: data.latitude,
+    longitude: data.longitude,
+  };
+  const response = await post<{ data: ApiAddress }>('/api/v2/daffa-addresses', payload);
   return response.data;
 }
 
@@ -47,7 +64,20 @@ export async function createAddress(data: CreateAddressRequest): Promise<ApiAddr
  * Update existing address
  */
 export async function updateAddress(id: number, data: Partial<CreateAddressRequest>): Promise<ApiAddress> {
-  const response = await put<{ data: ApiAddress }>(`/api/v2/daffa-addresses/${id}`, data);
+  // Map frontend fields to backend expected names
+  const payload: Record<string, unknown> = {};
+  if (data.title !== undefined) payload.title = data.title;
+  if (data.full_name !== undefined) payload.name = data.full_name;
+  if (data.phone !== undefined) payload.phone = data.phone;
+  if (data.address_line_1 !== undefined) payload.street = data.address_line_1;
+  if (data.address_line_2 !== undefined) payload.address_line_2 = data.address_line_2;
+  if (data.city !== undefined) { payload.city_id = data.city; payload.city = data.city; }
+  if (data.region !== undefined) payload.region = data.region;
+  if (data.postal_code !== undefined) payload.postal_code = data.postal_code;
+  if (data.country !== undefined) payload.country = data.country;
+  if (data.is_default !== undefined) payload.is_default = data.is_default;
+  
+  const response = await put<{ data: ApiAddress }>(`/api/v2/daffa-addresses/${id}`, payload);
   return response.data;
 }
 

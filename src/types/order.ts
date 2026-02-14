@@ -21,6 +21,7 @@ export interface SavedAddress extends Address {
   id: string;
   title: string;
   isDefault: boolean;
+  phone?: string;
 }
 
 export interface CustomerInfo {
