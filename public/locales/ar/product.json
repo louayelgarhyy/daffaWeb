@@ -9,6 +9,7 @@
     "inStock": "متوفر",
     "outOfStock": "غير متوفر",
     "size": "المقاس",
+    "selectSize": "يرجى اختيار المقاس أولاً",
     "quantity": "الكمية",
     "addToCart": "أضف للسلة",
     "buyNow": "اشتر الآن",
