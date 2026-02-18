@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Heart, ShoppingCart, Star } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/use-auth";
@@ -9,6 +9,7 @@ import { useCart } from "@/hooks/use-cart";
 import { LoginRequiredDialog } from "@/components/LoginRequiredDialog";
 import { subcategories } from "@/data/subcategories";
 import { Badge } from "@/components/ui/badge";
+import type { ApiProduct } from "@/lib/api/types";
 
 interface ProductCardProps {
   id: string;
@@ -21,6 +22,7 @@ interface ProductCardProps {
   categoryId?: string;
   subcategoryId?: string;
   delay?: number;
+  productData?: ApiProduct; // raw product data to pass via navigation state
 }
 
 export const ProductCard = ({
@@ -32,10 +34,12 @@ export const ProductCard = ({
   reviews = 0,
   discount,
   subcategoryId,
+  productData,
 }: ProductCardProps) => {
   const { t, i18n } = useTranslation('common');
   const { isAuthenticated } = useAuth();
   const { addToCart, isLoading: isAddingToCart } = useCart();
+  const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
   const [showLoginDialog, setShowLoginDialog] = useState(false);
   const isRTL = i18n.language === 'ar';
@@ -56,16 +60,20 @@ export const ProductCard = ({
       return;
     }
 
-    // Convert string id to number and call cart API
     const productId = parseInt(id, 10);
     if (!isNaN(productId)) {
       await addToCart(productId, 1);
     }
   };
 
+  const handleNavigate = (e: React.MouseEvent) => {
+    e.preventDefault();
+    navigate(`/product/${id}`, { state: { product: productData } });
+  };
+
   return (
     <Card className="group relative overflow-hidden border border-border hover:shadow-md transition-all duration-300 bg-card">
-      <Link to={`/product/${id}`}>
+      <div onClick={handleNavigate} className="cursor-pointer">
         <div className="relative h-[17rem] overflow-hidden bg-card-secondary">
           <img
             src={image}
@@ -79,7 +87,7 @@ export const ProductCard = ({
           )}
           <button
             onClick={(e) => {
-              e.preventDefault();
+              e.stopPropagation();
               setIsLiked(!isLiked);
             }}
             className={`absolute top-3 ${isRTL ? 'left-3' : 'right-3'} p-2 rounded-full bg-background/80 backdrop-blur-sm transition-colors ${
@@ -89,14 +97,14 @@ export const ProductCard = ({
             <Heart className={`h-5 w-5 ${isLiked ? "fill-current" : ""}`} />
           </button>
         </div>
-      </Link>
+      </div>
 
       <CardContent className="p-4 space-y-3">
-        <Link to={`/product/${id}`}>
+        <div onClick={handleNavigate} className="cursor-pointer">
           <h3 className="font-semibold text-foreground group-hover:text-foreground/70 transition-colors">
             {name}
           </h3>
-        </Link>
+        </div>
 
         {subcategoryName && (
           <Badge variant="secondary" className="text-xs">
