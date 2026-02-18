@@ -14,8 +14,12 @@ export async function getCategories(): Promise<ApiCategory[]> {
  * Get parent/top-level categories only
  */
 export async function getParentCategories(): Promise<ApiCategory[]> {
-  const response = await get<CategoriesResponse>('/api/v2/daffa-categories/parents', false);
-  return response.data;
+  const response = await get<{ data: { categories: ApiCategory[] } | ApiCategory[] }>('/api/v2/daffa-categories/parents', false);
+  // Handle both response shapes: {data: {categories: [...]}} and {data: [...]}
+  const data = response.data;
+  if (Array.isArray(data)) return data;
+  if (data && typeof data === 'object' && 'categories' in data) return (data as { categories: ApiCategory[] }).categories || [];
+  return [];
 }
 
 /**
