@@ -29,6 +29,13 @@ export async function searchProducts(filters: ProductSearchRequest): Promise<Pro
 }
 
 /**
+ * Get products by category ID with pagination
+ */
+export async function getProductsByCategory(categoryId: number, page: number = 1, perPage: number = 24): Promise<ProductsResponse> {
+  return post<ProductsResponse>('/api/v2/daffa-products/search', { category_id: categoryId, page, per_page: perPage }, false);
+}
+
+/**
  * Increment product view count
  */
 export async function incrementProductView(id: number): Promise<void> {

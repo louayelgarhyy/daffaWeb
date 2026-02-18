@@ -48,23 +48,36 @@ export interface ApiUser {
 
 // ============ Product Types ============
 export interface ApiProduct {
-  id: number;
+  id: number | string;
   name: string;
   name_ar?: string;
   code?: string;
   price: number;
+  old_price?: number | null;
+  discount?: number | null;
+  has_discount?: boolean;
   description?: string;
   description_ar?: string;
   size?: string;
   modal?: string;
-  currency: string;
-  is_active: boolean;
+  currency?: string;
+  currency_tag?: string;
+  is_active?: boolean;
+  is_available?: boolean;
+  is_new?: boolean;
+  is_favorite?: boolean;
   category_id?: number;
+  category_name?: string;
   category?: ApiCategory;
+  image?: string;
   images?: ApiProductImage[];
   views_count?: number;
-  created_at: string;
-  updated_at: string;
+  views?: number;
+  clicks?: number;
+  stock_quantity?: number;
+  brand?: { id: string | number; name: string; image?: string | null };
+  created_at?: string;
+  updated_at?: string;
 }
 
 export interface ApiProductImage {
