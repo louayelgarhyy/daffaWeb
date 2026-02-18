@@ -174,7 +174,7 @@ export function useCategories() {
   return { categories, isLoading, error };
 }
 
-// Hook for fetching parent categories only
+// Hook for fetching parent categories only (falls back to all categories on error)
 export function useParentCategories() {
   const [categories, setCategories] = useState<ApiCategory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -188,11 +188,17 @@ export function useParentCategories() {
         const data = await categoriesApi.getParentCategories();
         setCategories(data);
       } catch (err) {
-        console.error('Failed to fetch parent categories:', err);
-        if (err instanceof ApiError) {
-          setError(err.message);
-        } else {
-          setError('Failed to load categories');
+        console.warn('Parent categories endpoint failed, falling back to all categories:', err);
+        try {
+          const data = await categoriesApi.getCategories();
+          setCategories(data);
+        } catch (fallbackErr) {
+          console.error('Failed to fetch categories:', fallbackErr);
+          if (fallbackErr instanceof ApiError) {
+            setError(fallbackErr.message);
+          } else {
+            setError('Failed to load categories');
+          }
         }
       } finally {
         setIsLoading(false);
