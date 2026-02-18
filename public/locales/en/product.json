@@ -9,6 +9,7 @@
     "inStock": "In Stock",
     "outOfStock": "Out of Stock",
     "size": "Size",
+    "selectSize": "Please select a size first",
     "quantity": "Quantity",
     "addToCart": "Add to Cart",
     "buyNow": "Buy Now",

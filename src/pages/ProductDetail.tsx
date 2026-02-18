@@ -25,11 +25,12 @@ const ProductDetail = () => {
   const { addToCart, isLoading: isAddingToCart } = useCart();
   const { isAuthenticated } = useAuth();
   
-  const [selectedSize, setSelectedSize] = useState("M");
+  const [selectedSize, setSelectedSize] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [isLiked, setIsLiked] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
   const [showLoginDialog, setShowLoginDialog] = useState(false);
+  const [sizeError, setSizeError] = useState(false);
 
   // Get product images - search API returns single `image`, product_show returns `images` array
   const imageList = product?.images?.map(img => img.url) ||
@@ -47,6 +48,11 @@ const ProductDetail = () => {
   // Available sizes (from product or defaults)
   const sizes = product?.size ? [product.size] : ["XS", "S", "M", "L", "XL", "XXL"];
 
+  // Auto-select if only one size
+  if (sizes.length === 1 && selectedSize !== sizes[0]) {
+    setSelectedSize(sizes[0]);
+  }
+
   const handleAddToCart = async () => {
     if (!isAuthenticated) {
       setShowLoginDialog(true);
@@ -55,16 +61,14 @@ const ProductDetail = () => {
 
     if (!product) return;
 
-    const success = await addToCart(Number(product.id), quantity);
-    if (success) {
-      toast.success(t('product:details.addedToCart'), {
-        description: t('product:details.addedToCartDescription', {
-          quantity,
-          name: productName,
-          size: selectedSize
-        })
-      });
+    // Validate size selection when multiple sizes are available
+    if (sizes.length > 1 && !selectedSize) {
+      setSizeError(true);
+      toast.warning(t('product:details.selectSize', { defaultValue: 'Please select a size first' }));
+      return;
     }
+
+    await addToCart(Number(product.id), quantity);
   };
 
   if (isLoading) {
@@ -187,15 +191,20 @@ const ProductDetail = () => {
 
               {/* Size Selection */}
               <div>
-                <h3 className="font-semibold mb-3">{t('product:details.size')}</h3>
-                <div className="flex gap-2 flex-wrap">
+                <h3 className={`font-semibold mb-3 ${sizeError ? 'text-destructive' : ''}`}>
+                  {t('product:details.size')}
+                  {sizes.length > 1 && <span className="text-destructive ms-1">*</span>}
+                </h3>
+                <div className={`flex gap-2 flex-wrap p-2 rounded-lg transition-all ${sizeError ? 'ring-2 ring-destructive ring-offset-1' : ''}`}>
                   {sizes.map((size) => (
                     <button
                       key={size}
-                      onClick={() => setSelectedSize(size)}
+                      onClick={() => { setSelectedSize(size); setSizeError(false); }}
                       className={`w-12 h-12 rounded-lg border-2 font-semibold transition-all ${
                         selectedSize === size
                           ? "border-primary bg-primary text-primary-foreground"
+                          : sizeError
+                          ? "border-destructive hover:border-primary"
                           : "border-border hover:border-primary"
                       }`}
                     >
@@ -203,6 +212,9 @@ const ProductDetail = () => {
                     </button>
                   ))}
                 </div>
+                {sizeError && (
+                  <p className="text-destructive text-sm mt-1">{t('product:details.selectSize', { defaultValue: 'Please select a size' })}</p>
+                )}
               </div>
 
               {/* Quantity */}
