@@ -17,7 +17,7 @@ export async function getProducts(page: number = 1, perPage: number = 20): Promi
  * Get single product by ID
  */
 export async function getProduct(id: number): Promise<ApiProduct> {
-  const response = await post<{ data: ApiProduct }>(`/api/v2/daffa-products/product_show/${id}`, {}, false);
+  const response = await get<{ data: ApiProduct }>(`/api/v2/daffa-products/product_show/${id}`, false);
   return response.data;
 }
 
