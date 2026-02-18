@@ -45,7 +45,7 @@ const ProductDetail = () => {
 
     if (!product) return;
 
-    const success = await addToCart(product.id, quantity);
+    const success = await addToCart(Number(product.id), quantity);
     if (success) {
       toast.success(t('product:details.addedToCart'), {
         description: t('product:details.addedToCartDescription', {
