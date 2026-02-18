@@ -165,8 +165,13 @@ const CategoryPage = () => {
                     id={String(product.id)}
                     name={isArabic ? (product.name_ar || product.name) : product.name}
                     price={product.price}
-                    image={product.image || (product.images?.[0]?.url) || '/placeholder.svg'}
+                    image={
+                      product.image
+                        ? (product.image.startsWith('http') ? product.image : `https://appdaffah.com/${product.image}`)
+                        : (product.images?.[0]?.url) || '/placeholder.svg'
+                    }
                     discount={product.discount ?? undefined}
+                    productData={product}
                   />
                 ))}
               </div>

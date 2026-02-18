@@ -62,12 +62,20 @@ export function useProducts(initialPage: number = 1, perPage: number = 20) {
 }
 
 // Hook for fetching a single product
-export function useProduct(id: number | string | undefined) {
-  const [product, setProduct] = useState<ApiProduct | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+// Accepts an optional preloaded product (passed via router state) to avoid broken product_show endpoint
+export function useProduct(id: number | string | undefined, preloaded?: ApiProduct | null) {
+  const [product, setProduct] = useState<ApiProduct | null>(preloaded ?? null);
+  const [isLoading, setIsLoading] = useState(!preloaded);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    // If product was passed via navigation state, use it directly
+    if (preloaded) {
+      setProduct(preloaded);
+      setIsLoading(false);
+      return;
+    }
+
     if (!id) {
       setProduct(null);
       setIsLoading(false);
@@ -79,10 +87,16 @@ export function useProduct(id: number | string | undefined) {
       setError(null);
       try {
         const productId = typeof id === 'string' ? parseInt(id, 10) : id;
-        const data = await productsApi.getProduct(productId);
-        setProduct(data);
-        // Track view
-        productsApi.incrementProductView(productId).catch(console.error);
+        // Use search endpoint as fallback since product_show has a backend 500 error
+        const response = await productsApi.searchProducts({});
+        const found = (response.data || []).find(
+          (p) => String(p.id) === String(productId)
+        );
+        if (found) {
+          setProduct(found);
+        } else {
+          setError('Product not found');
+        }
       } catch (err) {
         console.error('Failed to fetch product:', err);
         if (err instanceof ApiError) {
@@ -96,7 +110,7 @@ export function useProduct(id: number | string | undefined) {
     };
 
     fetchProduct();
-  }, [id]);
+  }, [id, preloaded]);
 
   return { product, isLoading, error };
 }

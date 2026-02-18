@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Heart, Star, Truck, Shield, RefreshCw, ChevronLeft } from "lucide-react";
 import { toast } from "sonner";
@@ -10,12 +10,18 @@ import { useCart } from "@/hooks/use-cart";
 import { useAuth } from "@/hooks/use-auth";
 import { Skeleton } from "@/components/ui/skeleton";
 import { LoginRequiredDialog } from "@/components/LoginRequiredDialog";
+import type { ApiProduct } from "@/lib/api/types";
 
 const ProductDetail = () => {
   const { id } = useParams();
+  const location = useLocation();
   const { t, i18n } = useTranslation(['product', 'common']);
   const isRTL = i18n.language === 'ar';
-  const { product, isLoading, error } = useProduct(id);
+
+  // Use product passed via navigation state (from ProductCard) to avoid broken product_show endpoint
+  const stateProduct = (location.state as { product?: ApiProduct } | null)?.product ?? null;
+  const { product, isLoading, error } = useProduct(id, stateProduct);
+
   const { addToCart, isLoading: isAddingToCart } = useCart();
   const { isAuthenticated } = useAuth();
   
@@ -25,14 +31,18 @@ const ProductDetail = () => {
   const [currentImage, setCurrentImage] = useState(0);
   const [showLoginDialog, setShowLoginDialog] = useState(false);
 
-  // Get product images or fallback
-  const images = product?.images?.map(img => img.url) || [
-    "https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=600&h=800&fit=crop"
-  ];
+  // Get product images - search API returns single `image`, product_show returns `images` array
+  const imageList = product?.images?.map(img => img.url) ||
+    (product?.image ? [product.image.startsWith('http') ? product.image : `https://appdaffah.com/${product.image}`] : [
+      "https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=600&h=800&fit=crop"
+    ]);
 
   // Get product name in correct language
   const productName = isRTL && product?.name_ar ? product.name_ar : (product?.name || '');
-  const productDescription = isRTL && product?.description_ar ? product.description_ar : product?.description;
+  // Support both `description` (product_show) and `desc` (search endpoint)
+  const productDescription = isRTL && product?.description_ar
+    ? product.description_ar
+    : (product?.description || (product as ApiProduct & { desc?: string })?.desc);
 
   // Available sizes (from product or defaults)
   const sizes = product?.size ? [product.size] : ["XS", "S", "M", "L", "XL", "XXL"];
@@ -123,14 +133,14 @@ const ProductDetail = () => {
             <div className="space-y-4">
               <div className="relative aspect-[3/4] rounded-lg overflow-hidden bg-card-secondary">
                 <img
-                  src={images[currentImage]}
+                  src={imageList[currentImage]}
                   alt={productName}
                   className="w-full h-full object-cover"
                 />
               </div>
-              {images.length > 1 && (
+              {imageList.length > 1 && (
                 <div className="grid grid-cols-3 gap-4">
-                  {images.map((img, idx) => (
+                  {imageList.map((img, idx) => (
                     <button
                       key={idx}
                       onClick={() => setCurrentImage(idx)}
