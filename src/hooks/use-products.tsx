@@ -186,12 +186,12 @@ export function useParentCategories() {
       setError(null);
       try {
         const data = await categoriesApi.getParentCategories();
-        setCategories(data);
+        setCategories(Array.isArray(data) ? data : []);
       } catch (err) {
         console.warn('Parent categories endpoint failed, falling back to all categories:', err);
         try {
           const data = await categoriesApi.getCategories();
-          setCategories(data);
+          setCategories(Array.isArray(data) ? data : []);
         } catch (fallbackErr) {
           console.error('Failed to fetch categories:', fallbackErr);
           if (fallbackErr instanceof ApiError) {

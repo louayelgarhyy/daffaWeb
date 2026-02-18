@@ -26,7 +26,7 @@ export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const isArabic = i18n.language === 'ar';
   const { categories: apiCategories } = useParentCategories();
-  const navCategories = apiCategories.slice(0, 6);
+  const navCategories = (Array.isArray(apiCategories) ? apiCategories : []).slice(0, 6);
 
   return (
     <>
